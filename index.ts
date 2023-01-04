@@ -31,7 +31,7 @@ export default {
     console.log('D:', urlObj.pathname)
     console.log('D:', JSON.stringify(env))
 
-    const landingEntryPoint = isProd ? `https://ls-site-by6.pages.dev` :
+    const landingEntryPoint = isProd ? `https://logseq-sites.pages.dev` :
       `http://127.0.0.1:1234`
     const appEntryPoint = `https://logseq.com/?spa=true`
     const appAssetsPoint = `https://logseq.com`
