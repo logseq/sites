@@ -1,0 +1,151 @@
+.app-head-downloads {
+  @apply px-4 sm:px-0;
+
+  .text-slogan {
+    h2 {
+      @apply sm:pt-10 sm:text-[38px] sm:leading-[46px];
+    }
+  }
+
+  .dl-items {
+    @apply sm:px-10;
+
+    > .tabs {
+      li {
+        @apply flex flex-col items-center bg-logseq-600/90 rounded-xl
+        flex-1 py-5 px-2 justify-center select-none cursor-pointer
+        active:opacity-80 border-2 border-transparent transition-all duration-300;
+
+        &.active {
+          @apply border-gradient-br-yellow-purple-red-logseq-900;
+        }
+
+        &:hover {
+          box-shadow: 0 2px 18px rgba(73, 134, 190, 0.3),
+          inset 0 0 7px rgba(237, 204, 114, 0.5);
+        }
+
+        &.is-macos, &.is-ios {
+          &.active {
+            @apply border-gradient-br-purple-white-red-logseq-900;
+          }
+        }
+
+        &.is-windows {
+          &.active {
+            @apply border-gradient-br-blue-white-green-logseq-900;
+          }
+        }
+
+        &.is-linux {
+          &.active {
+            @apply border-gradient-br-yellow-white-orange-logseq-900;
+          }
+        }
+
+        &.is-android {
+          &.active {
+            @apply border-gradient-br-green-white-black-logseq-900;
+          }
+        }
+
+        > span {
+          font-size: 38px;
+        }
+
+        > strong {
+          @apply text-lg font-normal opacity-70 text-center pt-4;
+        }
+      }
+    }
+
+    > .selects {
+      .app-form-select {
+        outline: none;
+      }
+
+      &.active-of-macos, &.active-of-ios {
+        .app-form-select {
+          @apply border-gradient-br-purple-white-red-logseq-900;
+        }
+      }
+
+      &.active-of-linux .app-form-select {
+        @apply border-gradient-br-yellow-white-orange-logseq-900;
+      }
+
+      &.active-of-windows .app-form-select {
+        @apply border-gradient-br-blue-white-green-logseq-900;
+      }
+
+      &.active-of-android .app-form-select {
+        @apply border-gradient-br-green-white-black-logseq-900;
+      }
+    }
+
+    .panels {
+      @apply sm:h-[170px];
+
+      @screen sm {
+        > .is-ios {
+          @apply relative;
+
+          &:hover {
+            .qr {
+              @apply opacity-100;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .screen-shot {
+  }
+}
+
+.page-inner-full-wrap {
+  &.dl-a {
+    @apply relative overflow-hidden;
+
+    &:after {
+      @apply bottom-0 left-0 h-28 w-full absolute bg-gradient-to-t from-logseq-800;
+      content: " ";
+    }
+  }
+}
+
+.global-downloads-wrap {
+  @apply relative whitespace-nowrap;
+
+  .sub-items {
+    display: none;
+    min-width: 270px;
+    z-index: 99;
+
+    &-inner {
+      @apply border bg-logseq-600 rounded-md overflow-hidden
+      border-logseq-400 p-1;
+
+      > div {
+        @apply select-none cursor-pointer rounded-md
+        pl-3 pr-2 py-1.5 hover:bg-logseq-400/80 transition-all;
+      }
+    }
+  }
+
+  &:hover {
+    .sub-items {
+      display: flex !important;
+    }
+  }
+
+  &.is-super-button {
+    .sub-items {
+      top: 36px;
+      right: unset !important;
+      left: 0;
+      width: 280px;
+    }
+  }
+}
