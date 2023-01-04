@@ -1,2 +1,2 @@
 # sites
-Sites projects for Logseq.
+Some website projects for Logseq.
