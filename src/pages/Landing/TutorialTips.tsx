@@ -192,9 +192,9 @@ export function TutorialTips () {
             <AppLogo className="w-10 h-10 sm:w-16 sm:h-16"/>
             <span className="pl-2 text-logseq-50/80">.</span>
 
-            <h2 className={'inline-block pl-2 sm:!hidden'}>
+            <strong className={'inline-block sm:!hidden'}>
               New ideas will pop up with time.
-            </h2>
+            </strong>
           </h1>
 
           {appState.sm.get() ?

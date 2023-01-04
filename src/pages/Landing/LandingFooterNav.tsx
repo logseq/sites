@@ -264,7 +264,7 @@ export function LandingFooterDesc (props: {
             leftIcon={<Play size={18} weight={'duotone'}/>}
             rightIcon={<ArrowSquareOut size={18} className={'opacity-70'}/>}
             className={'w-full bg-logseq-600 mt-4 sm:w-auto sm:mt-0'}
-            href={"https://demo.logseq.com"}
+            href={'https://demo.logseq.com'}
           >
             Live Demo
           </Button>
@@ -285,7 +285,7 @@ export function LandingFooterNav () {
         <a href="mailto:hi@logseq.com">Contact Us</a>
       </p>
       <p className="text-xs opacity-40 py-1">
-        © 2022 Logseq, Inc.
+        © {(new Date()).getFullYear()} Logseq, Inc.
       </p>
     </div>
   )
