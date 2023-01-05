@@ -1,2 +1,2 @@
-# sites
-Some website projects for Logseq.
+# Logseq home page
+https://logseq.com
