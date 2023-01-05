@@ -9,7 +9,6 @@ import {
   useReleasesState,
 } from './state'
 import { useEffect } from 'react'
-import { PrivacyBanner } from './components/PrivacyBanner'
 import { Toaster } from 'react-hot-toast'
 
 export function App () {
@@ -48,8 +47,6 @@ export function App () {
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
         </Routes>
-
-        <PrivacyBanner/>
       </div>
     </div>
   )
