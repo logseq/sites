@@ -355,7 +355,7 @@ export function TutorialTips () {
             <div>
               <Button
                 leftIcon={<MonitorPlay size={24} weight={'duotone'}/>}
-                href={`https://discuss.logseq.com/`}
+                href={`https://hub.logseq.com/`}
                 className={'w-full sm:w-auto'}
               >
                 Knowledge Hub
