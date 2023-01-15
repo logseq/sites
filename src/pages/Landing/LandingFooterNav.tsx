@@ -13,7 +13,7 @@ export function FooterDescCard (props: any) {
   const { icon, title, desc } = props
   return (
     <div className="item pb-4 sm:p-2">
-      <div className="inner flex opacity-90">
+      <div className="inner flex bg-[#12323D] ">
         <div className="w-[40px] h-[40px] flex items-center justify-center">
           {icon}
         </div>
