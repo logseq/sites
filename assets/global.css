@@ -150,8 +150,7 @@ body {
 
 .app-logo {
   @apply flex items-center justify-center
-  bg-logseq-700 overflow-hidden border-logseq-800
-  shadow-2xl shadow-logseq-300 p-3 rounded-3xl;
+  bg-logseq-700 overflow-hidden border-logseq-800 p-3 rounded-3xl;
 
   img {
     @apply translate-y-0.5;
