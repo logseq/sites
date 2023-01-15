@@ -280,9 +280,9 @@ export function LandingFooterNav () {
   const links = (
     <div className="links flex flex-col justify-center">
       <p className="flex space-x-4 text-xs text-gray-300/90 pb-1">
-        <a href="https://docs.logseq.com/#/page/Privacy%20Policy" target="_blank">Privacy</a>
-        <a href="https://docs.logseq.com/#/page/Terms" target="_blank">Terms</a>
-        <a href="mailto:hi@logseq.com">Contact Us</a>
+        <a href="https://docs.logseq.com/#/page/Privacy%20Policy" target="_blank" rel='noreferrer' className='hover:text-gray-400/90'>Privacy</a>
+        <a href="https://docs.logseq.com/#/page/Terms" target="_blank" rel='noreferrer' className='hover:text-gray-400/90'>Terms</a>
+        <a href="mailto:hi@logseq.com" className='hover:text-gray-400/90'>Contact Us</a>
       </p>
       <p className="text-xs opacity-40 py-1">
         © {(new Date()).getFullYear()} Logseq, Inc.
