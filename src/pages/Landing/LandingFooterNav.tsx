@@ -294,7 +294,7 @@ export function LandingFooterNav () {
     <div className="app-landing-footer-navs">
       <div className="flex flex-1 justify-between">
         <div className="flex space-x-4">
-          <AppLogo className="w-16 h-16"/>
+          <AppLogo className="w-16 h-16 cursor-pointer" onClick={() => {window.scrollTo(0, 0)}}/>
 
           {appState.sm.get() ? null : links}
         </div>
