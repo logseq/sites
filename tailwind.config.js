@@ -28,6 +28,9 @@ module.exports = {
         '4xl': '80px',
         '5xl': '100px'
       },
+      backgroundImage: {
+        'radial': 'radial-gradient(var(--tw-gradient-stops))'
+      },
       linearBorderGradients: ({ theme }) => ({
         colors: {
           'yellow-purple-red': [

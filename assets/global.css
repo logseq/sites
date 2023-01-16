@@ -15,7 +15,9 @@ body {
 }
 
 .ani-slide-in-from-bottom {
-  @apply animate-in fade-in-0 duration-1000 slide-in-from-bottom-14;
+  /* @apply animate-in fade-in-0 duration-1000 slide-in-from-bottom-14; */
+  @apply animate-in fade-in-0 slide-in-from-bottom-14;
+  animation-duration: 2s;
 
   visibility: visible !important;
 }
@@ -51,12 +53,12 @@ body {
 }
 
 .glass-card {
-  @apply bg-gradient-to-b from-white/40 to-logseq-800/5 rounded-md;
+  @apply bg-gradient-to-b from-white/20 to-logseq-800/5 rounded-md;
 
   visibility: hidden;
 
   &-inner {
-    @apply backdrop-blur-5xl bg-logseq-700/50 rounded-md p-3 w-full;
+    @apply bg-logseq-700/50 rounded-md p-3 w-full;
 
     margin: .5px;
     padding-top: 15px;
@@ -85,7 +87,7 @@ body {
 }
 
 .app-headbar {
-  @apply w-full px-6 relative;
+  @apply w-full px-6 fixed bg-logseq-800/90 backdrop-blur-sm z-50 drop-shadow-lg shadow-logseq-900;
 
   .links-group {
     @apply flex flex-1 space-x-8 whitespace-nowrap;
@@ -154,6 +156,23 @@ body {
     @apply translate-y-0.5;
   }
 }
+
+.app-logo-embossed {
+  background: linear-gradient(to right, #0E2A35, #0E2A35) content-box content-box, 
+              linear-gradient(to bottom, rgba(133,200,200,0.1), rgba(133,200,200,0), rgba(0,0,0,0.2)) border-box,
+              #0E2A35 border-box;
+  padding: 2px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2))
+          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
+
+  svg {
+    filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.5));
+  }
+}
+
 
 .app-privacy-banner {
   @apply fixed left-0 bottom-0 right-0 p-6 flex justify-center

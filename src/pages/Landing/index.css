@@ -36,6 +36,7 @@ h1, h2, h3 {
 }
 
 .app-head-showcase {
+  @apply pt-14;
   height: 790px;
   -webkit-font-smoothing: antialiased;
 
@@ -339,75 +340,105 @@ h1, h2, h3 {
   }
 }
 
+.border-gradient-yellow-purple-red {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(to bottom right, #fbbf24, #a855f7, #dc2626) border-box;
+}
+
+.border-gradient-red-purple-blue {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(to bottom right, #e879f9, #a855f7, #2563eb) border-box;
+}
+
+.border-gradient-yellow-brown-yellow {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(to bottom right, #facc15, #d6d3d1, #a16207) border-box;
+}
+
+.border-gradient-red-black-yellow {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(to bottom right, #d946ef, #44403c, #facc15) border-box;
+}
+
+.border-gradient-green-black-cyan {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(to bottom right, #22c55e, #78716c, #0891b2) border-box;
+}
+
 .app-tutorial-features-slide {
   @apply py-14 px-0;
 
   ul.tabs {
     li {
       @apply flex flex-col items-center bg-logseq-600/90 rounded-xl
-      flex-1 py-4 px-2 justify-center select-none cursor-pointer
-      active:opacity-80 border-2 border-transparent transition-all;
+      flex-1 p-0.5 justify-center select-none cursor-pointer
+      active:opacity-80 transition-all;
+      --border-opacity: 0.4;
 
       &:first-child {
         &.active {
-          @apply border-gradient-br-yellow-purple-red-logseq-900;
+          @apply border-gradient-yellow-purple-red;
         }
 
         &:hover {
           box-shadow: 0 2px 18px rgba(255, 66, 247, 0.3),
-          inset 0 0 7px rgba(255, 179, 66, 0.5);
+                      inset 0 0 7px rgba(255, 179, 66, 0.5);
         }
       }
 
       &:nth-child(2) {
         &.active {
-          @apply border-gradient-br-red-purple-blue-logseq-900;
+          @apply border-gradient-red-purple-blue;
         }
 
         &:hover {
           box-shadow: 0 2px 18px rgba(110, 124, 251, 0.3),
           inset 0 0 7px rgba(251, 66, 255, 0.5);
+          border-color: rgba(251, 66, 255, var(--border-opacity));
         }
       }
 
       &:nth-child(3) {
         &.active {
-          @apply border-gradient-br-yellow-brown-yellow-logseq-900;
+          @apply border-gradient-yellow-brown-yellow;
         }
 
         &:hover {
           box-shadow: 0 2px 18px rgba(171, 143, 118, 0.3),
           inset 0 0 7px rgba(255, 248, 238, 0.5);
+          border-color: rgba(255, 248, 238, 0.4);
         }
       }
 
       &:nth-child(4) {
         &.active {
-          @apply border-gradient-br-red-black-yellow-logseq-900;
+          @apply border-gradient-red-black-yellow
         }
 
         &:hover {
           box-shadow: 0 2px 18px rgba(255, 66, 247, 0.3),
           inset 0 0 7px rgba(255, 179, 66, 0.5);
+          border-color: rgba(255, 179, 66, 0.4);
         }
       }
 
       &:nth-child(5) {
         &.active {
-          @apply border-gradient-br-green-black-cyan-logseq-900;
+          @apply border-gradient-green-black-cyan;
         }
 
         &:hover {
           box-shadow: 0px 2px 18px rgba(53, 113, 99, 0.3),
           inset 0px 0px 7px rgba(92, 209, 186, 0.5);
+          border-color: rgba(92, 209, 186, 0.4);
         }
       }
 
-      > span {
+      span {
         font-size: 38px;
       }
 
-      > strong {
+      strong {
         @apply text-[20px] pt-1 font-normal opacity-70 text-center tracking-wide;
       }
 
@@ -495,7 +526,7 @@ h1, h2, h3 {
     width: 320px;
     position: relative;
 
-    background-image: url("./assets/app-window-placeholder-bg.png");
+    background-image: url("./assets/app-window-placeholder-bg-no-logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position-y: 60px;
@@ -597,12 +628,25 @@ h1, h2, h3 {
   > .bd {
     @apply mt-8 mb-10 sm:my-16 sm:-mx-10 relative;
 
-    > .bd-slides {
+    .bd-wrapper {
+      place-self: center right;
+      flex-basis: 486px;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      /* flex-wrap: wrap; */
+      justify-content: center;
+      align-items: center;
+      max-width: 486px;
+    }
+
+    .bd-slides {
       @apply w-full flex-col items-center justify-center px-0
       border bg-logseq-500 border-gray-400/50 rounded-3xl relative h-[210px]
       sm:flex sm:h-[256px]  sm:w-0 sm:px-6;
 
-      flex-basis: 486px;
+      /* flex-basis: 486px; */
+      width: 100%;
 
       .items {
         @apply w-full;
@@ -635,9 +679,8 @@ h1, h2, h3 {
       }
     }
 
-    > .bd-actions {
-      @apply justify-between px-2 py-2 mt-3
-      sm:absolute sm:w-[482px] sm:top-[258px];
+    .bd-actions {
+      @apply justify-between px-2 py-2 mt-3 sm:w-[482px];
 
       .prev, .next {
         @apply opacity-80 cursor-pointer select-none hover:opacity-90 active:opacity-90;
@@ -648,6 +691,8 @@ h1, h2, h3 {
       @apply border flex-1 border-logseq-400 rounded-2xl
       relative overflow-hidden mt-6
       sm:ml-4 sm:mt-0;
+
+      place-self: center left;
     }
   }
 
@@ -706,7 +751,7 @@ h1, h2, h3 {
 
       .page-inner {
         z-index: 2;
-        margin-top: -768px;
+        /* margin-top: -768px; */
 
         @screen lg {
           max-width: 1440px;
@@ -718,7 +763,7 @@ h1, h2, h3 {
       }
 
       &:before {
-        @apply sm:absolute bottom-0 left-0 w-full;
+        @apply absolute bottom-0 left-0 w-full;
 
         content: " ";
         background-image: url("./assets/full-bg-c-gradient.png");
@@ -758,6 +803,26 @@ h1, h2, h3 {
   }
 }
 
+.border-gradient-blue-white-green {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(#60a5fa, #fff, #bbf7d0) border-box;
+}
+
+.border-gradient-gray-white-gray {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(#a8a29e, #fff, #57534e) border-box;
+}
+
+.border-gradient-brown-white-blue {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(#fde047, #fff, #60a5fa) border-box;
+}
+
+.border-gradient-gray-white-blue {
+  background: linear-gradient(to right, #01171d, #01171d) content-box content-box, 
+              linear-gradient(#78716c, #fff, #713f12) border-box;
+}
+
 .app-daily-showcase {
   @apply -mt-2 relative mb-10 px-4 sm:px-0;
 
@@ -766,8 +831,8 @@ h1, h2, h3 {
   > .tabs {
 
     > .it {
-      @apply items-center py-6
-      bg-logseq-700 rounded-xl cursor-pointer select-none border-2 border-transparent
+      @apply items-center p-0.5
+      bg-logseq-700 rounded-xl cursor-pointer select-none
       transition-all active:opacity-80;
 
       &:hover {
@@ -777,25 +842,25 @@ h1, h2, h3 {
 
       &:first-child {
         &.active {
-          @apply border-gradient-b-blue-white-green-logseq-900;
+          @apply border-gradient-blue-white-green;
         }
       }
 
       &:nth-child(2) {
         &.active {
-          @apply border-gradient-b-gray-white-gray-logseq-900;
+          @apply border-gradient-gray-white-gray;
         }
       }
 
       &:nth-child(3) {
         &.active {
-          @apply border-gradient-b-brown-white-blue-logseq-900;
+          @apply border-gradient-brown-white-blue;
         }
       }
 
       &:nth-child(4) {
         &.active {
-          @apply border-gradient-b-gray-white-blue-logseq-900;
+          @apply border-gradient-gray-white-blue;
         }
       }
 

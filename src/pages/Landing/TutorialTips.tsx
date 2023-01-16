@@ -219,109 +219,111 @@ export function TutorialTips () {
         }
       </AnimateInTurnStage>
 
-      <div className="bd sm:flex">
-        <div ref={swiperElRef} className="bd-slides swiper">
-          <div className="items swiper-wrapper">
-            {/* 1 */}
-            <TipSlideItem
-              isSm={isSm}
-              inActive={activeIndex === 0}
-              headEmoji={'✍️'}
-              headTitle={'Beginner'}
-              content={<span>Get in the habit of writing {isSm ? null : <br/>}thoughts down every day.</span>}
-              tips={[
-                'Think in sections, use indentation.',
-                'Use links & hashtags.',
-              ]}
-              complete={() => {
-                swiperRef.current?.slideNext()
-              }}
-              activeTipChanged={(tag) => {
-                setActiveTipTag?.(`0${tag}`)
-              }}
-
-            />
-
-            {/* 2 */}
-            <TipSlideItem
-              isSm={isSm}
-              inActive={activeIndex === 1}
-              headEmoji={'🔍️'}
-              headTitle={'Intermediate'}
-              content={<span>Always find what you’re {isSm ? null : <br/>} looking for.</span>}
-              tips={[
-                'Use CMD-K to search with ease.',
-                <span className={'sm:text-lg'}>Go through linked references to find valuable information nuggets from the past.</span>,
-              ]}
-              complete={() => {
-                swiperRef.current?.slideNext()
-              }}
-              activeTipChanged={(tag) => {
-                setActiveTipTag?.(`1${tag}`)
-              }}
-            />
-
-            {/*  3 */}
-            <TipSlideItem
-              isSm={isSm}
-              inActive={activeIndex === 2}
-              headEmoji={'💼️'}
-              headTitle={'Expert'}
-              content={<span>Create your own processes.</span>}
-              tips={[
-                <span>Use queries to generate tables of {isSm ? null : <br/>} relevant information.</span>,
-                'Install plugins and customize the app around your workflow needs.',
-              ]}
-              complete={() => {
-                swiperRef.current?.slideTo(0)
-              }}
-              activeTipChanged={(tag) => {
-                setActiveTipTag?.(`2${tag}`)
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="bd-actions flex">
-          <span className="prev" title={'Previous'}
-                onClick={() => {
-                  if (activeIndex == 0) {
-                    return swiperRef.current?.slideTo(2)
-                  }
-
-                  swiperRef.current?.slidePrev()
-                }}
-          >
-           <ArrowCircleLeft size={26}/>
-          </span>
-
-          <div
-            className="dots flex space-x-3 rounded-2xl bg-gray-700/40 py-2 px-4 items-center">
-            {Array(sidesLen).fill(0).map((_, i) => {
-              return (
-                <i key={i}
-                   className={cx(
-                     'w-2 h-2 bg-logseq-100/50 rounded-2xl cursor-pointer select-none hover:opacity-80',
-                     (i === activeIndex) && '!bg-white/90')}
-                   onClick={() => {
-                     swiperRef.current?.slideTo(i)
-                   }}
-                ></i>
-              )
-            })}
-          </div>
-
-          <span className="next" title={'Next'}
-                onClick={() => {
-                  if (activeIndex == 2) {
-                    return swiperRef.current?.slideTo(0)
-                  }
-
+      <div className="bd sm:grid grid-cols-2">
+        <div className="bd-wrapper">
+          <div ref={swiperElRef} className="bd-slides swiper">
+            <div className="items swiper-wrapper">
+              {/* 1 */}
+              <TipSlideItem
+                isSm={isSm}
+                inActive={activeIndex === 0}
+                headEmoji={'✍️'}
+                headTitle={'Beginner'}
+                content={<span>Get in the habit of writing {isSm ? null : <br/>}thoughts down every day.</span>}
+                tips={[
+                  'Think in sections, use indentation.',
+                  'Use links & hashtags.',
+                ]}
+                complete={() => {
                   swiperRef.current?.slideNext()
                 }}
-          >
-              <ArrowCircleRight size={26}/>
+                activeTipChanged={(tag) => {
+                  setActiveTipTag?.(`0${tag}`)
+                }}
+
+              />
+
+              {/* 2 */}
+              <TipSlideItem
+                isSm={isSm}
+                inActive={activeIndex === 1}
+                headEmoji={'🔍️'}
+                headTitle={'Intermediate'}
+                content={<span>Always find what you’re {isSm ? null : <br/>} looking for.</span>}
+                tips={[
+                  'Use CMD-K to search with ease.',
+                  <span className={'sm:text-lg'}>Go through linked references to find valuable information nuggets from the past.</span>,
+                ]}
+                complete={() => {
+                  swiperRef.current?.slideNext()
+                }}
+                activeTipChanged={(tag) => {
+                  setActiveTipTag?.(`1${tag}`)
+                }}
+              />
+
+              {/*  3 */}
+              <TipSlideItem
+                isSm={isSm}
+                inActive={activeIndex === 2}
+                headEmoji={'💼️'}
+                headTitle={'Expert'}
+                content={<span>Create your own processes.</span>}
+                tips={[
+                  <span>Use queries to generate tables of {isSm ? null : <br/>} relevant information.</span>,
+                  'Install plugins and customize the app around your workflow needs.',
+                ]}
+                complete={() => {
+                  swiperRef.current?.slideTo(0)
+                }}
+                activeTipChanged={(tag) => {
+                  setActiveTipTag?.(`2${tag}`)
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="bd-actions flex">
+            <span className="prev" title={'Previous'}
+                  onClick={() => {
+                    if (activeIndex == 0) {
+                      return swiperRef.current?.slideTo(2)
+                    }
+
+                    swiperRef.current?.slidePrev()
+                  }}
+            >
+             <ArrowCircleLeft size={26}/>
             </span>
+
+            <div
+              className="dots flex space-x-3 rounded-2xl bg-gray-700/40 py-2 px-4 items-center">
+              {Array(sidesLen).fill(0).map((_, i) => {
+                return (
+                  <i key={i}
+                     className={cx(
+                       'w-2 h-2 bg-logseq-100/50 rounded-2xl cursor-pointer select-none hover:opacity-80',
+                       (i === activeIndex) && '!bg-white/90')}
+                     onClick={() => {
+                       swiperRef.current?.slideTo(i)
+                     }}
+                  ></i>
+                )
+              })}
+            </div>
+
+            <span className="next" title={'Next'}
+                  onClick={() => {
+                    if (activeIndex == 2) {
+                      return swiperRef.current?.slideTo(0)
+                    }
+
+                    swiperRef.current?.slideNext()
+                  }}
+            >
+                <ArrowCircleRight size={26}/>
+              </span>
+          </div>
         </div>
 
         <div className="bd-info" ref={bdRef}>

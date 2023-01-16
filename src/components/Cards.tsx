@@ -15,7 +15,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, any>((
   }, [])
 
   return (
-    <div ref={ref} className={cx('glass-card', animateClass, className)} {...rest}>
+    <div ref={ref} className={cx('glass-card', 'backdrop-blur-5xl', animateClass, className)} style={{animationDuration: 20000}} {...rest}>
       <div className="glass-card-inner">
         {children}
       </div>

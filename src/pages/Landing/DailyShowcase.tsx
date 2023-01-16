@@ -102,12 +102,14 @@ export function DailyShowcaseTabs(
                setActiveShowcase(it.label)
              }}
         >
-              <span className="icon">
-                <img src={it.iconUrl as any} alt={it.label}/>
-              </span>
-          <strong className="pt-2.5 font-normal text-[20px] opacity-60 tracking-wide">
-            {it.label}
-          </strong>
+          <div className="py-6 flex flex-col items-center">
+            <span className="icon">
+              <img src={it.iconUrl as any} alt={it.label}/>
+            </span>
+            <strong className="pt-2.5 font-normal text-[20px] opacity-60 tracking-wide">
+              {it.label}
+            </strong>
+          </div>
         </div>
       )
     })}
@@ -257,6 +259,7 @@ export function DailyShowcase() {
                          const { width, height } = e.target
                          !sizeCache?.[0] && setSizeCache([width, height])
                        }}
+                       style={{width: "100%", objectFit: "cover"}}
                   />
 
                   <div className="ft absolute bottom-6 right-6">
