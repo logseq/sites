@@ -127,7 +127,7 @@ export function HeadShowcase () {
       <div className="inner flex h-full">
         <div className="item-wrap relative flex-1">
           {/* text layer*/}
-          <div className="text-1 z-0 w-full flex flex-col tracking-wide">
+          <div className="text-1 z-0 w-full flex flex-col tracking-wide pb-[38rem] sm:pb-[32rem]">
             <span className="text-4xl sm:text-6xl text-logseq-50/80">Connect your notes, </span>
             <strong className="text-3xl sm:text-6xl flex">
               increase understanding.
@@ -140,6 +140,7 @@ export function HeadShowcase () {
 
           {/* image layer */}
           <div className="image-2 z-10 thinker absolute">
+            <div className="absolute bottom-12 w-full h-40 bg-gradient-to-t from-logseq-800 via-logseq-800"></div>
           </div>
 
           {/* cards layer */}

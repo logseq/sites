@@ -37,7 +37,6 @@ h1, h2, h3 {
 
 .app-head-showcase {
   @apply pt-14;
-  height: 790px;
   -webkit-font-smoothing: antialiased;
 
   > .inner {
@@ -157,17 +156,9 @@ h1, h2, h3 {
   }
 
   .actions-4 {
-    @apply flex absolute px-4
-    w-full flex-col justify-center pt-24 pb-5
-    sm:pt-20 sm:flex-row sm:space-x-4;
-
-    bottom: 0;
-
-    &:before {
-      @apply absolute top-0 left-0 w-full bg-gradient-to-t h-16 from-logseq-800 via-logseq-800;
-
-      content: " ";
-    }
+    @apply flex px-4
+    w-full flex-col justify-center pb-5
+    sm:flex-row sm:space-x-4;
 
     button {
       @apply relative w-full mb-2 -translate-y-6
