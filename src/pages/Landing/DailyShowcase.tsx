@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import cx from 'classnames'
 import { FloatGlassButton, openLightbox } from './common'
 import { ArrowSquareOut, CaretDown, DiscordLogo, FrameCorners, TwitterLogo } from 'phosphor-react'
@@ -159,18 +159,20 @@ export function DailyShowcaseSelect(
 
 export function DailyShowcase() {
   const appState = useAppState()
+  const [showcase, setShowcase] = useState(0)
   const [activeShowcase, setActiveShowcase] = useState(showcases[0].label)
   const [sizeCache, setSizeCache] = useState([0, 0])
   const [progress, setProgress] = useState(0)
   const bdRef = useRef<HTMLDivElement>(null)
 
-  const nextShowcase = () => {
+  const nextShowcase = useCallback(() => {
     const total = showcases.length
     const currentIndex = showcases.findIndex((it) => it.label === activeShowcase)
     let nextIndex = currentIndex + 1
     if (nextIndex >= total) nextIndex = 0
     setActiveShowcase(showcases[nextIndex]?.label)
-  }
+    setShowcase(nextIndex)
+  }, [activeShowcase])
 
   useEffect(() => {
     setProgress(0)
@@ -189,7 +191,7 @@ export function DailyShowcase() {
     }, 60)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [activeShowcase])
 
   useEffect(() => {
     const handler = () => setSizeCache([])

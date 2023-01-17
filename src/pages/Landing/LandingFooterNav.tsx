@@ -171,8 +171,8 @@ export function LandingFooterDesc (props: {
 
             <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
               <span className="text-logseq-50/80">
-                By downloading Logseq, you are embarking on a journey. We are <br/>
-                constantly trying to make it even more useful for all kinds of <br/>
+                By downloading Logseq, you are embarking on a journey. We are
+                constantly trying to make it even more useful for all kinds of
                 workflows.
               </span>
               <strong className="font-normal">
