@@ -211,7 +211,7 @@ export function DailyShowcase() {
                 className={cx('text-2xl sm:text-[36px] sm:leading-10 tracking-wide invisible', t[0] && 'ani-fade-in')}
               >
                 <span className="text-logseq-50/80">Logseq helps you</span>
-                <span> turn this daily <br/>mess into structured information.</span>
+                <span> turn this daily mess into structured information.</span>
               </h2>
 
               <h1
