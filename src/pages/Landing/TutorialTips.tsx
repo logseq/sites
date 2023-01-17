@@ -1,4 +1,4 @@
-import { AppLogo, FloatGlassButton, openLightbox } from './common'
+import { AppLogoEmbossed, FloatGlassButton, openLightbox } from './common'
 import {
   ArrowCircleLeft,
   ArrowCircleRight, ChatsCircle, DiscordLogo,
@@ -189,7 +189,9 @@ export function TutorialTips () {
             <span className="pr-5 text-logseq-50/80">
               Braindump everything into
             </span>
-            <AppLogo className="w-10 h-10 sm:w-16 sm:h-16"/>
+            <span className="dockify-app-logo">
+              <AppLogoEmbossed className="w-10 h-10 sm:w-16 sm:h-16"/>
+            </span>
             <span className="pl-2 text-logseq-50/80">.</span>
 
             <strong className={'inline-block sm:!hidden'}>

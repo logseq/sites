@@ -179,7 +179,7 @@ export function DailyShowcase() {
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((progress: number) => {
-        let nextProgress = progress + 0.2
+        let nextProgress = progress + 0.4
         if (nextProgress > 100) {
           nextShowcase()
           nextProgress = 0

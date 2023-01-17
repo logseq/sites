@@ -55,7 +55,7 @@ export function GlassCardProfile (props: any) {
 export function GlassCardBook (props: any) {
   const { className, onRefMouseEnter, onRefMouseLeave, ...rest } = props
   return (
-    <GlassCard className={cx('is-card-book', className)} {...rest}>
+    <GlassCard className={cx('is-card-book flex mb-2.5 sm:mb-1', className)} {...rest}>
       <div className="avatar flex items-center">
         <span className="avatar-img">Image</span>
       </div>

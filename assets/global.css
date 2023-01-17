@@ -87,7 +87,8 @@ body {
 }
 
 .app-headbar {
-  @apply w-full px-6 fixed bg-logseq-800/90 backdrop-blur-sm z-50 drop-shadow-lg shadow-logseq-900;
+  @apply w-full px-6 fixed bg-logseq-800/70 z-50;
+  backdrop-filter: blur(70px);
 
   .links-group {
     @apply flex flex-1 space-x-8 whitespace-nowrap;
@@ -103,7 +104,7 @@ body {
 
   .right-group {
     &-inner {
-      @apply invisible absolute left-0 top-16 w-full bg-logseq-800
+      @apply invisible absolute left-0 top-16 w-full
       flex-col space-x-0 items-center px-2 pb-6 opacity-0 transition-opacity duration-300
       sm:flex sm:flex-row sm:top-0 sm:sticky sm:opacity-100 sm:visible
       sm:px-0 sm:space-x-6 sm:pb-0 sm:translate-y-0;
@@ -167,10 +168,17 @@ body {
   border-radius: 16px;
   filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2))
           drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
+  transition: filter 300ms ease-out;
 
   svg {
     filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.5));
   }
+}
+
+.dockify-app-logo:hover .app-logo-embossed {
+  cursor: pointer;
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3))
+          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));
 }
 
 
