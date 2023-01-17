@@ -17,7 +17,7 @@ body {
 .ani-slide-in-from-bottom {
   /* @apply animate-in fade-in-0 duration-1000 slide-in-from-bottom-14; */
   @apply animate-in fade-in-0 slide-in-from-bottom-14;
-  animation-duration: 2s;
+  animation-duration: 1s;
 
   visibility: visible !important;
 }
