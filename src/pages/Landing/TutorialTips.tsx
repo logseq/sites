@@ -186,13 +186,15 @@ export function TutorialTips () {
         {(t: Array<any>) => (<>
           <h1 className={cx('invisible pb-4 sm:pb-0 sm:flex items-center',
             t[0] && 'ani-slide-in-from-bottom')}>
-            <span className="pr-5 text-logseq-50/80">
-              Braindump everything into
+            <span>
+              <span className="pr-5 text-logseq-50/80 inline">
+                Braindump everything into
+              </span>
+              <span className="dockify-app-logo inline-block">
+                <AppLogoEmbossed className="w-16 h-16"/>
+              </span>
+              <span className="pl-2 text-logseq-50/80 inline">.</span>
             </span>
-            <span className="dockify-app-logo">
-              <AppLogoEmbossed className="w-10 h-10 sm:w-16 sm:h-16"/>
-            </span>
-            <span className="pl-2 text-logseq-50/80">.</span>
 
             <strong className={'inline-block sm:!hidden'}>
               New ideas will pop up with time.

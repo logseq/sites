@@ -302,12 +302,14 @@ h1, h2, h3 {
     z-index: 50;
   }
 
-  &:hover::before {
-    opacity: 1;
-  }
-
-  &:hover::after {
-    opacity: 0.75;
+  @screen sm {
+    &:hover::before {
+      opacity: 1;
+    }
+  
+    &:hover::after {
+      opacity: 0.75;
+    }
   }
 }
 
