@@ -4,7 +4,7 @@ import {
   PuzzlePiece, ScribbleLoop, Swatches, TwitterLogo, UserCirclePlus
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
-import { AppLogo, FloatGlassButton, imageProductHuntLogo } from './common'
+import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './common'
 import { WrapGlobalDownloadButton } from '../Downloads'
 import { useAppState } from '../../state'
 import { openLiveDemo } from '../../components/utils'
@@ -12,8 +12,8 @@ import { openLiveDemo } from '../../components/utils'
 export function FooterDescCard (props: any) {
   const { icon, title, desc } = props
   return (
-    <div className="item pb-4 sm:p-2">
-      <div className="inner flex opacity-90">
+    <div className="item pb-4 sm:p-2 flex items-stretch justify-stretch">
+      <div className="inner flex flex-1 opacity-90 backdrop-blur-lg">
         <div className="w-[40px] h-[40px] flex items-center justify-center">
           {icon}
         </div>
@@ -160,41 +160,43 @@ export function LandingFooterDesc (props: {
   return (
     <div className="app-landing-footer-desc">
 
-      {props.downloadsPage ?
-        <>
-          <h1
-            className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
-            <span className="text-logseq-50/80">Get ready for</span><br/>
-            <strong className="font-semibold">knowledge work reimagined.</strong>
-          </h1>
+      <div className="bg-radial from-logseq-800 via-logseq-800/50 to-logseq-800/0">
+        {props.downloadsPage ?
+          <>
+            <h1
+              className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
+              <span className="text-logseq-50/80">Get ready for</span><br/>
+              <strong className="font-semibold">knowledge work reimagined.</strong>
+            </h1>
 
-          <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
-            <span className="text-logseq-50/80">
-              By downloading Logseq, you are embarking on a journey. We are <br/>
-              constantly trying to make it even more useful for all kinds of <br/>
-              workflows.
-            </span>
-            <strong className="font-normal">
-              These exciting features are coming soon:
-            </strong>
-          </h2>
+            <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
+              <span className="text-logseq-50/80">
+                By downloading Logseq, you are embarking on a journey. We are
+                constantly trying to make it even more useful for all kinds of
+                workflows.
+              </span>
+              <strong className="font-normal">
+                These exciting features are coming soon:
+              </strong>
+            </h2>
 
-        </> :
-        <>
-          <h1 className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10">
-            <strong className="font-semibold">A safe space for </strong>
-            <span className="text-logseq-50/80">your thoughts.</span>
-          </h1>
+          </> :
+          <>
+            <h1 className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10 bg-radial">
+              <strong className="font-semibold">A safe space for </strong>
+              <span className="text-logseq-50/80">your thoughts.</span>
+            </h1>
 
-          <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
-            <span className="text-logseq-50/80">Designed to store your </span>
-            <strong className="font-normal">interests, questions, ideas, favorite quotes,
-              reminders, reading and meeting
-              notes </strong>
-            <span className="text-logseq-50/80">easily and future-proof:</span>
-          </h2>
-        </>
-      }
+            <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
+              <span className="text-logseq-50/80">Designed to store your </span>
+              <strong className="font-normal">interests, questions, ideas, favorite quotes,
+                reminders, reading and meeting
+                notes </strong>
+              <span className="text-logseq-50/80">easily and future-proof:</span>
+            </h2>
+          </>
+        }
+      </div>
 
       {/*  descriptions */}
       {props.downloadsPage ?
@@ -294,7 +296,7 @@ export function LandingFooterNav () {
     <div className="app-landing-footer-navs">
       <div className="flex flex-1 justify-between">
         <div className="flex space-x-4">
-          <AppLogo className="w-16 h-16"/>
+          <AppLogoEmbossed className="w-16 h-16"/>
 
           {appState.sm.get() ? null : links}
         </div>

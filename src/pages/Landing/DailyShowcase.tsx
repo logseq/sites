@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import cx from 'classnames'
 import { FloatGlassButton, openLightbox } from './common'
 import { ArrowSquareOut, CaretDown, DiscordLogo, FrameCorners, TwitterLogo } from 'phosphor-react'
@@ -102,12 +102,14 @@ export function DailyShowcaseTabs(
                setActiveShowcase(it.label)
              }}
         >
-              <span className="icon">
-                <img src={it.iconUrl as any} alt={it.label}/>
-              </span>
-          <strong className="pt-2.5 font-normal text-[20px] opacity-60 tracking-wide">
-            {it.label}
-          </strong>
+          <div className="py-6 flex flex-col items-center">
+            <span className="icon">
+              <img src={it.iconUrl as any} alt={it.label}/>
+            </span>
+            <strong className="pt-2.5 font-normal text-[20px] opacity-60 tracking-wide">
+              {it.label}
+            </strong>
+          </div>
         </div>
       )
     })}
@@ -157,18 +159,20 @@ export function DailyShowcaseSelect(
 
 export function DailyShowcase() {
   const appState = useAppState()
+  const [showcase, setShowcase] = useState(0)
   const [activeShowcase, setActiveShowcase] = useState(showcases[0].label)
   const [sizeCache, setSizeCache] = useState([0, 0])
   const [progress, setProgress] = useState(0)
   const bdRef = useRef<HTMLDivElement>(null)
 
-  const nextShowcase = () => {
+  const nextShowcase = useCallback(() => {
     const total = showcases.length
     const currentIndex = showcases.findIndex((it) => it.label === activeShowcase)
     let nextIndex = currentIndex + 1
     if (nextIndex >= total) nextIndex = 0
     setActiveShowcase(showcases[nextIndex]?.label)
-  }
+    setShowcase(nextIndex)
+  }, [activeShowcase])
 
   useEffect(() => {
     setProgress(0)
@@ -177,7 +181,7 @@ export function DailyShowcase() {
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((progress: number) => {
-        let nextProgress = progress + 0.2
+        let nextProgress = progress + 0.4
         if (nextProgress > 100) {
           nextShowcase()
           nextProgress = 0
@@ -187,7 +191,7 @@ export function DailyShowcase() {
     }, 60)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [activeShowcase])
 
   useEffect(() => {
     const handler = () => setSizeCache([])
@@ -207,7 +211,7 @@ export function DailyShowcase() {
                 className={cx('text-2xl sm:text-[36px] sm:leading-10 tracking-wide invisible', t[0] && 'ani-fade-in')}
               >
                 <span className="text-logseq-50/80">Logseq helps you</span>
-                <span> turn this daily <br/>mess into structured information.</span>
+                <span> turn this daily mess into structured information.</span>
               </h2>
 
               <h1
@@ -257,6 +261,7 @@ export function DailyShowcase() {
                          const { width, height } = e.target
                          !sizeCache?.[0] && setSizeCache([width, height])
                        }}
+                       style={{width: "100%", objectFit: "cover"}}
                   />
 
                   <div className="ft absolute bottom-6 right-6">

@@ -292,7 +292,9 @@ export function TutorialFeaturesSlide () {
                 className={cx({ active: (idx === activeIndex) })}
                 onClick={() => setActiveIndex(idx)}
               >
-                <span>{it.icon}</span><strong>{it.label}</strong>
+                <div className="py-4 px-2 flex flex-col items-center">
+                  <span>{it.icon}</span><strong>{it.label}</strong>
+                </div>
               </li>)
           })}
         </ul>
