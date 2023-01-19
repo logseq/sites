@@ -481,7 +481,7 @@ export function HeadDownloadLinks () {
 
 export function DownloadsPage () {
   return (
-    <div className="app-page">
+    <div className="app-page pt-20">
       <div className="page-inner-full-wrap dl-a">
         <div className="page-inner">
           <HeadDownloadLinks/>

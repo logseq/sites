@@ -17,7 +17,7 @@ body {
 .ani-slide-in-from-bottom {
   /* @apply animate-in fade-in-0 duration-1000 slide-in-from-bottom-14; */
   @apply animate-in fade-in-0 slide-in-from-bottom-14;
-  animation-duration: 1s;
+  animation-duration: 2s;
 
   visibility: visible !important;
 }
@@ -131,11 +131,12 @@ body {
 
     &.is-active {
       .right-group-inner {
-        @apply visible flex opacity-100 z-40;
+        @apply visible flex opacity-100 z-40 bg-logseq-800 sm:bg-logseq-800/0;
       }
 
       &:before {
-        display: block;
+        @apply block sm:hidden;
+        /* display: block; */
       }
     }
   }
