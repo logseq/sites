@@ -175,7 +175,7 @@ export function HeadShowcase () {
           </div>
 
           {/*  action buttons */}
-          <div className="actions-4 z-30">
+          <div className="relative actions-4 z-30">
             <WrapGlobalDownloadButton
               className="is-super-button"
             >
