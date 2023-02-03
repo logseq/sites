@@ -324,6 +324,7 @@ export function TutorialFeaturesSelect () {
                   )
                 }}
                 value={activeIndex}
+                aria-label="Select your role"
         >
           {featuresSlideItems.map((it, idx) => {
             return (<option

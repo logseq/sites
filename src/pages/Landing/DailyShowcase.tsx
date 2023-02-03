@@ -137,6 +137,7 @@ export function DailyShowcaseSelect(
                   )
                 }}
                 value={activeShowcase}
+                aria-label="Select your use case"
         >
           {showcases.map(it => {
             return (
@@ -314,7 +315,7 @@ export function DailyShowcase() {
                               className="opacity-60">Twitter</span></>)}
                           <span
                             className="border rounded p-1 border-gray-600 ml-3 bg-gray-500/20 cursor-pointer active:opacity-80">
-                            <a target={'_blank'} href={it.refLink}>
+                            <a target={'_blank'} href={it.refLink} aria-label={`${it.userName}'s comment in ${it.refType}`}>
                               <ArrowSquareOut size={18} weight={'duotone'}/>
                             </a>
                           </span>

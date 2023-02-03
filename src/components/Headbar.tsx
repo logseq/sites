@@ -106,7 +106,7 @@ export function Headbar () {
     <div className={'app-headbar h-14 flex justify-center'}>
       <div className={'flex items-center justify-between w-full'}>
         <div className={'flex items-center h-full flex-1'}>
-          <Link to={'/'} className={'app-logo-link mr-2'}></Link>
+          <Link to={'/'} className={'app-logo-link mr-2'} aria-label={`Logseq's logo`}></Link>
 
           <LinksGroup
             className={'justify-center sm:justify-start'}
