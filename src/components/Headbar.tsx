@@ -135,7 +135,7 @@ export function Headbar () {
 
                   return (
                     <a
-                      className={'flex items-center bg-sky-600 px-2 py-1 rounded text-sm hover:opacity-80 select-none cursor-pointer'}>
+                      className={'flex items-center bg-sky-700 px-2 py-1 rounded text-sm hover:opacity-80 select-none cursor-pointer'}>
                       {typeof leftIconFn === 'function'
                         ? leftIconFn({ weight: 'bold' })
                         : leftIconFn}

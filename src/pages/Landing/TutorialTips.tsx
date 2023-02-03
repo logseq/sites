@@ -144,7 +144,7 @@ export function TipSlideItem (props: {
           return (
             <span className={'animate-in duration-1000 fade-in-0'} key={idx}>
               <strong>Tip {idx + 1}: </strong>
-              <span className="text-gray-300/70">{it}</span>
+              <span className="text-gray-300/90">{it}</span>
             </span>
           )
         })}
@@ -395,7 +395,7 @@ export function TutorialTips () {
           <div className="sm:flex sm:space-x-6 py-5">
             <div className="flex flex-col space-x-2">
               <Button
-                className="bg-[#7289da] px-4 sm:px-8"
+                className="bg-[#5865F2]/75 px-4 sm:px-8"
                 leftIcon={<DiscordLogo size={20} weight={'duotone'}/>}
                 rightIcon={<SignIn className="opacity-40" size={20} weight={'duotone'}/>}
                 href={`https://discord.gg/VNfUaTtdFb`}

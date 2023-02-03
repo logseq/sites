@@ -20,7 +20,7 @@ const showcases = [
     refType: 'discord',
     desc: (
       <p>
-        Communicate better. <span className="opacity-60">Stay on top of your <br/>relationships, conversations, and meetings.</span>
+        Communicate better. <span className="opacity-70">Stay on top of your <br/>relationships, conversations, and meetings.</span>
       </p>),
     feedback: (
       <p>

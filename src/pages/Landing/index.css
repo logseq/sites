@@ -693,7 +693,7 @@ h1, h2, h3 {
             @apply flex items-center py-2;
 
             button {
-              @apply py-2 px-5 font-bold opacity-80 text-gray-300/60 uppercase;
+              @apply py-2 px-5 font-bold opacity-80 text-gray-200 uppercase;
             }
           }
 
