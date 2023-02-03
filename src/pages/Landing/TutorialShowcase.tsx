@@ -27,18 +27,18 @@ const featuresSlideItems = [
         icon: <ClockCounterClockwise size={20} weight="duotone"/>,
         title: 'Review notes',
         desc: <span>Capture, structure, and review all of your class notes with ease using the
-          <a> Linked References</a>, <a>Queries</a>, and <a>Search </a>features.</span>
+          <a> Linked References</a>, <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a>, and <a target='_blank' href="https://docs.logseq.com/#/page/search">Search</a> features.</span>
       },
       {
         icon: <Brain size={20} weight="duotone"/>,
         title: 'Memorize facts',
-        desc: (<span>Remember facts and insights using the <a>Flashcards</a> feature.</span>)
+        desc: (<span>Remember facts and insights using the <a target='_blank' href="https://docs.logseq.com/#/page/flashcards">Flashcards</a> feature.</span>)
       },
       {
         icon: <PencilLine size={20} weight="duotone"/>,
         title: 'Outline essays',
         desc: (
-          <span>Organize your thoughts and ideas, and quickly turn them into outlines using <a>Block References</a>.</span>)
+          <span>Organize your thoughts and ideas, and quickly turn them into outlines using <a target='_blank' href="https://docs.logseq.com/#/page/term%2Fblock%20reference">Block References</a>.</span>)
       }
     ]
   },
@@ -50,7 +50,7 @@ const featuresSlideItems = [
         icon: <ClockCounterClockwise size={20} weight="duotone"/>,
         title: 'Review notes',
         desc: <span>Capture, structure, and review all of your class notes with ease using the
-          <a> Linked References</a>, <a>Queries</a>, and <a>Search </a>features.</span>
+          <a> Linked References</a>, <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a>, and <a target='_blank' href="https://docs.logseq.com/#/page/search">Search </a>features.</span>
       },
       {
         icon: <Binoculars size={20} weight="duotone"/>,
@@ -61,7 +61,7 @@ const featuresSlideItems = [
         icon: <Books size={20} weight="duotone"/>,
         title: 'Manage sources',
         desc: (<span>Keep track of your research and easily manage your sources using the built-in
-          <a> Zotero integration</a>.</span>)
+          <a target='_blank' href="https://docs.logseq.com/#/page/zotero"> Zotero integration</a>.</span>)
       },
       {
         icon: <PencilLine size={20} weight="duotone"/>,
@@ -79,15 +79,15 @@ const featuresSlideItems = [
         icon: <ClockCounterClockwise size={20} weight="duotone"/>,
         title: 'Review notes',
         desc: <span>Capture, structure, and review all of your class notes with ease using the
-          <a> Linked References</a>, <a>Queries</a>, and <a>Search </a>features.</span>
+          <a> Linked References</a>, <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a>, and <a target='_blank' href="https://docs.logseq.com/#/page/search">Search </a>features.</span>
       },
       {
         icon: <CalendarCheck size={20} weight="duotone"/>,
         title: 'Manage writing stages',
         desc: (
           <span>
-           Manage your personal writing process using <a>Tasks</a>,
-           <a>Tags</a>, and <a>Queries</a> --no matter how simple or complex it is.
+           Manage your personal writing process using <a target='_blank' href="https://docs.logseq.com/#/page/tasks">Tasks</a>,
+           <a> Tags</a>, and <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a> --no matter how simple or complex it is.
          </span>
         )
       },
@@ -97,7 +97,7 @@ const featuresSlideItems = [
         desc: (
           <span>
             Effortlessly synthesize ideas from across your collection of notes using
-            <a> Block References</a>.
+            <a target='_blank' href="https://docs.logseq.com/#/page/term%2Fblock%20reference"> Block References</a>.
           </span>
         )
       },
@@ -117,7 +117,7 @@ const featuresSlideItems = [
         title: 'Retrieve notes',
         desc: (<span>
           Always find the information where and when you need it using
-          <a> Linked References</a>, <a>Queries</a> or <a>Search</a>.
+          <a> Linked References</a>, <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a> or <a target='_blank' href="https://docs.logseq.com/#/page/search">Search</a>.
         </span>)
       },
       {
@@ -126,9 +126,9 @@ const featuresSlideItems = [
         desc: (
           <span>
             Manage tasks with Logseq's built-in
-            <a> Task management system</a>, including
-            <a> Priorities</a>, <a>Scheduling</a>, and
-            <a> Deadlines</a>.
+            <a target='_blank' href="https://docs.logseq.com/#/page/tasks"> Task management system</a>, including
+            <a target='_blank' href="https://docs.logseq.com/#/page/tasks/block/priorities"> Priorities</a>, <a target='_blank' href="https://docs.logseq.com/#/page/tasks/block/deadline%20and%20scheduled">Scheduling</a>, and
+            <a target='_blank' href="https://docs.logseq.com/#/page/tasks/block/deadline%20and%20scheduled"> Deadlines</a>.
           </span>
         )
       },
@@ -158,7 +158,7 @@ const featuresSlideItems = [
         desc: (
           <span>
           Quickly find relevant information using the
-          <a> Linked References</a>, <a>Queries</a> or <a>Search</a>.
+          <a> Linked References</a>, <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a> or <a target='_blank' href="https://docs.logseq.com/#/page/search">Search</a>.
         </span>
         )
       },
@@ -186,7 +186,7 @@ const featuresSlideItems = [
         desc: (
           <span>
             Build your career by building your personal wiki. Easily structure your knowledge and find it back
-            using <a>Namespaces</a>, <a>Linked References</a>, and <a>Queries</a>.
+            using <a target='_blank' href="https://docs.logseq.com/#/page/properties">Properties</a>, <a>Namespaces</a>, <a>Linked References</a>, and <a target='_blank' href="https://docs.logseq.com/#/page/queries">Queries</a>.
           </span>
         )
       }
