@@ -117,7 +117,6 @@ export function FeaturesBoardsDL () {
                 <span>Always up-to-date notes</span> <br/>
                 <span className="text-logseq-50/80">between all your devices.</span>
               </h2>
-              <h3></h3>
             </div>
           </div>
         </div>
@@ -137,7 +136,6 @@ export function FeaturesBoardsDL () {
                   a result of collaboration.
                 </span>
               </h2>
-              <h3></h3>
             </div>
           </div>
         </div>
