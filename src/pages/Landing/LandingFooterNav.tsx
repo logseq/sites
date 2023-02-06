@@ -236,10 +236,10 @@ export function LandingFooterDesc (props: {
         </h1>
 
         <h2 className="text-lg mt-2 sm:mt-0 sm:text-3xl sm:text-center sm:tracking-wide">
-          <strong className="opacity-50 font-normal">By thinking and writing with Logseq, you'll </strong><br/>
+          <strong className="opacity-70 font-normal">By thinking and writing with Logseq, you'll </strong><br/>
           <span className="">gain confidence in what you know and <br/>
             stop worrying about forgetting </span>
-          <strong className={'opacity-50 font-normal'}>anything</strong>.
+          <strong className="opacity-70 font-normal">anything</strong>.
         </h2>
 
         <div className="actions-4 sm:flex sm:space-x-4 pt-10 pb-1">
