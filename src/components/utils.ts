@@ -79,7 +79,7 @@ export function navigateTabs(event: React.KeyboardEvent) {
     switch(key) {
       case "ArrowLeft":
       case "ArrowUp":
-        index = index > 0 ? index -1 : tabs.length - 1
+        index = index > 0 ? index - 1 : tabs.length - 1
         break
       case "ArrowRight":
       case "ArrowDown":
