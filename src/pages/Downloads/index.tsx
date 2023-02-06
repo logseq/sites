@@ -193,7 +193,7 @@ export function WrapGlobalDownloadButton (
           <div
             className={'w-full flex flex-col opacity-80'}
             onClick={(e) => {
-              downloadHandler(appState, active, isIOS, 'macos-x64')
+              downloadHandler(appState, active, isIOS, 'macos-arm64')
             }}
           >
             <span className="text-sm">
