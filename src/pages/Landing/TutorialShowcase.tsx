@@ -1,7 +1,6 @@
 import {
   ClockCounterClockwise,
   Brain,
-  FrameCorners,
   PencilLine,
   CaretDown,
   Binoculars,
@@ -12,11 +11,11 @@ import {
   Gauge,
   Browsers
 } from 'phosphor-react'
-import { FloatGlassButton, imageS1 } from './common'
 import { AnimateInTurnStage } from '../../components/Animations'
 import cx from 'classnames'
 import { useState } from 'react'
 import { useAppState } from '../../state'
+import { slugify, navigateTabs } from '../../components/utils'
 
 const featuresSlideItems = [
   {
@@ -244,7 +243,7 @@ export function TutorialFeaturesPanel (
     </>
   )
 
-  const labelId = props.activeItem?.label.replace(/\W/g,'_')
+  const labelId = slugify(props.activeItem?.label)
 
   return (
     <div className="app-tutorial-features-panel relative" id={labelId} role='tabpanel' aria-labelledby={"tab-" + labelId}>
@@ -288,7 +287,7 @@ export function TutorialFeaturesSlide () {
         {/* Tabs */}
         <ul className="tabs flex space-x-8 justify-around" role="tablist">
           {featuresSlideItems.map((it, idx) => {
-            const labelId = it.label.replace(/\W/g,'_')
+            const labelId = slugify(it.label)
 
             return (
               <li
@@ -299,7 +298,8 @@ export function TutorialFeaturesSlide () {
                 role="tab"
                 aria-controls={labelId}
                 id={"tab-" + labelId}
-                aria-selected={activeIndex === idx}>
+                aria-selected={activeIndex === idx}
+                onKeyDown={navigateTabs}>
                 <div className="py-4 px-2 flex flex-col items-center">
                   <span>{it.icon}</span><strong>{it.label}</strong>
                 </div>

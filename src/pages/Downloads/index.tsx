@@ -8,6 +8,7 @@ import cx from 'classnames'
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useAppState } from '../../state'
+import { navigateTabs } from '../../components/utils'
 
 const iosImageQr: any = new URL('assets/ios_app_qr.png', import.meta.url)
 const intelImageIcon: any = new URL('assets/icon_intel.png', import.meta.url)
@@ -309,6 +310,7 @@ export function HeadDownloadLinksTabs (
               aria-controls={label}
               id={"tab-" + label}
               aria-selected={isActive}
+              onKeyDown={navigateTabs}
           >
                 <span className="opacity-60">
                 {icon}

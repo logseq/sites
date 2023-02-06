@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import cx from 'classnames'
-import { FloatGlassButton, openLightbox } from './common'
-import { ArrowSquareOut, CaretDown, DiscordLogo, FrameCorners, TwitterLogo } from 'phosphor-react'
+import { ArrowSquareOut, CaretDown, DiscordLogo, TwitterLogo } from 'phosphor-react'
 import { AnimateInTurnStage } from '../../components/Animations'
 import { useAppState } from '../../state'
+import { slugify, navigateTabs } from '../../components/utils'
 
 const IconImageRelations = new URL('assets/icon_relations.png', import.meta.url)
 const IconImageDailyPlan = new URL('assets/icon_daily_plan.png', import.meta.url)
@@ -95,7 +95,7 @@ export function DailyShowcaseTabs(
 
   return (<div role="tablist" className="tabs flex justify-between space-x-8 px-6">
     {showcases.map(it => {
-      const labelId = it.label.replace(/\W/g,'_')
+      const labelId = slugify(it.label)
       return (
         <button className={cx('it flex flex-col flex-1', { active: it.label === activeShowcase })}
              key={it.label}
@@ -107,6 +107,7 @@ export function DailyShowcaseTabs(
              onClick={() => {
                setActiveShowcase(it.label)
              }}
+             onKeyDown={navigateTabs}
         >
           <div className="py-6 flex flex-col items-center">
             <span className="icon">
@@ -248,7 +249,7 @@ export function DailyShowcase() {
             return null
           }
 
-          const labelId = it.label.replace(/\W/g,'_')
+          const labelId = slugify(it.label)
 
           return (
             <div className={'panel'} key={it.label} id={labelId} role='tabpanel' aria-labelledby={"tab-" + labelId}>
