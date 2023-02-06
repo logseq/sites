@@ -93,24 +93,30 @@ export function DailyShowcaseTabs(
 ) {
   const { activeShowcase, setActiveShowcase } = props
 
-  return (<div className="tabs flex justify-between space-x-8 px-6">
+  return (<div role="tablist" className="tabs flex justify-between space-x-8 px-6">
     {showcases.map(it => {
+      const labelId = it.label.replace(/\W/g,'_')
       return (
-        <div className={cx('it flex flex-col flex-1', { active: it.label === activeShowcase })}
+        <button className={cx('it flex flex-col flex-1', { active: it.label === activeShowcase })}
              key={it.label}
+             role="tab"
+             aria-controls={labelId}
+             aria-selected={activeShowcase === it.label}
+             id={"tab-" + labelId}
+             tabIndex={activeShowcase === it.label ? 0 : -1}
              onClick={() => {
                setActiveShowcase(it.label)
              }}
         >
           <div className="py-6 flex flex-col items-center">
             <span className="icon">
-              <img src={it.iconUrl as any} alt={it.label}/>
+              <img src={it.iconUrl as any}  alt="" />
             </span>
             <strong className="pt-2.5 font-normal text-[20px] opacity-60 tracking-wide">
               {it.label}
             </strong>
           </div>
-        </div>
+        </button>
       )
     })}
   </div>)
@@ -242,8 +248,10 @@ export function DailyShowcase() {
             return null
           }
 
+          const labelId = it.label.replace(/\W/g,'_')
+
           return (
-            <div className={'panel'} key={it.label}>
+            <div className={'panel'} key={it.label} id={labelId} role='tabpanel' aria-labelledby={"tab-" + labelId}>
               <div className="desc">
                 <div className="animate-in fade-in">
                   {it.desc}

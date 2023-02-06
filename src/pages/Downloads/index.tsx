@@ -289,19 +289,26 @@ export function HeadDownloadLinksTabs (
   const { activeRelease, setActiveRelease } = props
 
   return (
-    <ul className="tabs flex flex space-x-8 justify-around">
+    <ul className="tabs flex space-x-8 justify-around" role="tablist">
       {releases.map(([label, icon]: any) => {
         if (typeof icon === 'function') {
           icon = icon()
         }
 
+        const isActive = activeRelease[0] === label
+
         return (
-          <li className={cx({ active: activeRelease[0] === label },
+          <li className={cx({ active: isActive },
             `is-${(label as string).toLowerCase()}`)}
               onClick={() => {
                 setActiveRelease([label, icon])
               }}
               key={label}
+              tabIndex={isActive ? 0 : -1}
+              role="tab"
+              aria-controls={label}
+              id={"tab-" + label}
+              aria-selected={isActive}
           >
                 <span className="opacity-60">
                 {icon}
@@ -362,7 +369,7 @@ export function HeadDownloadLinks () {
     switch (label) {
       case 'iOS':
         return (
-          <div className="w-full sm:w-auto flex flex-col items-center is-ios cursor-crosshair">
+          <div className="w-full sm:w-auto flex flex-col items-center is-ios cursor-crosshair" id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
             <Button
               className={'w-full bg-logseq-400 px-3 py-3 sm:px-6 sm:py-4'}
               leftIcon={icon}
@@ -381,7 +388,7 @@ export function HeadDownloadLinks () {
         )
       case 'MacOS':
         return (
-          <div className="w-full sm:w-auto sm:flex sm:space-x-6">
+          <div className="w-full sm:w-auto sm:flex sm:space-x-6"  id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
             <div className="flex flex-col items-center">
               <Button
                 className={'w-full bg-logseq-400 px-3 py-3 sm:px-6 sm:py-4'}
@@ -415,7 +422,7 @@ export function HeadDownloadLinks () {
         )
       default:
         return (
-          <div className={'w-full sm:w-auto'}>
+          <div className={'w-full sm:w-auto'} id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
             <Button
               leftIcon={icon}
               rightIcon={<DownloadSimple className="opacity-50"/>}

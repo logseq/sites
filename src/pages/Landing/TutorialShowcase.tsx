@@ -244,8 +244,10 @@ export function TutorialFeaturesPanel (
     </>
   )
 
+  const labelId = props.activeItem?.label.replace(/\W/g,'_')
+
   return (
-    <article className="app-tutorial-features-panel relative">
+    <div className="app-tutorial-features-panel relative" id={labelId} role='tabpanel' aria-labelledby={"tab-" + labelId}>
       {/*<div className="hd">*/}
       {/*  <strong>*/}
       {/*    <i>1</i>*/}
@@ -272,7 +274,7 @@ export function TutorialFeaturesPanel (
       {/*    />*/}
       {/*  </FloatGlassButton>*/}
       {/*</div>*/}
-    </article>
+    </div>
   )
 }
 
@@ -284,14 +286,20 @@ export function TutorialFeaturesSlide () {
     <div className="app-tutorial-features-slide">
       <div className="inner px-2">
         {/* Tabs */}
-        <ul className="tabs flex flex space-x-8 justify-around">
+        <ul className="tabs flex space-x-8 justify-around" role="tablist">
           {featuresSlideItems.map((it, idx) => {
+            const labelId = it.label.replace(/\W/g,'_')
+
             return (
               <li
                 key={it.label}
                 className={cx({ active: (idx === activeIndex) })}
                 onClick={() => setActiveIndex(idx)}
-              >
+                tabIndex={activeIndex === idx ? 0 : -1}
+                role="tab"
+                aria-controls={labelId}
+                id={"tab-" + labelId}
+                aria-selected={activeIndex === idx}>
                 <div className="py-4 px-2 flex flex-col items-center">
                   <span>{it.icon}</span><strong>{it.label}</strong>
                 </div>
