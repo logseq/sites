@@ -22,9 +22,9 @@ export function FloatGlassButton (
   }
 
   return (
-    <div className={cx('glass-btn', className)} {...rest}>
+    <button className={cx('glass-btn', className)} {...rest}>
       {children}
-    </div>
+    </button>
   )
 }
 
@@ -55,7 +55,7 @@ export function AppLogoEmbossed (
     </span>
   )
 }
-  
+
 
 export function openLightbox (
   sources: Array<{ src: string, width: number, height: number }>,
