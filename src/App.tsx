@@ -40,14 +40,14 @@ export function App () {
         }}
       />
 
-      <div className="app-container">
+      <main className="app-container">
         <Headbar/>
 
         <Routes>
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
         </Routes>
-      </div>
+      </main>
     </div>
   )
 }

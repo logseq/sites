@@ -22,7 +22,7 @@ export function HomePage () {
   // }, [])
 
   return (
-    <main className={'app-page min-h-screen'}>
+    <div className={'app-page min-h-screen'}>
       <div className="page-inner">
         <HeadShowcase/>
         <TutorialShowcase/>
@@ -92,6 +92,6 @@ export function HomePage () {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
