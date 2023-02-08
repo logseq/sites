@@ -4,6 +4,8 @@ import { ReactElement, useEffect, useState } from 'react'
 import { WrapGlobalDownloadButton } from '../pages/Downloads'
 import cx from 'classnames'
 
+const logo: any = new URL('/assets/logo-with-border.png', import.meta.url)
+
 export function LinksGroup (
   props: {
     items: Array<{ link: string, label: string | ReactElement, icon?: ReactElement }>,
@@ -21,8 +23,10 @@ export function LinksGroup (
         const inner = (
           <>
             {it.label}
-            {it.icon && <span
-              className={'pl-2 opacity-40 group-hover:opacity-80'}>{it.icon}</span>}
+            {it.icon && <>
+              <span className={'pl-2 opacity-40 group-hover:opacity-80'}>{it.icon}</span>
+              <span className="sr-only"> (opens a new window)</span>
+            </>}
           </>)
 
         return (
@@ -106,7 +110,9 @@ export function Headbar () {
     <div className={'app-headbar h-14 flex justify-center'}>
       <div className={'flex items-center justify-between w-full'}>
         <div className={'flex items-center h-full flex-1'}>
-          <Link to={'/'} className={'app-logo-link mr-2'} aria-label={`Logseq's logo`}></Link>
+          <Link to={'/'} className={'app-logo-link mr-2'} aria-label={`Home`}>
+            <img src={logo} alt={'Logseq'} />
+          </Link>
 
           <LinksGroup
             className={'justify-center sm:justify-start'}
@@ -134,14 +140,14 @@ export function Headbar () {
                 {({ active, rightIconFn, leftIconFn }: any) => {
 
                   return (
-                    <a
+                    <button
                       className={'flex items-center bg-sky-700 px-2 py-1 rounded text-sm hover:opacity-80 select-none cursor-pointer'}>
                       {typeof leftIconFn === 'function'
                         ? leftIconFn({ weight: 'bold' })
                         : leftIconFn}
                       <span className={'pl-2'}>Download for {active?.[0]}</span>
                       {rightIconFn?.()}
-                    </a>
+                    </button>
                   )
                 }}
               </WrapGlobalDownloadButton>

@@ -117,7 +117,6 @@ export function FeaturesBoardsDL () {
                 <span>Always up-to-date notes</span> <br/>
                 <span className="text-logseq-50/80">between all your devices.</span>
               </h2>
-              <h3></h3>
             </div>
           </div>
         </div>
@@ -137,7 +136,6 @@ export function FeaturesBoardsDL () {
                   a result of collaboration.
                 </span>
               </h2>
-              <h3></h3>
             </div>
           </div>
         </div>
@@ -302,19 +300,23 @@ export function LandingFooterNav () {
         </div>
 
         <div className="flex space-x-4 pl-[14px] py-[8px] sm:pr-[14px]">
-          <FloatGlassButton
+          <a
             href="https://github.com/logseq/logseq"
-            className={'!px-3'}
+            className="glass-btn !px-3"
+            aria-label="GitHub (opens a new window)"
+            target="_blank"
           >
             <GithubLogo size={26} weight={'duotone'}/>
-          </FloatGlassButton>
+          </a>
 
-          <FloatGlassButton
+          <a
             href="https://twitter.com/logseq"
-            className={'!px-3'}
+            className="glass-btn !px-3"
+            aria-label="Twitter (opens a new window)"
+            target="_blank"
           >
             <TwitterLogo size={26} weight={'duotone'}/>
-          </FloatGlassButton>
+          </a>
         </div>
       </div>
 
@@ -327,6 +329,7 @@ export function LandingFooterNav () {
         >
           <span className="opacity-90">
             Review us on ProductHunt
+            <span className="sr-only"> (opens a new window)</span>
           </span>
         </Button>
       </div>

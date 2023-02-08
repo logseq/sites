@@ -65,3 +65,30 @@ export const openLiveDemo = () => {
   Cookie.set(`spa`, '1', { expires: 7 })
   setTimeout(() => window.location.reload(), 500)
 }
+
+export function slugify(input: string | undefined) {
+  return input?.replace(/\W/g,'_')
+}
+
+export function navigateTabs(event: React.KeyboardEvent) {
+  const key = event.key
+  const tabs =  Array.prototype.slice.call(event.target.closest('[role="tablist"]').querySelectorAll('[role="tab"]'))
+  let index = tabs.indexOf(event.target)
+
+  if (key.includes('Arrow')) {
+    switch(key) {
+      case "ArrowLeft":
+      case "ArrowUp":
+        index = index > 0 ? index - 1 : tabs.length - 1
+        break
+      case "ArrowRight":
+      case "ArrowDown":
+        index = index < tabs.length - 1 ? index + 1 : 0
+        break
+    }
+
+    tabs[index].click()
+    tabs[index].focus()
+    event.preventDefault()
+  }
+}
