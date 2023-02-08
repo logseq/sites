@@ -10,6 +10,11 @@ body {
   }
 }
 
+/* Hackish solution to improve performance and reduce cpu usage on safari */
+* {
+  transform: rotateZ(360deg);
+}
+
 .app-container {
   @apply w-full flex-1 overflow-hidden;
 }
