@@ -10,7 +10,6 @@ body {
   }
 }
 
-
 .app-container {
   @apply w-full flex-1 overflow-hidden;
 }
