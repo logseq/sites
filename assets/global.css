@@ -167,9 +167,6 @@ body {
           drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
   transition: filter 300ms ease-out;
 
-  svg {
-    filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.5));
-  }
 }
 
 .dockify-app-logo:hover .app-logo-embossed {
