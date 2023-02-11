@@ -15,7 +15,7 @@ const showcases = [
     label: 'Relationships',
     iconUrl: IconImageRelations,
     descImgUrl: new URL('./assets/benefit-0.png', import.meta.url),
-    refLink: 'https://discord.com/channels/725182569297215569/725188616695054356/1045646531090448436',
+    refLink: 'https://www.linen.dev/d/Logseq/t/8862006/Heyy-Oskar-from-London-here-I-ve-been-using-Logseq-for-about',
     userName: 'oskr',
     refType: 'discord',
     desc: (
@@ -34,7 +34,7 @@ const showcases = [
     label: 'Daily Plan',
     iconUrl: IconImageDailyPlan,
     descImgUrl: new URL('./assets/benefit-1.png', import.meta.url),
-    refLink: 'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320',
+    refLink: 'https://www.linen.dev/d/Logseq/t/8975995/i-used-to-hate-taking-notes-i-would-write-something-down-and',
     refType: 'discord',
     userName: 'breadchris',
     desc: (
@@ -55,7 +55,7 @@ const showcases = [
     label: 'Journaling',
     iconUrl: IconImageJournals,
     descImgUrl: new URL('./assets/benefit-2.png', import.meta.url),
-    refLink: 'https://discord.com/channels/725182569297215569/766475028978991104/965786173148627044',
+    refLink: 'https://www.linen.dev/d/Logseq/t/8918537/For-me-also-my-task-manager-but-also-Notion-notes-in-general',
     refType: 'discord',
     userName: 'Kiernan',
     desc: (

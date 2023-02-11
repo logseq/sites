@@ -26,7 +26,7 @@ const appState = hookstate({
 })
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
-const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
+const discordEndpoint = 'https://www.linen.dev/d/Logseq'
 
 export function useReleasesState () {
   const state = useAppState()
