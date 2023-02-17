@@ -44,7 +44,7 @@ export function PrivacyBanner() {
               your device to enhance site navigation, and analyze site usage.
               View our <a
               className={'text-logseq-100 hover:underline'}
-              href={'https://docs.logseq.com/#/page/Privacy%20Policy'}
+              href={'https://blog.logseq.com/privacy-policy/'}
               target={'_blank'}
             >Privacy Policy</a> for more.
             </div>
