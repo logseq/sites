@@ -1,0 +1,7 @@
+<script>
+  const url = new URL(window.location.href)
+  const code = url.searchParams.get('code')
+  if (code) {
+    location.href = `logseq://auth-callback?code=${code}`
+  }
+</script>
