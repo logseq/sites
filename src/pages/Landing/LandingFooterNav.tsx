@@ -171,7 +171,7 @@ export function LandingFooterDesc (props: {
               <span className="text-logseq-50/80">
                 By downloading Logseq, you are embarking on a journey. We are
                 constantly trying to make it even more useful for all kinds of
-                workflows.
+                workflows.&nbsp;
               </span>
               <strong className="font-normal">
                 These exciting features are coming soon:
