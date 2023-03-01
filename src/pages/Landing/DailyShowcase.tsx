@@ -26,7 +26,7 @@ const showcases = [
       <p>
         <span>“I mostly use it for work: keeping </span>daily notes & meeting notes. It's the best solution I've found
         to managing my tasks
-        <span>(and I only use a fraction of the features there).”</span>
+        <span>&nbsp;(and I only use a fraction of the features there).”</span>
       </p>
     )
   },
