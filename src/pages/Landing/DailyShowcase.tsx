@@ -47,7 +47,7 @@ const showcases = [
         <span>“I used to hate taking notes.</span>
         If I told my past self that I wouldn't just like taking notes, but that I would become addicted to it, I
         wouldn't believe it.
-        <span>Logseq has changed my life 🔥🔥🔥”</span>
+        <span>&nbsp;Logseq has changed my life 🔥🔥🔥”</span>
       </p>
     )
   },
