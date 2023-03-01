@@ -39,7 +39,7 @@ const showcases = [
     userName: 'breadchris',
     desc: (
       <p>
-        <span>Channel your attention,</span>
+        <span>Channel your attention,&nbsp;</span>
         reduce stress.
       </p>),
     feedback: (
