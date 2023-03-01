@@ -229,7 +229,7 @@ export function LandingFooterDesc (props: {
       {/* downloads */}
       <div className="actions">
         <h1 className="text-4xl leading-9 sm:leading-normal sm:text-6xl tracking-wide">
-          <span className="opacity-70">Think faster,</span>
+          <span className="opacity-70">Think faster,&nbsp;</span>
           <strong className="font-semibold">think better!</strong>
         </h1>
 
