@@ -34,7 +34,7 @@ export function FeaturesBoards () {
         <div className="inner">
           <div className="l info-wrap flex-1">
             <strong><CloudCheck size={38} weight={'duotone'}/></strong>
-            <h1>File sync <sup>BETA</sup></h1>
+            <h1>Logseq Sync <sup>BETA</sup></h1>
             <h2>
               <span>Always up-to-date notes</span> <br/>
               <span className="text-logseq-50/80">between all your devices.</span>
@@ -112,7 +112,7 @@ export function FeaturesBoardsDL () {
           <div className="inner">
             <div className="l info-wrap flex-1">
               <strong><CloudCheck size={38} weight={'duotone'}/></strong>
-              <h1>File sync <sup>BETA</sup></h1>
+              <h1>Logseq Sync <sup>BETA</sup></h1>
               <h2>
                 <span>Always up-to-date notes</span> <br/>
                 <span className="text-logseq-50/80">between all your devices.</span>
