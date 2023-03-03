@@ -26,7 +26,7 @@ const showcases = [
       <p>
         <span>“I mostly use it for work: keeping </span>daily notes & meeting notes. It's the best solution I've found
         to managing my tasks
-        <span>(and I only use a fraction of the features there).”</span>
+        <span> (and I only use a fraction of the features there).”</span>
       </p>
     )
   },
@@ -39,7 +39,7 @@ const showcases = [
     userName: 'breadchris',
     desc: (
       <p>
-        <span>Channel your attention,</span>
+        <span>Channel your attention, </span>
         reduce stress.
       </p>),
     feedback: (
@@ -47,7 +47,7 @@ const showcases = [
         <span>“I used to hate taking notes.</span>
         If I told my past self that I wouldn't just like taking notes, but that I would become addicted to it, I
         wouldn't believe it.
-        <span>Logseq has changed my life 🔥🔥🔥”</span>
+        <span> Logseq has changed my life 🔥🔥🔥”</span>
       </p>
     )
   },
