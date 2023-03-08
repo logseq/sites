@@ -422,6 +422,24 @@ export function HeadDownloadLinks () {
             </div>
           </div>
         )
+      case 'Linux':
+        return (
+          <div className={'w-full sm:w-auto flex flex-col items-center'} id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
+
+            <Button
+              leftIcon={icon}
+              rightIcon={<DownloadSimple className="opacity-50"/>}
+              className="w-full sm:w-auto bg-logseq-600 px-3 py-3 sm:px-6 sm:py-4"
+              onClick={() => _downloadHandler('linux')}
+            >
+              Download Linux release
+            </Button>
+
+            <span className="opacity-60 py-3">
+                You are advised to use <a className="text-logseq-100" target='_blank' href="https://github.com/TheAssassin/AppImageLauncher">AppImageLauncher</a> for proper desktop integration
+            </span>
+          </div>
+        )
       default:
         return (
           <div className={'w-full sm:w-auto'} id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
