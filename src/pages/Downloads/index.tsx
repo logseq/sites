@@ -201,7 +201,7 @@ export function WrapGlobalDownloadButton (
               Apple silicon
             </span>
             <span className="text-[11px] opacity-60">
-              Macs from november 2020 and later
+              Macs from November 2020 and later
             </span>
           </div>
 
