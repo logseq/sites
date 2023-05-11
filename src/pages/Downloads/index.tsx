@@ -107,7 +107,7 @@ const releases = [
   ['Android', (props = {}) => <GooglePlayLogo {...props} weight={'duotone'}/>],
 ]
 
-const downloadHandler = (
+const resolveDownloadHref = (
   appState: any,
   item: typeof releases[number],
   isIOS: boolean,
@@ -122,13 +122,10 @@ const downloadHandler = (
   platform = platform || item?.[0].toString().toLowerCase()
 
   if (!downloads?.[platform]) {
-    return window?.open(rollback, '_blank')
+    return rollback
   }
 
-  window?.open(
-    downloads[platform]?.browser_download_url,
-    '_blank',
-  )
+  return downloads[platform]?.browser_download_url
 }
 
 export function WrapGlobalDownloadButton (
@@ -166,46 +163,45 @@ export function WrapGlobalDownloadButton (
   const subItems = isMacOS ? (
     <div className="sub-items flex flex-col absolute top-5 right-0 w-full pt-6">
       <div className="sub-items-inner">
-        <div className="flex items-center">
-          <div className="flex pr-2">
-            <IntelIcon className={'bg-black w-8 h-8'}/>
-          </div>
 
-          <div
-            className={'w-full flex flex-col opacity-80'}
-            onClick={(e) => {
-              downloadHandler(appState, active, isIOS, 'macos-x64')
-            }}
-          >
+        <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
+          <div className="flex items-center">
+            <div className="flex pr-2">
+              <IntelIcon className={'bg-black w-8 h-8'}/>
+            </div>
+
+            <div
+              className={'w-full flex flex-col opacity-80'}
+            >
             <span className="text-sm">
               Intel chip
             </span>
-            <span className="text-[11px] opacity-60">
+              <span className="text-[11px] opacity-60">
               Most common in Macs
             </span>
+            </div>
           </div>
-        </div>
+        </a>
 
-        <div className="flex items-center">
-          <div className="flex pr-2">
-            <M1Icon className={'bg-black w-8 h-8'}/>
-          </div>
 
-          <div
-            className={'w-full flex flex-col opacity-80'}
-            onClick={(e) => {
-              downloadHandler(appState, active, isIOS, 'macos-arm64')
-            }}
-          >
+        <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-arm64')}>
+          <div className="flex items-center">
+            <div className="flex pr-2">
+              <M1Icon className={'bg-black w-8 h-8'}/>
+            </div>
+
+            <div
+              className={'w-full flex flex-col opacity-80'}
+            >
             <span className="text-sm">
               Apple silicon
             </span>
-            <span className="text-[11px] opacity-60">
+              <span className="text-[11px] opacity-60">
               Macs from November 2020 and later
             </span>
+            </div>
           </div>
-
-        </div>
+        </a>
       </div>
     </div>
   ) : (isIOS ? (
@@ -220,16 +216,17 @@ export function WrapGlobalDownloadButton (
 
   return (
     <div className={cx('global-downloads-wrap', className)}
-         onClick={() => downloadHandler(appState, active, isIOS)}
          ref={wrapElRef}
     >
-      {children({
-        active,
-        leftIconFn: typeof activePlatformIcon === 'function'
-          ? activePlatformIcon
-          : () => activePlatformIcon,
-        rightIconFn,
-      })}
+      <a className={'block'} target={'_blank'} href={resolveDownloadHref(appState, active, isIOS)}>
+        {children({
+          active,
+          leftIconFn: typeof activePlatformIcon === 'function'
+            ? activePlatformIcon
+            : () => activePlatformIcon,
+          rightIconFn,
+        })}
+      </a>
 
       {subItems}
     </div>
@@ -308,7 +305,7 @@ export function HeadDownloadLinksTabs (
               tabIndex={isActive ? 0 : -1}
               role="tab"
               aria-controls={label}
-              id={"tab-" + label}
+              id={'tab-' + label}
               aria-selected={isActive}
               onKeyDown={navigateTabs}
           >
@@ -343,13 +340,13 @@ export function HeadDownloadLinks () {
 
   const [activeRelease, setActiveRelease] = useState(active)
 
-  const _downloadHandler = (platform: string) => {
+  const _getDownloadHref = (platform: string) => {
     const isIOS = platform === 'ios'
     const item: any = releases.find(it => {
       return (it[0] as string).toLowerCase() === platform
     })
 
-    downloadHandler(appState, item, isIOS, platform)
+    return resolveDownloadHref(appState, item, isIOS, platform)
   }
 
   const resolvePanel = function ([label, icon]: [string, any]) {
@@ -371,13 +368,15 @@ export function HeadDownloadLinks () {
     switch (label) {
       case 'iOS':
         return (
-          <div className="w-full sm:w-auto flex flex-col items-center is-ios cursor-crosshair" id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
+          <div className="w-full sm:w-auto flex flex-col items-center is-ios cursor-crosshair" id={label}
+               role="tabpanel" aria-labelledby={'tab-' + label}>
             <Button
               className={'w-full bg-logseq-400 px-3 py-3 sm:px-6 sm:py-4'}
               leftIcon={icon}
               disabled={!isSm}
               rightIcon={isSm ? <DownloadSimple className="opacity-50"/> : <QrCode className="opacity-50"/>}
-              onClick={() => _downloadHandler('ios')}
+              href={_getDownloadHref('ios')}
+              asAnchor={true}
             >
               Download on the App Store
             </Button>
@@ -390,14 +389,16 @@ export function HeadDownloadLinks () {
         )
       case 'MacOS':
         return (
-          <div className="w-full sm:w-auto sm:flex sm:space-x-6"  id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
+          <div className="w-full sm:w-auto sm:flex sm:space-x-6" id={label} role="tabpanel"
+               aria-labelledby={'tab-' + label}>
             <div className="flex flex-col items-center">
               <Button
                 className={'w-full bg-logseq-400 px-3 py-3 sm:px-6 sm:py-4'}
                 leftIcon={<IntelIcon className={'w-6 h-6 sm:w-8 sm:h-8 bg-gray-900'}
                                      color={'white'}/>}
                 rightIcon={<DownloadSimple className="opacity-50"/>}
-                onClick={() => _downloadHandler('macos-x64')}
+                href={_getDownloadHref('macos-x64')}
+                asAnchor={true}
               >
                 Download for Intel chip
               </Button>
@@ -412,7 +413,8 @@ export function HeadDownloadLinks () {
                 leftIcon={<M1Icon className={'w-6 h-6 sm:w-8 sm:h-8 bg-gray-900'}
                                   color={'white'}/>}
                 rightIcon={<DownloadSimple className="opacity-50"/>}
-                onClick={() => _downloadHandler('macos-arm64')}
+                href={_getDownloadHref('macos-arm64')}
+                asAnchor={true}
               >
                 Download for Apple silicon
               </Button>
@@ -424,30 +426,34 @@ export function HeadDownloadLinks () {
         )
       case 'Linux':
         return (
-          <div className={'w-full sm:w-auto flex flex-col items-center'} id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
+          <div className={'w-full sm:w-auto flex flex-col items-center'} id={label} role="tabpanel"
+               aria-labelledby={'tab-' + label}>
 
             <Button
               leftIcon={icon}
               rightIcon={<DownloadSimple className="opacity-50"/>}
               className="w-full sm:w-auto bg-logseq-600 px-3 py-3 sm:px-6 sm:py-4"
-              onClick={() => _downloadHandler('linux')}
+              href={_getDownloadHref('linux')}
+              asAnchor={true}
             >
               Download Linux release
             </Button>
 
             <span className="opacity-60 py-3">
-                You are advised to use <a className="text-logseq-100" target='_blank' href="https://github.com/TheAssassin/AppImageLauncher">AppImageLauncher</a> for proper desktop integration
+                You are advised to use <a className="text-logseq-100" target="_blank"
+                                          href="https://github.com/TheAssassin/AppImageLauncher">AppImageLauncher</a> for proper desktop integration
             </span>
           </div>
         )
       default:
         return (
-          <div className={'w-full sm:w-auto'} id={label} role='tabpanel' aria-labelledby={"tab-" + label}>
+          <div className={'w-full sm:w-auto'} id={label} role="tabpanel" aria-labelledby={'tab-' + label}>
             <Button
               leftIcon={icon}
               rightIcon={<DownloadSimple className="opacity-50"/>}
               className="w-full bg-logseq-600 px-3 py-3 sm:px-6 sm:py-4"
-              onClick={() => _downloadHandler(label.toString().toLowerCase())}
+              href={_getDownloadHref(label.toString().toLowerCase())}
+              asAnchor={true}
             >
               Download {label} release
             </Button>
