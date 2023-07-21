@@ -1,0 +1,65 @@
+.app-page.logseq-pro {
+  @apply py-16 min-h-screen block;
+
+  > section {
+    @apply xl:max-w-screen-xl mx-auto;
+
+    b {
+      @apply font-[500] text-pro-200;
+    }
+
+    &.pro-info {
+      @apply min-h-[880px] relative flex flex-col pt-10 px-14;
+
+      > .bg {
+        @apply w-full h-[500px] absolute left-1/2 translate-x-[-50%] top-32 z-0;
+
+        background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 70%);
+      }
+
+      .pro-flag {
+        @apply border-[4px] border-pro-400 text-pro-400 rounded-xl px-5 py-[10px]
+        tracking-widest bg-pro-600/40 text-[28px] leading-none ml-10 mr-2 font-bold;
+      }
+    }
+  }
+
+  .plans-card {
+    @apply pt-11 px-8;
+
+    > i {
+      @apply w-[72px] h-[72px] flex items-center justify-center
+      rounded-full text-pro-400 bg-pro-600/20;
+    }
+
+    > h1 b, > h2 b {
+      @apply font-normal;
+    }
+
+    > h1 {
+      @apply pt-4 leading-[44px] tracking-wide pl-[0.5];
+    }
+
+    > h2 {
+      @apply pt-4 pr-4 font-medium;
+    }
+  }
+
+  .ui-pro-card {
+    @apply rounded-2xl min-h-[660px]
+    bg-logseq-600/30 backdrop-blur-3xl overflow-hidden;
+
+    &:before {
+      content: "";
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(rgb(60, 186, 243, .9), rgba(255, 255, 255, .1));
+      -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
+      -webkit-mask-composite: xor;
+    }
+  }
+}
