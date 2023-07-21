@@ -1,7 +1,6 @@
 import './index.css'
-import { ReactElement } from 'react'
 import cx from 'classnames'
-import { FileCloud, LockKeyOpen } from 'phosphor-react'
+import { FileCloud, LockKeyOpen, ShieldStar } from 'phosphor-react'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -25,7 +24,7 @@ function ProInfoSection () {
 
       {/*price card*/}
       <div className={'flex pt-14 space-x-6 z-10'}>
-        <ProCard className={'plans-card flex-col flex-1'}>
+        <ProCard className={'plans-card a flex-col flex-1'}>
           <i><FileCloud size={38} weight={'duotone'}/></i>
           <h1 className={'text-4xl'}>
             <b>Enjoy</b> advanced <br/> syncing options.
@@ -35,9 +34,16 @@ function ProInfoSection () {
             <b className={'ml-2'}>as well as</b> expanded storage and larger <br/>asset support
             <b className={'ml-2'}>across all devices</b>.
           </h2>
+          <h3 className={'flex items-center bg-pro-900/90 rounded-lg mt-4 py-2 px-4 leading-none'}>
+            <ShieldStar weight={'duotone'} size={32}/>
+            <span className={'text-xl ml-2 font-medium'}>
+              Always end-to-end encrypted
+              <b className={'font-normal ml-2'}>on all plans.</b>
+            </span>
+          </h3>
         </ProCard>
 
-        <ProCard className={'plans-card flex-1'}>
+        <ProCard className={'plans-card b flex-1'}>
           <i><LockKeyOpen size={38} weight={'duotone'}/></i>
           <h1 className={'text-4xl'}>
             <b>Get</b> early access to <br/>cutting-edge features.

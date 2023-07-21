@@ -25,7 +25,15 @@
   }
 
   .plans-card {
-    @apply pt-11 px-8;
+    @apply pt-11 px-8 min-h-[830px];
+
+    &.a {
+      background-image: url("./assets/pro_card_bg1.png");
+      background-size: 96%;
+      background-position-x: left;
+      background-position-y: bottom;
+      background-repeat: no-repeat;
+    }
 
     > i {
       @apply w-[72px] h-[72px] flex items-center justify-center
@@ -46,8 +54,7 @@
   }
 
   .ui-pro-card {
-    @apply rounded-2xl min-h-[660px]
-    bg-logseq-600/30 backdrop-blur-3xl overflow-hidden;
+    @apply rounded-2xl bg-logseq-600/30 backdrop-blur-3xl overflow-hidden;
 
     &:before {
       content: "";
