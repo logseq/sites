@@ -94,6 +94,10 @@ body {
 
       &.app-link-active {
         @apply text-gray-300 font-semibold sm:opacity-100;
+
+        > * {
+          @apply opacity-100;
+        }
       }
     }
   }

@@ -32,6 +32,7 @@ export function LinksGroup (
         return (
           <li className={'flex items-center'}
               key={it.label.toString()}
+              data-link={it.link?.toString().toLowerCase()}
           >
             {it.link.startsWith('http')
               ?
@@ -85,6 +86,12 @@ export function Headbar () {
 
   const leftLinks = [
     { label: 'Home', link: '/' },
+    {
+      label: (<>
+        <span>Pro</span>
+        <sup className={'pl-1 opacity-90 group-hover:opacity-100 text-xs font-medium text-pro'}>New</sup>
+      </>), link: '/pro'
+    },
     { label: 'Downloads', link: '/downloads' },
   ]
 
@@ -111,7 +118,7 @@ export function Headbar () {
       <div className={'flex items-center justify-between w-full'}>
         <div className={'flex items-center h-full flex-1'}>
           <Link to={'/'} className={'app-logo-link mr-2'} aria-label={`Home`}>
-            <img src={logo} alt={'Logseq'} />
+            <img src={logo} alt={'Logseq'}/>
           </Link>
 
           <LinksGroup

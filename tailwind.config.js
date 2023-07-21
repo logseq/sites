@@ -19,6 +19,7 @@ module.exports = {
           800: '#01222a',
           900: '#01171d'
         },
+        'pro': '#0EA5E9'
       },
       fontSize: {
         '4xl': '2.4rem',

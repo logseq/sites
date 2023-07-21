@@ -10,6 +10,7 @@ import {
 } from './state'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { ProPage } from './pages/Pro'
 
 export function App () {
   const appState = useAppState()
@@ -46,6 +47,7 @@ export function App () {
         <Routes>
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
+          <Route path={'/pro'} element={<ProPage/>}></Route>
         </Routes>
       </main>
     </div>
