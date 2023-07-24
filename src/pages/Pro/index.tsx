@@ -1,6 +1,7 @@
 import './index.css'
 import cx from 'classnames'
 import {
+  ArrowSquareOut,
   CircleWavyQuestion,
   Database,
   FileCloud,
@@ -9,7 +10,7 @@ import {
   Notebook,
   ShieldStar,
   Stack,
-  Student
+  Student, TwitterLogo
 } from 'phosphor-react'
 
 function ProCard ({ children, className, ...rest }: any) {
@@ -131,6 +132,113 @@ function TweetsSection () {
           <b className={'ls'}>Join users who rely on</b> Logseq's <br/>
           seamless syncing and powerful toolbox.
         </h2>
+
+        {/*tweet cards*/}
+        <div className="tweet-cards">
+          <div className="c1">
+            {/* item */}
+            <div className="tweet-card">
+              <p>
+                <b className={'ls'}>
+                  “I have always suffered from loosing information from
+                  consuming a lot of information which can be somehow stressful,
+                  but now </b>
+                <strong>
+                  i can manage my personal knowledge, link and connect
+                  information physically and also capture more information.
+                </strong>
+                <b className={'bg'}>It is the perfect digital brain.</b>”
+              </p>
+              <p>
+                <span>Remy Oreo</span>
+                <span>
+                  <b className={'ls'}>Via</b>
+                  <TwitterLogo weight={'duotone'} size={28}/>
+                  <label>Twitter </label>
+                  <a href={'javascript:;'}
+                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                </span>
+              </p>
+            </div>
+
+            {/*item*/}
+            <div className="tweet-card">
+              <p>
+                <b className={'ls'}>“Thinking of a note title before writing an idea is usually enough
+                  for me to completely forget what I was going to write or make me
+                  feel overwhelmed enough that I don't want to write it down. </b>
+                <b className={'bg'}>After discovering Logseq's "do everything in the journal"
+                  mindset and the lack of friction in capturing new ideas,
+                  I'm in love. </b>
+                <strong className={'pl-0.5'}>
+                  The ability to just write and go off on whatever
+                  tangent I want just by pressing Tab and Shift Tab is a dream.”
+                </strong>
+              </p>
+              <p>
+                <span>chadly</span>
+                <span>
+                  <b className={'ls'}>Via</b>
+                  <TwitterLogo weight={'duotone'} size={28}/>
+                  <label>Twitter </label>
+                  <a href={'javascript:;'}
+                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="c2">
+            {/*item*/}
+            <div className="tweet-card">
+              <p>
+                <b className={'ls'}>“Logseq has been the biggest game changer for me since I moved from
+                  written ink notebooks to Evernote.</b>
+                <strong>I'm constantly in meetings all day,
+                  learning and tracking knowledge and losing information.</strong>
+                <b className={'ls'}> I personally am not interested in trying out
+                  new plugins, so </b>
+                <b className={'bg'}> I really love the fact that the core capabilities
+                  of Logseq are so powerful, and the app is useful out of the box.
+                </b><b className={'ls'}>”</b></p>
+              <p>
+                <span>GeneralChaos</span>
+                <span>
+                  <b className={'ls'}>Via</b>
+                  <TwitterLogo weight={'duotone'} size={28}/>
+                  <label>Twitter </label>
+                  <a href={'javascript:;'}
+                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                </span>
+              </p>
+            </div>
+
+            {/*item*/}
+            <div className="tweet-card">
+              <p>
+                <b className={'ls'}>
+                  “So, I completely switched to Logseq and I don't see myself
+                  coming back to Obsidian, even if it's a great tool. </b>
+                <strong>With Logseq, I took to journaling,</strong>
+                <b className={'bg'}>
+                  it feels so freeing to just jot down ideas
+                  and thoughts in the journal. And I'm managing my creative
+                  projects
+                </b>
+                <b className={'ls'}>in Logseq too. So, thanks for that very useful tool.”</b>
+              </p>
+              <p>
+                <span>Kris</span>
+                <span>
+                  <b className={'ls'}>Via</b>
+                  <TwitterLogo weight={'duotone'} size={28}/>
+                  <label>Twitter </label>
+                  <a href={'javascript:;'}
+                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

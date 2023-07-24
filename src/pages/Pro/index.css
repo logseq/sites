@@ -10,6 +10,10 @@
       &.ls {
         @apply text-[#a4b5b6];
       }
+
+      &.bg {
+        @apply bg-pro-900 text-pro-50 px-1 mx-1;
+      }
     }
 
     &.pro-info {
@@ -152,6 +156,59 @@
             @apply bg-pro-800;
           }
         }
+      }
+    }
+  }
+
+  .tweet-cards {
+    @apply flex space-x-8 pt-20 px-40;
+
+    > .c1, > .c2 {
+      @apply flex flex-col flex-1;
+    }
+
+    .tweet-card {
+      @apply rounded-2xl bg-logseq-700/20 backdrop-blur-3xl
+      py-8 px-7 overflow-hidden min-h-[200px] mb-8;
+
+      b {
+        @apply font-light;
+
+        &.bg {
+          @apply font-[400];
+        }
+      }
+
+      > p:first-child {
+        @apply text-2xl leading-[33px] font-light tracking-wide;
+      }
+
+      > p:last-child {
+        @apply flex justify-between mt-8 mb-2 text-lg;
+
+        > span:last-child {
+          @apply flex items-center space-x-3;
+
+          a.link {
+            @apply border rounded p-1 border-gray-600 ml-3 bg-gray-500/20
+            cursor-pointer active:opacity-80;
+          }
+        }
+      }
+
+      /*noinspection CssInvalidPropertyValue*/
+
+      &:before {
+        content: "";
+        pointer-events: none;
+        user-select: none;
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(rgba(94, 94, 94, 0.86), rgba(0, 0, 0, 0));
+        -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
+        -webkit-mask-composite: xor;
       }
     }
   }
