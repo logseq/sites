@@ -1,6 +1,16 @@
 import './index.css'
 import cx from 'classnames'
-import { CircleWavyQuestion, FileCloud, Files, LockKeyOpen, Notebook, ShieldStar, Stack, Student } from 'phosphor-react'
+import {
+  CircleWavyQuestion,
+  Database,
+  FileCloud,
+  Files,
+  LockKeyOpen,
+  Notebook,
+  ShieldStar,
+  Stack,
+  Student
+} from 'phosphor-react'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -13,6 +23,7 @@ function ProCard ({ children, className, ...rest }: any) {
 function ProInfoSection () {
   return (
     <section className={'pro-info'}>
+      {/*head text*/}
       <div className={'flex flex-col items-center pt-12 z-10 font-bold'}>
         <h1 className={'text-6xl flex items-center'}>
           Experience <b className={'ml-4'}>the benefits of</b>
@@ -96,9 +107,31 @@ function ProInfoSection () {
             </p>
           </span>
         </ProCard>
+
+        {/*compare button*/}
+        <a className="compare-btn">
+          <Database size={20}/>
+          <span>Compare plans</span>
+        </a>
       </div>
 
       <i className="bg"></i>
+    </section>
+  )
+}
+
+function TweetsSection () {
+  return (
+    <section className={'tweets-section'}>
+      <div className="inner relative z-10">
+        <h1>
+          Unlock your ideas with <b className={'ls'}>ease.</b>
+        </h1>
+        <h2>
+          <b className={'ls'}>Join users who rely on</b> Logseq's <br/>
+          seamless syncing and powerful toolbox.
+        </h2>
+      </div>
     </section>
   )
 }
@@ -107,6 +140,7 @@ export function ProPage () {
   return (
     <div className={'app-page logseq-pro'}>
       <ProInfoSection/>
+      <TweetsSection/>
     </div>
   )
 }

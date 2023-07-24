@@ -1,3 +1,4 @@
+import React from 'react'
 import cx from 'classnames'
 import Cookie from 'js-cookie'
 
@@ -71,9 +72,10 @@ export function slugify(input: string | undefined) {
 }
 
 export function navigateTabs(event: React.KeyboardEvent) {
+  const target = event.target as HTMLElement
   const key = event.key
-  const tabs =  Array.prototype.slice.call(event.target.closest('[role="tablist"]').querySelectorAll('[role="tab"]'))
-  let index = tabs.indexOf(event.target)
+  const tabs =  Array.prototype.slice.call(target?.closest('[role="tablist"]')?.querySelectorAll('[role="tab"]'))
+  let index = tabs.indexOf(target)
 
   if (key.includes('Arrow')) {
     switch(key) {
