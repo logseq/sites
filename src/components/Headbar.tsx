@@ -3,6 +3,7 @@ import { ArrowSquareOut, List, X } from 'phosphor-react'
 import { ReactElement, useEffect, useState } from 'react'
 import { WrapGlobalDownloadButton } from '../pages/Downloads'
 import cx from 'classnames'
+import { scrollToTop } from './utils'
 
 const logo: any = new URL('/assets/logo-with-border.png', import.meta.url)
 
@@ -41,6 +42,7 @@ export function LinksGroup (
               :
               <NavLink
                 to={it.link}
+                onClick={() => (scrollToTop(), setTimeout(scrollToTop, 100))}
                 className={({ isActive }) => {
                   return cx('h-full flex items-center group transition-colors',
                     isActive && 'app-link-active')
