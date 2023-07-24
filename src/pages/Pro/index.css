@@ -1,5 +1,5 @@
 .app-page.logseq-pro {
-  @apply py-16 min-h-screen block;
+  @apply pt-16 min-h-screen block pb-40;
 
   > section {
     @apply xl:max-w-screen-xl mx-auto;
@@ -25,14 +25,39 @@
   }
 
   .plans-card {
-    @apply pt-11 px-8 min-h-[830px];
+    @apply pt-11 px-8 min-h-[850px];
 
     &.a {
       background-image: url("./assets/pro_card_bg1.png");
-      background-size: 96%;
+      background-size: 100%;
       background-position-x: left;
       background-position-y: bottom;
       background-repeat: no-repeat;
+    }
+
+    &.b {
+      background-image: url("./assets/pro_card_bg2.png");
+      background-size: 97%;
+      background-position-x: right;
+      background-position-y: bottom;
+      background-repeat: no-repeat;
+    }
+
+    &.c {
+      @apply absolute mx-0 px-4 left-0 bottom-0 pt-0
+      w-full min-h-0 h-[170px] flex items-center;
+
+      > span {
+        @apply flex flex-1 justify-center items-center;
+
+        > strong {
+          @apply text-4xl font-[400] ml-1 mr-4;
+        }
+
+        > small {
+          @apply text-pro-200 text-[18px];
+        }
+      }
     }
 
     > i {
@@ -51,6 +76,54 @@
     > h2 {
       @apply pt-4 pr-4 font-medium;
     }
+
+    .big-things {
+      > h4 {
+        @apply text-sm font-bold pt-8 pb-5 text-pro-200;
+      }
+
+      > ul {
+        @apply relative pb-0.5;
+
+        &:before {
+          @apply absolute w-[4px] h-[100%] top-[32px] left-[20px]
+          from-pro-600 to-transparent bg-gradient-to-b;
+
+          content: " ";
+        }
+
+        > li {
+          @apply flex flex-col pl-14 mb-3 relative;
+
+          > strong {
+            @apply text-xl font-[400];
+          }
+
+          > span {
+            @apply text-sm opacity-70 py-1;
+
+            b {
+              @apply font-normal;
+            }
+          }
+
+          &:before {
+            @apply w-[16px] h-[16px] absolute top-[20px] left-[14px]
+            bg-pro-500 rounded-full overflow-hidden;
+
+            content: " ";
+          }
+
+          &:nth-child(2):before {
+            @apply bg-pro-700;
+          }
+
+          &:nth-child(3):before {
+            @apply bg-pro-800;
+          }
+        }
+      }
+    }
   }
 
   .ui-pro-card {
@@ -64,7 +137,7 @@
       inset: 0;
       border-radius: inherit;
       padding: 1px;
-      background: linear-gradient(rgb(60, 186, 243, .9), rgba(255, 255, 255, .1));
+      background: linear-gradient(rgb(60, 186, 243, .8), rgba(255, 255, 255, .1));
       -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
       -webkit-mask-composite: xor;
     }
