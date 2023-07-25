@@ -244,11 +244,30 @@ function TweetsSection () {
   )
 }
 
+function ChoosePlanSection () {
+  return (
+    <div className={'choose-plan-section-wrap page-inner-full-wrap b'}>
+      <section className={'choose-plan-section as-section'}>
+        <h1>
+          Choose the plan
+          <br/>
+          <b>that's right for you.</b>
+        </h1>
+        <h2>
+          <b>Discover the </b>power of Logseq for free, or <br/>
+          <b>unlock</b> advanced features with Logseq <span className="pro-flag">PRO</span>.
+        </h2>
+      </section>
+    </div>
+  )
+}
+
 export function ProPage () {
   return (
     <div className={'app-page logseq-pro'}>
       <ProInfoSection/>
       <TweetsSection/>
+      <ChoosePlanSection/>
     </div>
   )
 }

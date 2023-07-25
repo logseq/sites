@@ -1,7 +1,7 @@
 .app-page.logseq-pro {
   @apply pt-16 min-h-screen block pb-40;
 
-  > section {
+  > section, .as-section {
     @apply xl:max-w-screen-xl mx-auto;
 
     b {
@@ -24,11 +24,6 @@
 
         background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 70%);
       }
-
-      .pro-flag {
-        @apply border-[4px] border-pro-400 text-pro-400 rounded-xl px-5 py-[10px]
-        tracking-widest bg-pro-600/40 text-[28px] leading-none ml-10 mr-2 font-bold;
-      }
     }
 
     &.tweets-section {
@@ -38,6 +33,7 @@
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: center -500px;
+      z-index: 1;
 
       &:before {
         @apply absolute top-0 left-0 w-full h-2/3 z-0
@@ -54,6 +50,37 @@
         > h2 {
           @apply text-4xl text-center font-normal leading-[42px] pt-5;
         }
+      }
+    }
+  }
+
+  .choose-plan-section {
+    @apply relative z-10 flex flex-col items-center;
+
+    &-wrap {
+      @apply relative min-h-[800px] pt-10 block;
+
+      &:before {
+        @apply absolute top-[-200px] left-[50%] translate-x-[-50%]
+        rounded-full h-[5600px] w-[250%];
+
+        background: linear-gradient(180deg, rgb(0, 174, 255) 0%, rgba(155, 153, 148, 0) 10%);
+        box-shadow: 1px 1px 28px #03a8f3;
+        content: " ";
+        opacity: .58;
+        z-index: 0;
+      }
+    }
+
+    > h1 {
+      @apply font-bold text-6xl text-center leading-[4rem] tracking-wide;
+    }
+
+    > h2 {
+      @apply text-4xl leading-[2.8rem] pt-10 text-center tracking-wide;
+
+      .pro-flag {
+        @apply text-xl py-1.5 px-3 mx-1;
       }
     }
   }
@@ -238,5 +265,11 @@
       -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
       -webkit-mask-composite: xor;
     }
+  }
+
+
+  .pro-flag {
+    @apply border-[4px] border-pro-400 text-pro-400 rounded-xl px-5 py-[10px]
+    tracking-widest bg-pro-600/40 text-[28px] leading-none ml-10 mr-2 font-bold;
   }
 }
