@@ -151,81 +151,86 @@ export function FeaturesBoardsDL () {
 }
 
 export function LandingFooterDesc (props: {
-  downloadsPage?: boolean
+  downloadsPage?: boolean,
+  hideFeaturesSection?: boolean
 }) {
   const appState = useAppState()
 
   return (
     <div className="app-landing-footer-desc">
+      {!props.hideFeaturesSection &&
+        (<div className="bg-radial from-logseq-800 via-logseq-800/50 to-logseq-800/0">
+          {props.downloadsPage ?
+            <>
+              <h1
+                className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
+                <span className="text-logseq-50/80">Get ready for</span><br/>
+                <strong className="font-semibold">knowledge work reimagined.</strong>
+              </h1>
 
-      <div className="bg-radial from-logseq-800 via-logseq-800/50 to-logseq-800/0">
-        {props.downloadsPage ?
-          <>
-            <h1
-              className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
-              <span className="text-logseq-50/80">Get ready for</span><br/>
-              <strong className="font-semibold">knowledge work reimagined.</strong>
-            </h1>
-
-            <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
+              <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
               <span className="text-logseq-50/80">
                 By downloading Logseq, you are embarking on a journey. We are
                 constantly trying to make it even more useful for all kinds of
                 workflows.
               </span>
-              {" "}
-              <strong className="font-normal">
-                These exciting features are coming soon:
-              </strong>
-            </h2>
+                {' '}
+                <strong className="font-normal">
+                  These exciting features are coming soon:
+                </strong>
+              </h2>
 
-          </> :
-          <>
-            <h1 className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10 bg-radial">
-              <strong className="font-semibold">A safe space for </strong>
-              <span className="text-logseq-50/80">your thoughts.</span>
-            </h1>
+            </> :
+            <>
+              <h1
+                className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10 bg-radial">
+                <strong className="font-semibold">A safe space for </strong>
+                <span className="text-logseq-50/80">your thoughts.</span>
+              </h1>
 
-            <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
-              <span className="text-logseq-50/80">Designed to store your </span>
-              <strong className="font-normal">interests, questions, ideas, favorite quotes,
-                reminders, reading and meeting
-                notes </strong>
-              <span className="text-logseq-50/80">easily and future-proof:</span>
-            </h2>
-          </>
-        }
-      </div>
+              <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
+                <span className="text-logseq-50/80">Designed to store your </span>
+                <strong className="font-normal">interests, questions, ideas, favorite quotes,
+                  reminders, reading and meeting
+                  notes </strong>
+                <span className="text-logseq-50/80">easily and future-proof:</span>
+              </h2>
+            </>}
+        </div>)}
 
       {/*  descriptions */}
-      {props.downloadsPage ?
-        null :
-        <div className="cards">
-          {[
-            [<GithubLogo size={34} weight={'duotone'}/>, 'Open source', 'Free forever for personal use'],
-            [<Keyhole size={34} weight={'duotone'}/>, 'Privacy first', 'You own your data locally forever'],
-            [<DeviceMobile weight={'duotone'} size={34}/>, 'Mobile apps', 'Available for iOS & Android'],
-            [<FileText size={34} weight={'duotone'}/>, 'Markdown files', 'Open your notes in other tools'],
-            [<HandWaving size={34} weight={'duotone'}/>, 'Strong community', (
-              <span className="flex space-x-2 items-center">
+      {!props.hideFeaturesSection &&
+        (props.downloadsPage ?
+          null :
+          <div className="cards">
+            {[
+              [<GithubLogo size={34} weight={'duotone'}/>, 'Open source', 'Free forever for personal use'],
+              [<Keyhole size={34} weight={'duotone'}/>, 'Privacy first', 'You own your data locally forever'],
+              [<DeviceMobile weight={'duotone'} size={34}/>, 'Mobile apps', 'Available for iOS & Android'],
+              [<FileText size={34} weight={'duotone'}/>, 'Markdown files', 'Open your notes in other tools'],
+              [<HandWaving size={34} weight={'duotone'}/>, 'Strong community', (
+                <span className="flex space-x-2 items-center">
               <i className="w-[6px] h-[6px] bg-green-600 rounded-2xl"></i>
               <span className="opacity-50">{appState.discord?.approximate_presence_count.get() || '-'} users online currently</span>
             </span>)],
-            [<Globe size={34} weight={'duotone'}/>, 'Localization', 'Translated in many languages'],
-            [<PuzzlePiece size={34} weight={'duotone'}/>, '150+ Plugins', 'Extend functionality to your needs'],
-            [<Swatches size={34} weight={'duotone'}/>, '30+ Themes', 'Customize look and feel'],
-          ].map(([icon, title, desc]) => {
-            if (typeof desc === 'string') {
-              desc = (<span className="opacity-50">{desc}</span>)
-            }
-            return (
-              <FooterDescCard key={title} icon={icon} title={title} desc={desc}/>
-            )
-          })}
-        </div>}
+              [<Globe size={34} weight={'duotone'}/>, 'Localization', 'Translated in many languages'],
+              [<PuzzlePiece size={34} weight={'duotone'}/>, '150+ Plugins', 'Extend functionality to your needs'],
+              [<Swatches size={34} weight={'duotone'}/>, '30+ Themes', 'Customize look and feel'],
+            ].map(([icon, title, desc]) => {
+              if (typeof desc === 'string') {
+                desc = (<span className="opacity-50">{desc}</span>)
+              }
+              return (
+                <FooterDescCard key={title} icon={icon} title={title} desc={desc}/>
+              )
+            })}
+          </div>)}
 
       {/* features */}
-      {props.downloadsPage ? <FeaturesBoardsDL/> : <FeaturesBoards/>}
+      {
+        !props.hideFeaturesSection &&
+        (props.downloadsPage ? <FeaturesBoardsDL/> : <FeaturesBoards/>)
+      }
 
       {/* downloads */}
       <div className="actions">

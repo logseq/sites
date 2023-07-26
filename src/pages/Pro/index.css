@@ -86,7 +86,7 @@
     @apply relative z-10 flex flex-col items-center;
 
     &-wrap {
-      @apply relative min-h-[800px] pt-10 block;
+      @apply relative min-h-[800px] pt-10;
 
       &:before {
         @apply absolute top-[-200px] left-[50%] translate-x-[-50%]
@@ -97,6 +97,10 @@
         content: " ";
         opacity: .58;
         z-index: 0;
+      }
+
+      .footer-desc {
+        @apply pt-[230px] mt-[-190px];
       }
     }
 
@@ -205,7 +209,7 @@
       @apply my-16 px-56;
 
       > li {
-        @apply bg-logseq-600/90 py-6 relative pl-16 pr-10 mb-8;
+        @apply bg-logseq-600/90 pt-6 pb-4 relative pl-16 pr-10 mb-8;
 
         a {
           @apply absolute top-[22px] left-[22px] bg-logseq-500/90 scale-75
@@ -217,7 +221,7 @@
         }
 
         > h2 {
-          @apply text-lg leading-7 opacity-70;
+          @apply text-lg leading-7 opacity-70 pb-2;
         }
       }
     }

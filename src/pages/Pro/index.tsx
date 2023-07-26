@@ -13,7 +13,7 @@ import {
   Student, Tag, TwitterLogo, UserCirclePlus, Wallet
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
-import { LandingFooterNav } from '../Landing'
+import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
 
 function ProCard ({ children, className, ...rest }: any) {
@@ -113,7 +113,17 @@ function ProInfoSection () {
         </ProCard>
 
         {/*compare button*/}
-        <a className="compare-btn">
+        <a
+          onClick={() => {
+            const el = document.getElementById('choose-the-plan-for-you')
+            if (el) {
+              document.documentElement.scrollTo({
+                top: el.getBoundingClientRect().top - 50,
+                behavior: 'smooth'
+              })
+            }
+          }}
+          className="compare-btn">
           <Database size={20}/>
           <span>Compare plans</span>
         </a>
@@ -280,7 +290,7 @@ function ChoosePlanSection () {
   const [foldedSet, setFoldSet] = useState(new Set())
 
   return (
-    <div className={'choose-plan-section-wrap page-inner-full-wrap b'}>
+    <div className={'choose-plan-section-wrap page-inner-full-wrap b'} id={'choose-the-plan-for-you'}>
       <section className={'choose-plan-section as-section'}>
         <h1>
           Choose the plan
@@ -410,6 +420,24 @@ function ChoosePlanSection () {
           })}
         </ul>
       </section>
+
+      <div className="page-inner footer-desc">
+        <section className="app-landing-footer-desc">
+          <LandingFooterDesc hideFeaturesSection={true}/>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+function FooterSection () {
+  return (
+    <div className="page-inner-full-wrap relative pt-30">
+      <div className="page-inner footer-nav">
+        <div className="page-inner">
+          <LandingFooterNav/>
+        </div>
+      </div>
     </div>
   )
 }
@@ -420,14 +448,7 @@ export function ProPage () {
       <ProInfoSection/>
       <TweetsSection/>
       <ChoosePlanSection/>
-
-      <div className="page-inner-full-wrap relative pt-36">
-        <div className="page-inner footer-nav">
-          <div className="page-inner">
-            <LandingFooterNav/>
-          </div>
-        </div>
-      </div>
+      <FooterSection/>
     </div>
   )
 }
