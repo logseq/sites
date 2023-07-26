@@ -1,17 +1,19 @@
 import './index.css'
 import cx from 'classnames'
 import {
-  ArrowSquareOut,
-  CircleWavyQuestion,
+  ArrowSquareOut, Check, CheckSquare,
+  CircleWavyQuestion, Cube,
   Database,
   FileCloud,
-  Files,
+  Files, HandPointing,
   LockKeyOpen,
   Notebook,
-  ShieldStar,
+  ShieldStar, SignIn,
   Stack,
-  Student, TwitterLogo
+  Student, Tag, TwitterLogo, UserCirclePlus, Wallet
 } from 'phosphor-react'
+import { Button } from '../../components/Buttons'
+import { LandingFooterNav } from '../Landing'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -257,6 +259,89 @@ function ChoosePlanSection () {
           <b>Discover the </b>power of Logseq for free, or <br/>
           <b>unlock</b> advanced features with Logseq <span className="pro-flag">PRO</span>.
         </h2>
+
+        <div className="tabs">
+          <ul>
+            <li className={'active'}>Monthly</li>
+            <li><Tag className={'mr-1.5'} weight={'duotone'} color={'#195D6C'}/>
+              Yearly<sup className={'text-xs text-pro-400'}>-20%</sup></li>
+          </ul>
+        </div>
+
+        <div className="cards">
+          <div className="free as-pro-card">
+            <div className="th">
+              <strong>Free</strong>
+              <h1>Get started with basic syncing</h1>
+            </div>
+            <div className="bd">
+              <h2>Free</h2>
+              <ul>
+                <li>
+                  <HandPointing weight={'duotone'}/>
+                  <span>1 synced graph (up to 50MB)</span>
+                </li>
+                <li>
+                  <HandPointing weight={'duotone'}/>
+                  <span>Limited asset syncing</span>
+                </li>
+                <li>
+                  <CheckSquare weight={'duotone'}/>
+                  <span>Access to core Logseq features</span>
+                </li>
+              </ul>
+
+              {/* link button */}
+              <div className="flex justify-center pt-6 pb-3">
+                <Button className={'w-full !bg-logseq-700/70 !justify-center'}>
+                  <div className="flex items-center space-x-2">
+                    <UserCirclePlus weight={'duotone'} size={20}/>
+                    <span>Create a Logseq account</span>
+                    <strong className="dark-flag">Free</strong>
+                    <SignIn size={20} className={'opacity-50'}/>
+                  </div>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="pro as-pro-card as-pro-border">
+            <div className="th">
+              <strong className={'pro-flag'}>PRO</strong>
+              <h1>Unlock advanced syncing and more</h1>
+            </div>
+            <div className="bd">
+              <h2 className={'flex items-baseline'}>
+                $10 <small className={'pl-1 font-normal text-2xl text-pro-200'}>/ month</small>
+              </h2>
+              <ul className={'text-pro-200'}>
+                <li>
+                  <CheckSquare weight={'duotone'}/>
+                  <span>10 synced graphs (up to 10GB each)</span>
+                </li>
+                <li>
+                  <CheckSquare weight={'duotone'}/>
+                  <span>Sync assets up to 100MB per file</span>
+                </li>
+                <li>
+                  <Cube weight={'duotone'}/>
+                  <span>Early access to beta features</span>
+                </li>
+              </ul>
+
+              <div className="flex justify-center pt-6 pb-3">
+                <Button className={'w-full !bg-pro-500/60 !justify-center'}>
+                  <div className="flex items-center space-x-2">
+                    <Wallet weight={'duotone'} size={20}/>
+                    <span>Subscribe to Logseq</span>
+                    <strong className="light-flag">Pro</strong>
+                    <SignIn size={20} className={'opacity-50'}/>
+                  </div>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   )
@@ -268,6 +353,14 @@ export function ProPage () {
       <ProInfoSection/>
       <TweetsSection/>
       <ChoosePlanSection/>
+
+      <div className="page-inner-full-wrap relative pt-36">
+        <div className="page-inner footer-nav">
+          <div className="page-inner">
+            <LandingFooterNav/>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

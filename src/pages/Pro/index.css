@@ -1,5 +1,5 @@
 .app-page.logseq-pro {
-  @apply pt-16 min-h-screen block pb-40;
+  @apply pt-16 min-h-screen block;
 
   > section, .as-section {
     @apply xl:max-w-screen-xl mx-auto;
@@ -54,6 +54,34 @@
     }
   }
 
+  .as-pro-card {
+    @apply rounded-2xl bg-logseq-600/10 backdrop-blur-md
+    py-8 px-7 overflow-hidden min-h-[200px] mb-8;
+
+    /*noinspection CssInvalidPropertyValue*/
+
+    &:before {
+      content: "";
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(rgba(94, 94, 94, 0.86), rgba(0, 0, 0, 0));
+      -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
+      -webkit-mask-composite: xor;
+    }
+
+    &.as-pro-border {
+      @apply bg-pro-900/30;
+
+      &:before {
+        background: linear-gradient(rgb(60, 186, 243, .86), rgba(255, 255, 255, 0));
+      }
+    }
+  }
+
   .choose-plan-section {
     @apply relative z-10 flex flex-col items-center;
 
@@ -81,6 +109,86 @@
 
       .pro-flag {
         @apply text-xl py-1.5 px-3 mx-1;
+      }
+    }
+
+    > .tabs {
+      @apply flex justify-center pt-16 pb-14;
+
+      > ul {
+        @apply flex items-center bg-[#02171d] rounded-lg p-[1px];
+
+        li {
+          @apply flex items-center text-xl py-3.5 w-[175px] justify-center
+          leading-4 space-x-1 text-pro-200 tracking-wider ml-[2px] font-light
+          select-none;
+
+          &.active {
+            @apply bg-logseq-600/50 rounded-[6px] text-gray-100 overflow-hidden font-medium;
+          }
+        }
+      }
+    }
+
+    > .cards {
+      @apply flex w-full space-x-7 px-28;
+
+      > .free, > .pro {
+        @apply flex-1 relative min-h-[400px] p-0 flex flex-col;
+
+        > .th {
+          @apply px-6 pt-8 pb-3 flex flex-col;
+
+          > h1 {
+            @apply text-2xl leading-4 font-medium tracking-wide py-5;
+          }
+        }
+
+        > .bd {
+          @apply px-[24px] py-4;
+
+          > h2 {
+            @apply text-4xl font-medium pb-2;
+          }
+
+          li {
+            @apply text-xl flex items-center space-x-2 py-1 opacity-80
+            font-normal tracking-wide;
+          }
+        }
+      }
+
+      > .free {
+        > .th {
+          background: linear-gradient(162deg, rgba(6, 98, 119, 0.6) 0%, rgba(0, 0, 0, 0) 45%);
+
+          > strong {
+            @apply font-medium uppercase text-xs  bg-logseq-800 w-fit px-1.5 py-1 rounded
+            tracking-widest text-gray-300/90;
+          }
+
+          > h1 {
+            @apply text-gray-300;
+          }
+        }
+
+        > .bd {
+          @apply bg-logseq-500/95 flex-1;
+        }
+      }
+
+      > .pro {
+        > .th {
+          background: linear-gradient(162deg, rgba(42, 103, 122, 0.6) 0%, rgba(0, 0, 0, 0) 45%);
+
+          > strong {
+            @apply w-fit m-0 text-xs py-0.5 px-1.5 rounded-md border-[2px];
+          }
+        }
+
+        > .bd {
+          @apply bg-pro-900/90 flex-1;
+        }
       }
     }
   }
@@ -267,9 +375,18 @@
     }
   }
 
-
   .pro-flag {
     @apply border-[4px] border-pro-400 text-pro-400 rounded-xl px-5 py-[10px]
     tracking-widest bg-pro-600/40 text-[28px] leading-none ml-10 mr-2 font-bold;
+  }
+
+  .dark-flag {
+    @apply font-medium uppercase text-xs  bg-logseq-800 w-fit px-1.5 py-1 rounded
+    tracking-widest text-gray-300/90;
+  }
+
+  .light-flag {
+    @apply font-bold uppercase text-xs  bg-white w-fit px-1.5 py-[3px] rounded
+    tracking-wide text-pro-600/90;
   }
 }
