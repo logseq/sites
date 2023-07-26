@@ -6,14 +6,15 @@ import {
   Database,
   FileCloud,
   Files, HandPointing,
-  LockKeyOpen,
-  Notebook,
+  LockKeyOpen, Minus,
+  Notebook, Plus,
   ShieldStar, SignIn,
   Stack,
   Student, Tag, TwitterLogo, UserCirclePlus, Wallet
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import { LandingFooterNav } from '../Landing'
+import { useMemo, useState } from 'react'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -247,6 +248,37 @@ function TweetsSection () {
 }
 
 function ChoosePlanSection () {
+  const items = useMemo(() => {
+    return [
+      {
+        title: 'Can I switch between plans? ',
+        desc: 'Yes, you can upgrade or downgrade your plan at any time.' +
+          'If you choose to downgrade, you\'ll maintain access to Pro features' +
+          ' until the end of your billing cycle.'
+      }, {
+        title: 'What happens to my synced graphs if I downgrade from Pro to Free?',
+        desc: 'Upon downgrading, you\'ll need to select one synced graph to keep ' +
+          'within the Free plan and ensure it meets the syncing size limits. If you don\'t make' +
+          ' these adjustments, syncing will pause until you modify your plan or reduce the number' +
+          ' of graphs and files to fit the free limit. Your remaining previously synced graphs' +
+          ' will still be accessible as local files on each synced device. However, once' +
+          ' you stop syncing, any changes made to these files will no longer be updated across all devices.'
+      }, {
+        title: 'Is there a discount for annual subscriptions?',
+        desc: 'Yes, we offer a discount for annual subscriptions. ' +
+          'Choose the yearly option when subscribing to Logseq Pro for a reduced rate.'
+      }, {
+        title: 'Do you offer student pricing?',
+        desc: 'Yes, we provide a 50% discount for students who can show proof of ' +
+          'their university or high school enrollment. To receive the student discount, ' +
+          'please send us your enrollment documentation, and we\'ll help you get started ' +
+          'with Logseq Pro at the discounted rate.'
+      }
+    ]
+  }, [])
+
+  const [foldedSet, setFoldSet] = useState(new Set())
+
   return (
     <div className={'choose-plan-section-wrap page-inner-full-wrap b'}>
       <section className={'choose-plan-section as-section'}>
@@ -342,6 +374,41 @@ function ChoosePlanSection () {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className={'qa-plan-section as-section'}>
+        <h1>
+          <b className={'ls'}>Get answers to</b>
+          <strong>
+            Frequently Asked Questions.
+          </strong>
+        </h1>
+
+        <ul>
+          {items.map(it => {
+            return (
+              <li key={it.title}>
+                <a onClick={() => {
+                  if (foldedSet.has(it.title)) {
+                    foldedSet.delete(it.title)
+                  } else {
+                    foldedSet.add(it.title)
+                  }
+
+                  setFoldSet(new Set(foldedSet))
+                }}>
+                  {foldedSet.has(it.title) ?
+                    (<Plus weight={'bold'} size={26}/>) :
+                    (<Minus weight={'bold'} size={26}/>)
+                  }
+
+                </a>
+                <h1>{it.title}</h1>
+                {!foldedSet.has(it.title) && (<h2>{it.desc}</h2>)}
+              </li>
+            )
+          })}
+        </ul>
       </section>
     </div>
   )

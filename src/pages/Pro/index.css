@@ -193,6 +193,36 @@
     }
   }
 
+  .qa-plan-section {
+    @apply min-h-[600px];
+
+    > h1 {
+      @apply text-6xl flex justify-center flex-col items-center
+      mt-24 leading-[1.1em] tracking-wide;
+    }
+
+    > ul {
+      @apply my-16 px-56;
+
+      > li {
+        @apply bg-logseq-600/90 py-6 relative pl-16 pr-10 mb-8;
+
+        a {
+          @apply absolute top-[22px] left-[22px] bg-logseq-500/90 scale-75
+          active:opacity-80 cursor-pointer select-none p-0.5;
+        }
+
+        > h1 {
+          @apply text-2xl leading-none pt-0 pb-3 font-medium;
+        }
+
+        > h2 {
+          @apply text-lg leading-7 opacity-70;
+        }
+      }
+    }
+  }
+
   .plans-card {
     @apply pt-11 px-8 min-h-[850px];
 
@@ -265,7 +295,7 @@
           @apply flex flex-col pl-14 mb-3 relative;
 
           > strong {
-            @apply text-xl font-[400];
+            @apply text-xl font-[400] tracking-wider;
           }
 
           > span {
