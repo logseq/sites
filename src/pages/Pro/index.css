@@ -7,6 +7,10 @@
     b {
       @apply font-[500] text-pro-200;
 
+      &.thin {
+        @apply font-[400];
+      }
+
       &.ls {
         @apply text-[#a4b5b6];
       }
@@ -17,12 +21,16 @@
     }
 
     &.pro-info {
-      @apply min-h-[880px] relative flex flex-col pt-10 px-14;
+      @apply min-h-[880px] relative flex flex-col px-5 pt-3 sm:pt-10 sm:px-14;
 
       > .bg {
         @apply w-full h-[500px] absolute left-1/2 translate-x-[-50%] top-32 z-0;
 
         background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 70%);
+      }
+
+      .pro-flag {
+        @apply relative top-[-4px] sm:top-0;
       }
     }
 
@@ -410,8 +418,9 @@
   }
 
   .pro-flag {
-    @apply border-[4px] border-pro-400 text-pro-400 rounded-xl px-5 py-[10px]
-    tracking-widest bg-pro-600/40 text-[28px] leading-none ml-10 mr-2 font-bold;
+    @apply border-[3px] py-[5px] text-[14px] px-2 rounded-md ml-2
+    sm:border-[4px] border-pro-400 text-pro-400 sm:rounded-xl sm:px-5 sm:py-[10px]
+    tracking-widest bg-pro-600/40 sm:text-[28px] leading-none sm:ml-10 mr-2 font-bold;
   }
 
   .dark-flag {

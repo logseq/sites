@@ -28,13 +28,22 @@ function ProInfoSection () {
   return (
     <section className={'pro-info'}>
       {/*head text*/}
-      <div className={'flex flex-col items-center pt-12 z-10 font-bold'}>
-        <h1 className={'text-6xl flex items-center'}>
-          Experience <b className={'ml-4'}>the benefits of</b>
+      <div className={'flex flex-col items-center z-10 font-bold pt-10 sm:pt-12'}>
+        <h1 className={'text-3xl sm:flex items-center sm:text-6xl tracking-wide leading-[2.5rem]'}>
+          <span>Experience</span>
+          <b className={'ml-2 sm:ml-4'}>
+            <span className={'pr-10 sm:pr-0'}>the</span> benefits of</b>
           <strong className={'pro-flag'}>PRO</strong>
-          <b>.</b></h1>
-        <h2 className={'text-4xl font-medium'}>
-          <b>Boost your</b> workflows and creativity across all devices.</h2>
+          <b>.</b>
+        </h1>
+
+        <h2 className={'hidden sm:block text-4xl font-medium'}>
+          <b>Boost your</b> workflows and creativity across all devices.
+        </h2>
+
+        <h2 className={'sm:hidden text-2xl font-medium pt-2'}>
+          <b className={'thin'}>Collect your thoughts and get inspired.</b> Your train-of-thought is waiting for you!
+        </h2>
       </div>
 
       {/*price card*/}
