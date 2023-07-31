@@ -26,7 +26,11 @@
       > .bg {
         @apply w-full h-[500px] absolute left-1/2 translate-x-[-50%] top-32 z-0;
 
-        background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 70%);
+        background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 20%);
+
+        @screen sm {
+          background: radial-gradient(ellipse, rgba(60, 186, 243, .6) 0%, transparent 70%);
+        }
       }
 
       .pro-flag {
@@ -249,8 +253,8 @@
       @apply bg-right-bottom bg-no-repeat;
 
       background-image: url("./assets/pro_card_bg2.png");
-      background-size: 96%;
-      padding-bottom: 200px;
+      background-size: 94%;
+      padding-bottom: 180px;
     }
 
     &.c {
@@ -297,21 +301,22 @@
         @apply relative pb-0.5;
 
         &:before {
-          @apply absolute w-[4px] h-[100%] top-[32px] left-[20px]
+          @apply absolute w-[4px] h-[100%]
+          top-[18px] sm:top-[32px] left-[20px]
           from-pro-600 to-transparent bg-gradient-to-b;
 
           content: " ";
         }
 
         > li {
-          @apply flex flex-col pl-14 mb-3 relative;
+          @apply flex flex-col pl-14 mb-6 sm:mb-3 relative;
 
           > strong {
             @apply text-xl font-[400] tracking-wider;
           }
 
           > span {
-            @apply text-sm opacity-70 py-1;
+            @apply hidden sm:block text-sm opacity-70 py-1;
 
             b {
               @apply font-normal;
@@ -319,7 +324,8 @@
           }
 
           &:before {
-            @apply w-[16px] h-[16px] absolute top-[20px] left-[14px]
+            @apply w-[16px] h-[16px] absolute
+            top-[6px] sm:top-[20px] left-[14px]
             bg-pro-500 rounded-full overflow-hidden;
 
             content: " ";
