@@ -258,18 +258,19 @@
     }
 
     &.c {
-      @apply absolute mx-0 px-4 left-0 bottom-0 pt-0 pb-0
-      w-full min-h-0 h-[170px] flex items-center select-none;
+      @apply absolute mx-0 left-0 bottom-0
+      w-full min-h-0 sm:h-[170px] sm:flex sm:items-center select-none
+      space-y-12 py-12 px-8 sm:px-4 sm:py-0 sm:space-y-0;
 
       > span {
-        @apply flex flex-1 justify-center items-center;
+        @apply flex flex-1 sm:justify-center items-center space-x-2;
 
         > strong {
-          @apply text-4xl font-[400] ml-1 mr-4;
+          @apply text-2xl sm:text-4xl font-[400] ml-1 mr-4;
         }
 
         > small {
-          @apply text-pro-200 text-[18px];
+          @apply text-pro-200 font-[300] text-xl sm:text-[18px];
         }
       }
     }
@@ -352,7 +353,7 @@
 
     .tweet-card {
       @apply rounded-2xl bg-logseq-700/20 backdrop-blur-3xl
-      py-8 px-7 overflow-hidden min-h-[200px] mb-8;
+      pt-7 pb-6 px-7 overflow-hidden min-h-[200px] mb-8;
 
       b {
         @apply font-light;

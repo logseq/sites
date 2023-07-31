@@ -50,7 +50,7 @@ function ProInfoSection () {
       </div>
 
       {/*price card*/}
-      <div className={'block space-y-6 sm:space-y-0 sm:flex pt-14 sm:space-x-6 z-10 relative pb-[190px]'}>
+      <div className={'block space-y-6 sm:space-y-0 sm:flex pt-14 sm:space-x-6 z-10 relative pb-[418px] sm:pb-[190px]'}>
         <ProCard className={'plans-card a flex-col flex-1'}>
           <i><FileCloud size={38} weight={'duotone'}/></i>
           <h1>
