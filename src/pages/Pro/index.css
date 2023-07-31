@@ -236,26 +236,25 @@
   }
 
   .plans-card {
-    @apply pt-11 px-8 min-h-[850px];
+    @apply px-3 pt-6 sm:pt-11 sm:px-8 sm:min-h-[850px];
 
     &.a {
+      @apply bg-left-bottom bg-no-repeat bg-contain;
+
       background-image: url("./assets/pro_card_bg1.png");
-      background-size: 100%;
-      background-position-x: left;
-      background-position-y: bottom;
-      background-repeat: no-repeat;
+      padding-bottom: 300px;
     }
 
     &.b {
+      @apply bg-right-bottom bg-no-repeat;
+
       background-image: url("./assets/pro_card_bg2.png");
-      background-size: 97%;
-      background-position-x: right;
-      background-position-y: bottom;
-      background-repeat: no-repeat;
+      background-size: 96%;
+      padding-bottom: 200px;
     }
 
     &.c {
-      @apply absolute mx-0 px-4 left-0 bottom-0 pt-0
+      @apply absolute mx-0 px-4 left-0 bottom-0 pt-0 pb-0
       w-full min-h-0 h-[170px] flex items-center select-none;
 
       > span {
@@ -281,7 +280,8 @@
     }
 
     > h1 {
-      @apply pt-4 leading-[44px] tracking-wide pl-[0.5];
+      @apply font-medium text-2xl pt-4 tracking-wide pl-[0.5]
+      sm:text-4xl sm:leading-[44px] sm:font-normal;
     }
 
     > h2 {
@@ -391,7 +391,7 @@
   }
 
   .compare-btn {
-    @apply absolute top-[34px] left-[50%] flex items-center
+    @apply hidden absolute top-[34px] left-[50%] sm:flex items-center
     translate-x-[-62%] px-4 py-2 space-x-1.5 rounded-lg bg-pro-700 select-none
     border-transparent border-[2px] cursor-pointer active:bg-pro-800 active:border-pro-700;
 

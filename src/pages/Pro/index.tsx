@@ -15,6 +15,7 @@ import {
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
+import { useAppState } from '../../state'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -25,14 +26,16 @@ function ProCard ({ children, className, ...rest }: any) {
 }
 
 function ProInfoSection () {
+  const appState = useAppState()
+
   return (
     <section className={'pro-info'}>
       {/*head text*/}
-      <div className={'flex flex-col items-center z-10 font-bold pt-10 sm:pt-12'}>
+      <div className={'flex flex-col sm:items-center z-10 font-bold pt-10 sm:pt-12'}>
         <h1 className={'text-3xl sm:flex items-center sm:text-6xl tracking-wide leading-[2.5rem]'}>
           <span>Experience</span>
           <b className={'ml-2 sm:ml-4'}>
-            <span className={'pr-10 sm:pr-0'}>the</span> benefits of</b>
+            the {appState.sm.get() ? <br/> : ''} benefits of</b>
           <strong className={'pro-flag'}>PRO</strong>
           <b>.</b>
         </h1>
@@ -47,20 +50,21 @@ function ProInfoSection () {
       </div>
 
       {/*price card*/}
-      <div className={'flex pt-14 space-x-6 z-10 relative pb-[190px]'}>
+      <div className={'block space-y-6 sm:space-y-0 sm:flex pt-14 sm:space-x-6 z-10 relative pb-[190px]'}>
         <ProCard className={'plans-card a flex-col flex-1'}>
           <i><FileCloud size={38} weight={'duotone'}/></i>
-          <h1 className={'text-4xl'}>
+          <h1>
             <b>Enjoy</b> advanced <br/> syncing options.
           </h1>
-          <h2 className={'text-xl'}>
+          <h2 className={'hidden sm:block text-xl'}>
             <b>Benefit from our</b> smart merging system for seamless syncing,
             <b className={'ml-2'}>as well as</b> expanded storage and larger <br/>asset support
             <b className={'ml-2'}>across all devices.</b>
           </h2>
-          <h3 className={'flex items-center bg-pro-900/90 rounded-lg mt-4 py-2 px-4 leading-none'}>
-            <ShieldStar weight={'duotone'} size={32}/>
-            <span className={'text-xl ml-2 font-medium'}>
+          <h3
+            className={'px-2 flex items-center bg-pro-900/90 rounded-lg mt-4 py-2 sm:px-4 leading-none tracking-normal'}>
+            <ShieldStar weight={'duotone'} size={appState.sm.get() ? 22 : 32}/>
+            <span className={'text-sm sm:text-xl ml-2 font-medium'}>
               Always end-to-end encrypted
               <b className={'font-normal ml-2'}>on all plans.</b>
             </span>
@@ -69,10 +73,10 @@ function ProInfoSection () {
 
         <ProCard className={'plans-card b flex-1'}>
           <i><LockKeyOpen size={38} weight={'duotone'}/></i>
-          <h1 className={'text-4xl'}>
+          <h1>
             <b>Get</b> early access to <br/>cutting-edge features.
           </h1>
-          <h2 className={'text-xl'}>
+          <h2 className={'hidden sm:block text-xl'}>
             <b>Be the first to upgrade your workflows with</b> exclusive <br/>access to beta features,
             <b className={'ml-2'}>helping shape the future of <br/>Logseq.</b>
           </h2>
