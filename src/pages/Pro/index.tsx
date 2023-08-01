@@ -19,7 +19,7 @@ import { useAppState } from '../../state'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
-    <div className={cx('ui-pro-card', className)} {...rest}>
+    <div className={cx('as-pro-card', className)} {...rest}>
       {children}
     </div>
   )
@@ -51,7 +51,7 @@ function ProInfoSection () {
 
       {/*price card*/}
       <div className={'block space-y-6 sm:space-y-0 sm:flex pt-14 sm:space-x-6 z-10 relative pb-[418px] sm:pb-[190px]'}>
-        <ProCard className={'plans-card a flex-col flex-1'}>
+        <ProCard className={'plans-card as-pro-border a sm:flex-1'}>
           <i><FileCloud size={38} weight={'duotone'}/></i>
           <h1>
             <b>Enjoy</b> advanced <br/> syncing options.
@@ -71,7 +71,7 @@ function ProInfoSection () {
           </h3>
         </ProCard>
 
-        <ProCard className={'plans-card b flex-1'}>
+        <ProCard className={'plans-card as-pro-border b sm:flex-1'}>
           <i><LockKeyOpen size={38} weight={'duotone'}/></i>
           <h1>
             <b>Get</b> early access to <br/>cutting-edge features.

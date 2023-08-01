@@ -248,7 +248,7 @@
   }
 
   .plans-card {
-    @apply px-3 pt-6 sm:pt-11 sm:px-8 sm:min-h-[850px];
+    @apply relative px-3 pt-6 sm:pt-11 sm:px-8 sm:min-h-[850px];
 
     &.a {
       @apply bg-left-bottom bg-no-repeat bg-contain;
@@ -411,25 +411,6 @@
     border-transparent border-[2px] cursor-pointer active:bg-pro-800 active:border-pro-700;
 
     box-shadow: 1px 0 10px #016c9b;
-  }
-
-  .ui-pro-card {
-    @apply rounded-2xl bg-logseq-600/30 backdrop-blur-3xl overflow-hidden;
-
-    /*noinspection CssInvalidPropertyValue*/
-
-    &:before {
-      content: "";
-      pointer-events: none;
-      user-select: none;
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(rgb(60, 186, 243, .8), rgba(255, 255, 255, .1));
-      -webkit-mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
-      -webkit-mask-composite: xor;
-    }
   }
 
   .pro-flag {
