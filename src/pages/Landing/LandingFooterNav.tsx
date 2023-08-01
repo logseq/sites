@@ -234,12 +234,12 @@ export function LandingFooterDesc (props: {
 
       {/* downloads */}
       <div className="actions">
-        <h1 className="text-4xl leading-9 sm:leading-normal sm:text-6xl tracking-wide">
+        <h1 className="text-4xl leading-10 sm:leading-normal sm:text-6xl tracking-wide">
           <span className="opacity-70">Think faster, </span>
           <strong className="font-semibold">think better!</strong>
         </h1>
 
-        <h2 className="text-lg mt-2 sm:mt-0 sm:text-3xl sm:text-center sm:tracking-wide">
+        <h2 className="text-lg mt-4 sm:mt-0 sm:text-3xl sm:text-center sm:tracking-wide">
           <strong className="opacity-70 font-normal">By thinking and writing with Logseq, you'll </strong><br/>
           <span className="">gain confidence in what you know and <br/>
             stop worrying about forgetting </span>

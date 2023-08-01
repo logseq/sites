@@ -95,44 +95,51 @@
   }
 
   .choose-plan-section {
-    @apply relative z-10 flex flex-col items-center;
+    @apply relative top-[-150px] sm:top-0
+    z-10 flex flex-col sm:items-center;
 
     &-wrap {
-      @apply relative min-h-[800px] pt-10;
+      @apply relative px-4 !mt-[298px] sm:!mt-0
+      sm:px-0 sm:min-h-[800px] sm:pt-10;
 
       &:before {
-        @apply absolute top-[-200px] left-[50%] translate-x-[-50%]
-        rounded-full h-[5600px] w-[250%];
+        @apply absolute top-[-230px] sm:top-[-200px] left-[50%] translate-x-[-50%]
+        rounded-full h-[5600px] w-[250%] opacity-30 sm:opacity-80;
 
         background: linear-gradient(180deg, rgb(0, 174, 255) 0%, rgba(155, 153, 148, 0) 10%);
         box-shadow: 1px 1px 28px #03a8f3;
         content: " ";
-        opacity: .58;
         z-index: 0;
       }
 
       .footer-desc {
-        @apply pt-[230px] mt-[-190px];
+        @apply mt-[-220px] sm:pt-[230px] sm:mt-[-190px];
+
+        .app-landing-footer-desc {
+          @apply px-0;
+        }
       }
     }
 
     > h1 {
-      @apply font-bold text-6xl text-center leading-[4rem] tracking-wide;
+      @apply text-3xl font-bold sm:text-6xl sm:text-center sm:leading-[4rem] tracking-wide;
     }
 
     > h2 {
-      @apply text-4xl leading-[2.8rem] pt-10 text-center tracking-wide;
+      @apply text-2xl pt-3 sm:text-4xl sm:leading-[2.8rem]
+      sm:pt-10 sm:text-center tracking-wide;
 
       .pro-flag {
-        @apply text-xl py-1.5 px-3 mx-1;
+        @apply border-[2px] sm:border-[3px] sm:text-xl sm:py-1.5 px-3 mx-2;
       }
     }
 
     > .tabs {
-      @apply flex justify-center pt-16 pb-14;
+      @apply flex justify-center pt-8 pb-8 sm:pt-16 sm:pb-14;
 
       > ul {
-        @apply flex items-center bg-[#02171d] rounded-lg p-[1px];
+        @apply flex items-center bg-[#02171d] rounded-lg p-[1px]
+        w-full sm:w-auto;
 
         li {
           @apply flex items-center text-xl py-3.5 w-[175px] justify-center
@@ -147,29 +154,30 @@
     }
 
     > .cards {
-      @apply flex w-full space-x-7 px-28;
+      @apply sm:flex w-full sm:space-x-7 sm:px-28;
 
       > .free, > .pro {
         @apply flex-1 relative min-h-[400px] p-0 flex flex-col;
 
         > .th {
-          @apply px-6 pt-8 pb-3 flex flex-col;
+          @apply pt-5 px-5 pb-2 flex flex-col
+          sm:px-6 sm:pt-8 sm:pb-3;
 
           > h1 {
-            @apply text-2xl leading-4 font-medium tracking-wide py-5;
+            @apply text-xl sm:text-2xl leading-4 font-medium tracking-wide py-5;
           }
         }
 
         > .bd {
-          @apply px-[24px] py-4;
+          @apply px-[18px] sm:px-[24px] py-4;
 
           > h2 {
             @apply text-4xl font-medium pb-2;
           }
 
           li {
-            @apply text-xl flex items-center space-x-2 py-1 opacity-80
-            font-normal tracking-wide;
+            @apply text-lg sm:text-xl flex items-center space-x-2 py-1 opacity-80
+            font-normal sm:tracking-wide;
           }
         }
       }

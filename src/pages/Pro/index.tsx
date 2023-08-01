@@ -299,8 +299,8 @@ function ChoosePlanSection () {
       }
     ]
   }, [])
-
   const [foldedSet, setFoldSet] = useState(new Set())
+  const appState = useAppState()
 
   return (
     <div className={'choose-plan-section-wrap page-inner-full-wrap b'} id={'choose-the-plan-for-you'}>
@@ -311,8 +311,10 @@ function ChoosePlanSection () {
           <b>that's right for you.</b>
         </h1>
         <h2>
-          <b>Discover the </b>power of Logseq for free, or <br/>
-          <b>unlock</b> advanced features with Logseq <span className="pro-flag">PRO</span>.
+          <b>Discover the </b>power of Logseq for free<b>, or</b>
+          {!appState.sm.get() ? <br/> : ' '}
+          <b>unlock</b> advanced features with Logseq
+          <span className="pro-flag">PRO</span>.
         </h2>
 
         <div className="tabs">
@@ -399,40 +401,41 @@ function ChoosePlanSection () {
         </div>
       </section>
 
-      <section className={'qa-plan-section as-section'}>
-        <h1>
-          <b className={'ls'}>Get answers to</b>
-          <strong>
-            Frequently Asked Questions.
-          </strong>
-        </h1>
+      {!appState.sm.get() &&
+        (<section className={'qa-plan-section as-section'}>
+          <h1>
+            <b className={'ls'}>Get answers to</b>
+            <strong>
+              Frequently Asked Questions.
+            </strong>
+          </h1>
 
-        <ul>
-          {items.map(it => {
-            return (
-              <li key={it.title}>
-                <a onClick={() => {
-                  if (foldedSet.has(it.title)) {
-                    foldedSet.delete(it.title)
-                  } else {
-                    foldedSet.add(it.title)
-                  }
+          <ul>
+            {items.map(it => {
+              return (
+                <li key={it.title}>
+                  <a onClick={() => {
+                    if (foldedSet.has(it.title)) {
+                      foldedSet.delete(it.title)
+                    } else {
+                      foldedSet.add(it.title)
+                    }
 
-                  setFoldSet(new Set(foldedSet))
-                }}>
-                  {foldedSet.has(it.title) ?
-                    (<Plus weight={'bold'} size={26}/>) :
-                    (<Minus weight={'bold'} size={26}/>)
-                  }
+                    setFoldSet(new Set(foldedSet))
+                  }}>
+                    {foldedSet.has(it.title) ?
+                      (<Plus weight={'bold'} size={26}/>) :
+                      (<Minus weight={'bold'} size={26}/>)
+                    }
 
-                </a>
-                <h1>{it.title}</h1>
-                {!foldedSet.has(it.title) && (<h2>{it.desc}</h2>)}
-              </li>
-            )
-          })}
-        </ul>
-      </section>
+                  </a>
+                  <h1>{it.title}</h1>
+                  {!foldedSet.has(it.title) && (<h2>{it.desc}</h2>)}
+                </li>
+              )
+            })}
+          </ul>
+        </section>)}
 
       <div className="page-inner footer-desc">
         <section className="app-landing-footer-desc">
@@ -456,10 +459,12 @@ function FooterSection () {
 }
 
 export function ProPage () {
+  const appState = useAppState()
+
   return (
     <div className={'app-page logseq-pro'}>
       <ProInfoSection/>
-      <TweetsSection/>
+      {!appState.sm.get() && <TweetsSection/>}
       <ChoosePlanSection/>
       <FooterSection/>
     </div>
