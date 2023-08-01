@@ -2,7 +2,7 @@
   @apply pt-16 min-h-screen block;
 
   > section, .as-section {
-    @apply xl:max-w-screen-xl mx-auto;
+    @apply w-full xl:max-w-screen-xl mx-auto;
 
     b {
       @apply font-[500] text-pro-200;
@@ -154,14 +154,14 @@
     }
 
     > .cards {
-      @apply sm:flex w-full sm:space-x-7 sm:px-28;
+      @apply w-full sm:flex sm:space-x-7 sm:px-32;
 
       > .free, > .pro {
         @apply flex-1 relative min-h-[400px] p-0 flex flex-col;
 
         > .th {
           @apply pt-5 px-5 pb-2 flex flex-col
-          sm:px-6 sm:pt-8 sm:pb-3;
+          sm:px-6 sm:pt-8 sm:pb-2;
 
           > h1 {
             @apply text-xl sm:text-2xl leading-4 font-medium tracking-wide py-5;
@@ -169,7 +169,7 @@
         }
 
         > .bd {
-          @apply px-[18px] sm:px-[24px] py-4;
+          @apply px-[18px] sm:px-[24px] py-3.5;
 
           > h2 {
             @apply text-4xl font-medium pb-2;
