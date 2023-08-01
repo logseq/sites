@@ -99,12 +99,12 @@
     z-10 flex flex-col sm:items-center;
 
     &-wrap {
-      @apply relative px-4 !mt-[298px] sm:!mt-0
+      @apply relative px-4 !mt-[240px] sm:!mt-0
       sm:px-0 sm:min-h-[800px] sm:pt-10;
 
       &:before {
         @apply absolute top-[-230px] sm:top-[-200px] left-[50%] translate-x-[-50%]
-        rounded-full h-[5600px] w-[250%] opacity-30 sm:opacity-80;
+        rounded-full h-[3000px] w-[800px] sm:h-[6000px] sm:w-[5800px] opacity-30 sm:opacity-80;
 
         background: linear-gradient(180deg, rgb(0, 174, 255) 0%, rgba(155, 153, 148, 0) 10%);
         box-shadow: 1px 1px 28px #03a8f3;
