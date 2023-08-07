@@ -1,7 +1,7 @@
 import './index.css'
 import cx from 'classnames'
 import {
-  ArrowSquareOut, Check, CheckSquare,
+  ArrowSquareOut, ChatsCircle, CheckSquare,
   CircleWavyQuestion, Cube,
   Database,
   FileCloud,
@@ -120,7 +120,12 @@ function ProInfoSection () {
             <p className={'flex flex-col pl-2'}>
               <strong className={'flex text-xl font-medium items-center'}>Student pricing
                 <i className={'ml-1 text-pro-200'}><CircleWavyQuestion/></i></strong>
-              <small>Contact us</small>
+              <a
+                className={'bg-pro-600 mr-10 mt-1 rounded-md leading-none px-2 py-1.5 text-xs flex space-x-1 items-center ' +
+                  'opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer'}>
+                <ChatsCircle weight={'duotone'} size={14}/>
+                <span>Contact us</span>
+              </a>
             </p>
           </span>
         </ProCard>

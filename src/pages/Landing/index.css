@@ -43,9 +43,6 @@ h1, h2, h3 {
     @apply pt-0 sm:pt-16;
   }
 
-  .item-wrap {
-  }
-
   .text-1 {
     @apply pt-8 px-4
     sm:pt-16 sm:items-center;
