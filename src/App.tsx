@@ -8,9 +8,10 @@ import {
   useDiscordState,
   useReleasesState,
 } from './state'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { ProPage } from './pages/Pro'
+import { UserEntryPage } from './pages/User'
 
 export function App () {
   const appState = useAppState()
@@ -48,6 +49,7 @@ export function App () {
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/pro'} element={<ProPage/>}></Route>
+          <Route path={'/users'} element={<UserEntryPage/>}></Route>
         </Routes>
       </main>
     </div>

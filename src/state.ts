@@ -1,4 +1,4 @@
-import { hookstate, useHookstate} from '@hookstate/core'
+import { hookstate, useHookstate } from '@hookstate/core'
 
 // @ts-ignore
 import os from 'platform-detect/os.mjs'
@@ -13,6 +13,7 @@ export const checkSmBreakPoint = () => {
 
 const appState = hookstate({
   os, sm: checkSmBreakPoint(),
+  userInfo: { pending: false, username: null, signInUserSession: null, attributes: null, signOut: () => {} },
   releases: {
     fetching: false,
     downloads: {}, // macos -> download url

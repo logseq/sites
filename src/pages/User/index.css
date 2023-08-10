@@ -1,0 +1,16 @@
+[data-amplify-authenticator] [data-amplify-router] {
+  --amplify-components-authenticator-router-background-color: #F5FEFB;
+  --amplify-components-authenticator-state-inactive-background-color: #cde9ff;
+}
+
+.app-page.user-entry {
+  @apply pt-[100px] w-full xl:max-w-screen-xl mx-auto;
+
+  .login-pane {
+    @apply min-h-[88vh] w-full p-10 flex items-center justify-center;
+  }
+}
+
+.federated-sign-in-container {
+  display: none;
+}
