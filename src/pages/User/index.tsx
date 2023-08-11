@@ -1,9 +1,10 @@
 import './index.css'
 import { setupAuthConfigure } from './amplify'
 import { LoginPane } from './Login'
-import { useAppState } from '../../state'
+import { useAppState, useProState } from '../../state'
 import { Button } from '../../components/Buttons'
-import { SignOut, Spinner } from 'phosphor-react'
+import { SignOut, Spinner, Star } from 'phosphor-react'
+import { Card } from '@aws-amplify/ui-react'
 
 // setup amplify configures
 setupAuthConfigure({
@@ -16,13 +17,14 @@ setupAuthConfigure({
 function UserEntryPage () {
   const appState = useAppState()
   const userInfo = appState.userInfo.get({ noproxy: true })
+  const proState = useProState().get()
 
   let pane = <></>
 
   if (userInfo.username) {
     pane = (
       <div>
-        <p className={'flex space-x-6'}>
+        <p className={'flex space-x-6 items-center justify-around'}>
           <h1 className={'text-4xl'}>Hi, {userInfo.username}!</h1>
           <Button
             className={'text-lg'}
@@ -34,6 +36,18 @@ function UserEntryPage () {
           >
             Sign out
           </Button>
+
+          <Card className={'!bg-orange-600'}>
+            {proState?.info.ProUser ?
+              (<>
+                <b>&lt;Status&gt; Pro user! </b> <br/>
+                <b>&lt;Group&gt; {proState.info.UserGroups?.toString()}</b> <br/>
+                <b>&lt;Graph limit&gt; {proState.info.GraphCountLimit}</b> <br/>
+                <b>&lt;Storage limit&gt; {proState.info.StorageLimit / 1024 / 1024 / 1024} G</b> <br/>
+                <b>&lt;Expired At&gt; {(new Date(proState.info.ExpireTime * 1000)).toLocaleDateString()}</b> <br/>
+              </>) :
+              (<b>Not a Pro user!</b>)}
+          </Card>
         </p>
         <pre className={'whitespace-pre w-56'}>
           {JSON.stringify(userInfo.attributes, null, 2)}

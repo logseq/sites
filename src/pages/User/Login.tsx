@@ -1,5 +1,5 @@
 import { Authenticator, CheckboxField, useAuthenticator, AccountSettings } from '@aws-amplify/ui-react'
-import { useAppState } from '../../state'
+import { useAppState, useProState } from '../../state'
 import { Auth } from 'aws-amplify'
 
 function LSAuthenticator ({ termsLink, children }: any) {

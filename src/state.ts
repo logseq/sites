@@ -1,4 +1,5 @@
 import { hookstate, useHookstate } from '@hookstate/core'
+import { IProInfo } from './types'
 
 // @ts-ignore
 import os from 'platform-detect/os.mjs'
@@ -26,8 +27,12 @@ const appState = hookstate({
   },
 })
 
+const proState =
+  hookstate<{ info: IProInfo } | null>(null)
+
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
+const fileSyncEndpoint = 'https://api.logseq.com/file-sync'
 
 export function useReleasesState () {
   const state = useAppState()
@@ -108,6 +113,38 @@ export function useDiscordState () {
 
 export function useAppState () {
   return useHookstate(appState)
+}
+
+export function useProState () {
+  const appState = useAppState()
+  const userInfo = appState.userInfo.get()
+  const hookProState = useHookstate(proState)
+
+  // @ts-ignore
+  const idToken = userInfo.signInUserSession?.idToken?.jwtToken
+
+  useEffect(() => {
+    if (!idToken) {
+      hookProState.set(null)
+    } else {
+      requestProInfo()
+        .then((info) => proState.set({ info }))
+        .catch(e => console.error('[Request ProState] ', e))
+    }
+
+    async function requestProInfo () {
+      const resp = await fetch(`${fileSyncEndpoint}/user_info`,
+        { method: 'POST', headers: { Authorization: `Bearer ${idToken}` } })
+
+      if (resp.status !== 200) {
+        throw new Error(resp.statusText)
+      }
+
+      return resp.json()
+    }
+  }, [idToken])
+
+  return hookProState
 }
 
 // @ts-ignore
