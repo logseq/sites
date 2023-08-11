@@ -4,6 +4,24 @@ import { IProInfo } from './types'
 // @ts-ignore
 import os from 'platform-detect/os.mjs'
 import { useEffect } from 'react'
+import { useAuthenticator } from '@aws-amplify/ui-react'
+import { Auth } from 'aws-amplify'
+import toast from 'react-hot-toast'
+
+export const authConfig = {
+  region: 'us-east-1',
+  userPoolId: 'us-east-1_dtagLnju8',
+  userPoolWebClientId: '69cs1lgme7p8kbgld8n5kseii6',
+  oauthProviders: []
+}
+
+function getAuthValueFromStorage (key: string) {
+  const prefix = `CognitoIdentityServiceProvider.${authConfig.userPoolWebClientId}`
+  const authUser = localStorage.getItem(`${prefix}.${authConfig.userPoolWebClientId}.LastAuthUser`)
+  if (!authUser) return
+
+  return localStorage.getItem(`${prefix}.${authConfig.userPoolWebClientId}.${authUser}.${key?.trim()}`)
+}
 
 export const checkSmBreakPoint = () => {
   return (
@@ -14,11 +32,17 @@ export const checkSmBreakPoint = () => {
 
 const appState = hookstate({
   os, sm: checkSmBreakPoint(),
-  userInfo: { pending: false, username: null, signInUserSession: null, attributes: null, signOut: () => {} },
+  userInfo: {
+    pending: false,
+    username: null,
+    signInUserSession: null,
+    attributes: null,
+    signOut: () => {}
+  },
   releases: {
     fetching: false,
     downloads: {}, // macos -> download url
-    fetchErr: null,
+    error: null,
   },
   discord: {
     guild: null,
@@ -28,17 +52,47 @@ const appState = hookstate({
 })
 
 const proState =
-  hookstate<{ info: IProInfo } | null>(null)
+  hookstate<Partial<{ info: IProInfo, fetching: boolean, error: Error }>>({})
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
 const fileSyncEndpoint = 'https://api.logseq.com/file-sync'
 
+export function useAuthUserInfoState () {
+  const { user }: any = useAuthenticator(
+    ({ route, signOut, user }) => [route, signOut, user]
+  )
+
+  useEffect(() => {
+    if (user?.username && user?.pool) {
+      appState.userInfo.set({
+        signOut: async () => {
+          console.time()
+          appState.userInfo.pending.set(true)
+          await Auth.signOut()
+          appState.userInfo.pending.set(false)
+          console.timeEnd()
+          appState.userInfo.set({} as any)
+        }, username: user.username,
+        signInUserSession: user.signInUserSession,
+        attributes: user.attributes,
+        pending: false
+      })
+
+      // TODO: debug
+      toast.success(
+        `Hi, ${user.username} !`, {
+          position: 'top-center'
+        })
+    }
+  }, [user?.username])
+}
+
 export function useReleasesState () {
   const state = useAppState()
 
   useEffect(() => {
-    if (!state.releases.fetching.get()) {
+    if (!state.releases.fetching.value) {
       state.releases.fetching.set(true)
 
       fetch(releasesEndpoint).then(res => res.json()).then((json) => {
@@ -83,7 +137,7 @@ export function useReleasesState () {
           throw new Error('Parse latest release failed!')
         }
       }).catch(e => {
-        state.releases.fetchErr.set(e)
+        state.releases.error.set(e)
       }).finally(() => {
         state.releases.fetching.set(false)
       })
@@ -125,11 +179,16 @@ export function useProState () {
 
   useEffect(() => {
     if (!idToken) {
-      hookProState.set(null)
+      hookProState.set({})
     } else {
+      hookProState.fetching?.set(true)
       requestProInfo()
-        .then((info) => proState.set({ info }))
-        .catch(e => console.error('[Request ProState] ', e))
+        .then((info) => hookProState.info.set(info))
+        .catch(e => {
+          console.error('[Request ProState] ', e)
+          hookProState.error.set(e)
+        })
+        .finally(() => hookProState.fetching?.set(false))
     }
 
     async function requestProInfo () {

@@ -4,7 +4,7 @@ import { DownloadsPage } from './pages/Downloads'
 import { Headbar } from './components/Headbar'
 import {
   checkSmBreakPoint,
-  useAppState,
+  useAppState, useAuthUserInfoState,
   useDiscordState,
   useReleasesState,
 } from './state'
@@ -17,6 +17,7 @@ export function App () {
   const appState = useAppState()
 
   // load global state
+  useAuthUserInfoState()
   useReleasesState()
   useDiscordState()
 

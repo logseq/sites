@@ -67,23 +67,7 @@ export function LoginPane () {
   return (
     <div className={'login-pane'}>
       <LSAuthenticator>
-        {({ user }: any) => {
-          if (user?.username && user?.pool) {
-            appState.userInfo.set({
-              signOut: async () => {
-                console.time()
-                appState.userInfo.pending.set(true)
-                await Auth.signOut()
-                appState.userInfo.pending.set(false)
-                console.timeEnd()
-                appState.userInfo.set({} as any)
-              }, username: user.username,
-              signInUserSession: user.signInUserSession,
-              attributes: user.attributes,
-              pending: false
-            })
-          }
-        }}
+        {({ user }: any) => {}}
       </LSAuthenticator>
     </div>)
 }
