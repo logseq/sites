@@ -4,7 +4,6 @@ specifiers:
   '@aws-amplify/ui-react': ^5.1.0
   '@cloudflare/workers-types': 4.20230807.0
   '@hookstate/core': 4.0.1
-  '@hookstate/devtools': ^4.0.0
   '@types/cookie': ^0.5.1
   '@types/js-cookie': 3.0.3
   '@types/react': 18.2.20
@@ -57,7 +56,6 @@ dependencies:
 
 devDependencies:
   '@cloudflare/workers-types': 4.20230807.0
-  '@hookstate/devtools': 4.0.0_@hookstate+core@4.0.1
   '@types/cookie': 0.5.1
   '@types/js-cookie': 3.0.3
   '@types/react': 18.2.20
@@ -2044,6 +2042,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: false
 
   /@cloudflare/kv-asset-handler/0.2.0:
     resolution: {integrity: sha512-MVbXLbTcAotOPUj0pAMhVtJ+3/kFkwJqc5qNOleOZTv6QkZZABDMS21dSrSlVswEHwrpWC03e4fWytjqKvuE2A==}
@@ -2355,16 +2354,7 @@ packages:
       react: ^16.8.6 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
-
-  /@hookstate/devtools/4.0.0_@hookstate+core@4.0.1:
-    resolution: {integrity: sha512-4uUwfA6g5kZnhW9MyxIi20ZFie8D/JPP5NBhTjPNuU+NtwuRQ4276qUG/RnYDXR+p55+LrY66JA/rAy1lEkhTg==}
-    peerDependencies:
-      '@hookstate/core': 4.0.0
-    dependencies:
-      '@hookstate/core': 4.0.1_react@18.2.0
-      redux: 4.2.0
-      redux-devtools-extension: 2.13.9_redux@4.2.0
-    dev: true
+    dev: false
 
   /@jridgewell/gen-mapping/0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
@@ -6039,21 +6029,6 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /redux-devtools-extension/2.13.9_redux@4.2.0:
-    resolution: {integrity: sha512-cNJ8Q/EtjhQaZ71c8I9+BPySIBVEKssbPpskBfsXqb8HJ002A3KRVHfeRzwRo6mGPqsm7XuHTqNSNeS1Khig0A==}
-    deprecated: Package moved to @redux-devtools/extension.
-    peerDependencies:
-      redux: ^3.1.0 || ^4.0.0
-    dependencies:
-      redux: 4.2.0
-    dev: true
-
-  /redux/4.2.0:
-    resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
-    dependencies:
-      '@babel/runtime': 7.22.10
-    dev: true
-
   /regenerator-runtime/0.11.1:
     resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
     dev: true
@@ -6064,6 +6039,7 @@ packages:
 
   /regenerator-runtime/0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
+    dev: false
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}

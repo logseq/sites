@@ -1,5 +1,4 @@
 import { hookstate, useHookstate } from '@hookstate/core'
-import { devtools } from '@hookstate/devtools'
 import { IProInfo } from './types'
 
 // @ts-ignore
@@ -50,10 +49,10 @@ const appState = hookstate({
     approximate_member_count: 0,
     approximate_presence_count: 0,
   },
-}, devtools({ key: 'app' }))
+})
 
 const proState =
-  hookstate<Partial<{ info: IProInfo, fetching: boolean, lastOrder: {}, e: Error }>>({}, devtools({ key: 'pro' }))
+  hookstate<Partial<{ info: IProInfo, fetching: boolean, lastOrder: {}, e: Error }>>({})
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
