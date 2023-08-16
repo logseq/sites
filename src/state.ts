@@ -1,4 +1,5 @@
 import { hookstate, useHookstate } from '@hookstate/core'
+import { devtools } from '@hookstate/devtools'
 import { IProInfo } from './types'
 
 // @ts-ignore
@@ -42,17 +43,17 @@ const appState = hookstate({
   releases: {
     fetching: false,
     downloads: {}, // macos -> download url
-    error: null,
+    e: null,
   },
   discord: {
     guild: null,
     approximate_member_count: 0,
     approximate_presence_count: 0,
   },
-})
+}, devtools({ key: 'app' }))
 
 const proState =
-  hookstate<Partial<{ info: IProInfo, fetching: boolean, error: Error }>>({})
+  hookstate<Partial<{ info: IProInfo, fetching: boolean, e: Error }>>({}, devtools({ key: 'pro' }))
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
@@ -137,7 +138,7 @@ export function useReleasesState () {
           throw new Error('Parse latest release failed!')
         }
       }).catch(e => {
-        state.releases.error.set(e)
+        state.releases.e.set(e)
       }).finally(() => {
         state.releases.fetching.set(false)
       })
@@ -186,7 +187,7 @@ export function useProState () {
         .then((info) => hookProState.info.set(info))
         .catch(e => {
           console.error('[Request ProState] ', e)
-          hookProState.error.set(e)
+          hookProState.e.set(e)
         })
         .finally(() => hookProState.fetching?.set(false))
     }
@@ -208,3 +209,5 @@ export function useProState () {
 
 // @ts-ignore
 window.__appState = appState
+// @ts-ignore
+window.__proState = proState
