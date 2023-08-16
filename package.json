@@ -29,7 +29,8 @@
     "tailwindcss-border-gradient-radius": "^3.0.1",
     "typescript": "4.9.4",
     "url": "^0.11.0",
-    "wrangler": "3.5.0"
+    "wrangler": "3.5.0",
+    "pnpm": "7.27.0"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^5.1.0",
