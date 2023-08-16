@@ -43,7 +43,7 @@ const appState = hookstate({
   releases: {
     fetching: false,
     downloads: {}, // macos -> download url
-    e: null,
+    e: false,
   },
   discord: {
     guild: null,
@@ -53,7 +53,7 @@ const appState = hookstate({
 }, devtools({ key: 'app' }))
 
 const proState =
-  hookstate<Partial<{ info: IProInfo, fetching: boolean, e: Error }>>({}, devtools({ key: 'pro' }))
+  hookstate<Partial<{ info: IProInfo, fetching: boolean, lastOrder: {}, e: Error }>>({}, devtools({ key: 'pro' }))
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
@@ -181,7 +181,7 @@ export function useProState () {
   useEffect(() => {
     if (!idToken) {
       hookProState.set({})
-    } else {
+    } else if (!hookProState.get().info) {
       hookProState.fetching?.set(true)
       requestProInfo()
         .then((info) => hookProState.info.set(info))

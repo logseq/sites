@@ -8,3 +8,10 @@ export type IProInfo = {
   StorageLimit: number
   UserGroups: 'alpha-tester' | string
 }
+
+declare global {
+  interface Window {
+    LemonSqueezy: any
+    createLemonSqueezy: () => void
+  }
+}

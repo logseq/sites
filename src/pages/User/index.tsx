@@ -5,9 +5,46 @@ import { Button } from '../../components/Buttons'
 import { SignOut, Spinner } from 'phosphor-react'
 import { Card } from '@aws-amplify/ui-react'
 import { setupAuthConfigure } from './amplify'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 // setup amplify configures
 setupAuthConfigure(authConfig)
+
+function LemonPaymentButton ({ username, email }: Partial<{ username: string, email: string }>) {
+  const proState = useProState()
+
+  useEffect(() => {
+    // https://docs.lemonsqueezy.com/help/lemonjs/handling-events
+    window.createLemonSqueezy()
+
+    setTimeout(() => {
+      window.LemonSqueezy.Setup({
+        eventHandler: (e: any) => {
+          if (e?.event === 'Checkout.Success') {
+            proState.lastOrder.set(e?.data)
+            window.LemonSqueezy.Url.Close()
+            toast.success(
+              <div>
+                <h1 className={'text-xl'}>😀 Thanks for your support!</h1>
+              </div>
+            )
+          }
+        }
+      })
+    }, 2000)
+  }, [])
+
+  if (!email) return
+
+  return (
+    <a
+      href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09?embed=1&media=0&checkout[email]=${email}&custom[username]=${username}`}
+      className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-lg">
+      Buy Logseq Pro
+    </a>
+  )
+}
 
 function UserEntryPage () {
   const appState = useAppState()
@@ -37,7 +74,7 @@ function UserEntryPage () {
 
     pane = (
       <div>
-        <p className={'flex space-x-6 items-center justify-around'}>
+        <div className={'flex space-x-6 items-center justify-around'}>
           <h1 className={'text-4xl'}>Hi, {userInfo.username}!</h1>
           <Button
             className={'text-lg'}
@@ -50,16 +87,27 @@ function UserEntryPage () {
             Sign out
           </Button>
 
+          <LemonPaymentButton
+            email={userInfo.attributes?.email}
+            username={userInfo.username}
+          />
+
           <Card className={'!bg-orange-600'}>
             {proInfo}
           </Card>
-        </p>
+        </div>
         <pre className={'whitespace-pre w-56'}>
           {JSON.stringify(userInfo.attributes, null, 2)}
         </pre>
-        <pre className={'w-[50vw] overflow-hidden whitespace-pre-wrap'}>
-          {JSON.stringify(userInfo.signInUserSession, null, 2)}
+        <pre className={'w-[50vw] overflow-hidden whitespace-pre-wrap py-8'}>
+          <b>IDToken: </b> <br/>
+          <code>{userInfo.signInUserSession.idToken?.jwtToken}</code>
         </pre>
+
+        {proState.lastOrder &&
+          <textarea className={'min-h-[600px] w-full p-2 border bg-transparent'}
+                    value={JSON.stringify(proState.lastOrder, null, 2)}
+          ></textarea>}
       </div>
     )
   } else {
