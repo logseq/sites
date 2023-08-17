@@ -8,6 +8,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react'
 import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
 
+export const isDev = process.env.NODE_ENV !== 'production'
 export const authConfig = {
   region: 'us-east-1',
   userPoolId: 'us-east-1_dtagLnju8',
@@ -31,7 +32,7 @@ export const checkSmBreakPoint = () => {
 }
 
 const appState = hookstate({
-  os, sm: checkSmBreakPoint(),
+  isDev, os, sm: checkSmBreakPoint(),
   userInfo: {
     pending: false,
     username: null,
@@ -64,7 +65,7 @@ const proState =
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
 const fileSyncEndpoint = 'https://api.logseq.com/file-sync'
-const lemoEndpoint = 'http://127.0.0.1:8787/lemon/api'
+const lemoEndpoint = isDev ? 'http://127.0.0.1:8787/lemon/api' : 'https://plugins.logseq.io/lemon/api'
 
 export function useAuthUserInfoState () {
   const { user }: any = useAuthenticator(
