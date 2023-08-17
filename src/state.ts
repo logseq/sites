@@ -52,11 +52,19 @@ const appState = hookstate({
 })
 
 const proState =
-  hookstate<Partial<{ info: IProInfo, fetching: boolean, lastOrder: {}, e: Error }>>({})
+  hookstate<Partial<{
+    info: IProInfo,
+    infoFetching: boolean,
+    orders: {},
+    ordersFetching: boolean,
+    lastOrder: {},
+    e: Error
+  }>>({})
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
 const fileSyncEndpoint = 'https://api.logseq.com/file-sync'
+const lemoEndpoint = 'http://127.0.0.1:8787/lemon/api'
 
 export function useAuthUserInfoState () {
   const { user }: any = useAuthenticator(
@@ -181,14 +189,14 @@ export function useProState () {
     if (!idToken) {
       hookProState.set({})
     } else if (!hookProState.get().info) {
-      hookProState.fetching?.set(true)
+      hookProState.infoFetching?.set(true)
       requestProInfo()
         .then((info) => hookProState.info.set(info))
         .catch(e => {
           console.error('[Request ProState] ', e)
           hookProState.e.set(e)
         })
-        .finally(() => hookProState.fetching?.set(false))
+        .finally(() => hookProState.infoFetching?.set(false))
     }
 
     async function requestProInfo () {
@@ -204,6 +212,32 @@ export function useProState () {
   }, [idToken])
 
   return hookProState
+}
+
+export function useLemonState () {
+  const userInfo = useAppState().userInfo.get()
+  const proState = useProState()
+
+  return {
+    get: () => proState.orders.value,
+    fetching: proState.ordersFetching.get(),
+    load: async () => {
+      try {
+        // @ts-ignore
+        const idToken = userInfo.signInUserSession?.idToken?.jwtToken
+        proState.ordersFetching.set(true)
+        const res = await fetch(`${lemoEndpoint}/orders`,
+          { method: 'GET', headers: { Authorization: `Bearer ${idToken}` } })
+        const json = await res.json()
+
+        proState.orders.set(json)
+      } catch (e: any) {
+        toast.error(e.message)
+      } finally {
+        proState.ordersFetching.set(false)
+      }
+    }
+  }
 }
 
 // @ts-ignore

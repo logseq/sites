@@ -1,8 +1,8 @@
 import './index.css'
 import { LoginPane } from './Login'
-import { authConfig, useAppState, useProState } from '../../state'
+import { authConfig, useAppState, useLemonState, useProState } from '../../state'
 import { Button } from '../../components/Buttons'
-import { SignOut, Spinner } from 'phosphor-react'
+import { CircleWavyCheck, SignOut, Spinner } from 'phosphor-react'
 import { Card } from '@aws-amplify/ui-react'
 import { setupAuthConfigure } from './amplify'
 import { useEffect } from 'react'
@@ -13,6 +13,7 @@ setupAuthConfigure(authConfig)
 
 function LemonPaymentButton ({ username, email }: Partial<{ username: string, email: string }>) {
   const proState = useProState()
+  const lemon = useLemonState()
 
   useEffect(() => {
     // https://docs.lemonsqueezy.com/help/lemonjs/handling-events
@@ -24,6 +25,8 @@ function LemonPaymentButton ({ username, email }: Partial<{ username: string, em
           if (e?.event === 'Checkout.Success') {
             proState.lastOrder.set(e?.data)
             window.LemonSqueezy.Url.Close()
+            lemon.load().catch(null)
+
             toast.success(
               <div>
                 <h1 className={'text-xl'}>😀 Thanks for your support!</h1>
@@ -39,10 +42,61 @@ function LemonPaymentButton ({ username, email }: Partial<{ username: string, em
 
   return (
     <a
-      href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09?embed=1&media=0&checkout[email]=${email}&custom[username]=${username}`}
+      href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
+      ?embed=1&media=0&checkout[email]=${email}&custom[username]=${username}`}
       className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-lg">
       Buy Logseq Pro
     </a>
+  )
+}
+
+function LemoOrders () {
+  const lemon = useLemonState()
+  const lemonState = lemon.get() as any
+
+  useEffect(() => {
+    lemon.load().catch(null)
+  }, [])
+
+  let pane = <></>
+
+  if (lemon.fetching) {
+    pane = <div className={'p-4 text-2xl flex'}><Spinner/> Loading...</div>
+  } else {
+    pane = (<ul className={'py-2'}>
+      {lemonState && lemonState.data?.map(it => {
+        const {
+          status_formatted, subtotal_formatted, created_at, user_email,
+          first_order_item, user_name
+        } = it.attributes
+        return (
+          <li key={it.id} className={'text-lg border-b border-dashed py-3 flex items-center'}>
+            <span className={'px-4'}>
+              <CircleWavyCheck size={30} weight={'duotone'} className={'opacity-70'}/>
+            </span>
+            <div>
+              <small>#{it.id} {user_name} & {user_email}</small>
+              <br/>
+              <span
+                className={'font-bold text-pro-300 pr-1'}>{first_order_item.product_name} / {first_order_item.variant_name} </span>
+              {subtotal_formatted} / <code>{status_formatted}</code> / {created_at}
+            </div>
+          </li>)
+      })}
+    </ul>)
+  }
+
+  return (
+    <div className={'py-4'}>
+      <h1 className={'text-4xl'}>Subscription orders:</h1>
+      <p>
+        <Button onClick={lemon.load}>
+          Load orders
+        </Button>
+      </p>
+
+      {pane}
+    </div>
   )
 }
 
@@ -56,8 +110,8 @@ function UserEntryPage () {
   if (userInfo.username) {
     let proInfo = <></>
 
-    if (proState.fetching != undefined) {
-      if (proState.fetching) {
+    if (proState.infoFetching != undefined) {
+      if (proState.infoFetching) {
         proInfo = <b className={'flex space-x-6 items-center'}><Spinner size={22}/> Loading Pro Info ...</b>
       } else {
         proInfo = proState.info?.ProUser ?
@@ -74,7 +128,7 @@ function UserEntryPage () {
 
     pane = (
       <div>
-        <div className={'flex space-x-6 items-center justify-around'}>
+        <div className={'flex space-x-6 items-center justify-around relative'}>
           <h1 className={'text-4xl'}>Hi, {userInfo.username}!</h1>
           <Button
             className={'text-lg'}
@@ -92,22 +146,18 @@ function UserEntryPage () {
             username={userInfo.username}
           />
 
-          <Card className={'!bg-orange-600'}>
+          <Card className={'!bg-blue-600'}>
             {proInfo}
           </Card>
         </div>
-        <pre className={'whitespace-pre w-56'}>
+        <br/>
+        <hr/>
+        <pre className={'whitespace-pre w-56 p-4'}>
           {JSON.stringify(userInfo.attributes, null, 2)}
         </pre>
-        <pre className={'w-[50vw] overflow-hidden whitespace-pre-wrap py-8'}>
-          <b>IDToken: </b> <br/>
-          <code>{userInfo.signInUserSession.idToken?.jwtToken}</code>
-        </pre>
+        <hr/>
 
-        {proState.lastOrder &&
-          <textarea className={'min-h-[600px] w-full p-2 border bg-transparent'}
-                    value={JSON.stringify(proState.lastOrder, null, 2)}
-          ></textarea>}
+        <LemoOrders/>
       </div>
     )
   } else {
