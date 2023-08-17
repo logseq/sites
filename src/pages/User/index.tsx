@@ -166,7 +166,6 @@ function UserEntryPage () {
 
   return (
     <div className={'app-page user-entry page-inner'}>
-      {appState.isDev ? 'Development' : 'Production'}
       {pane}
     </div>
   )
