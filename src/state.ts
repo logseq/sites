@@ -222,16 +222,16 @@ export function useLemonState () {
   return {
     get: () => proState.orders.value,
     fetching: proState.ordersFetching.get(),
-    load: async () => {
+    load: async (type: string = 'orders') => {
       try {
         // @ts-ignore
         const idToken = userInfo.signInUserSession?.idToken?.jwtToken
         proState.ordersFetching.set(true)
-        const res = await fetch(`${lemoEndpoint}/orders`,
+        const res = await fetch(`${lemoEndpoint}/${type}`,
           { method: 'GET', headers: { Authorization: `Bearer ${idToken}` } })
         const json = await res.json()
 
-        proState.orders.set(json)
+        proState[type].set(json)
       } catch (e: any) {
         toast.error(e.message)
       } finally {

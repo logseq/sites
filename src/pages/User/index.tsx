@@ -67,7 +67,7 @@ function LemoOrders () {
       {lemonState && lemonState.data?.map(it => {
         const {
           status_formatted, subtotal_formatted, created_at, user_email,
-          first_order_item, user_name
+          first_order_item, user_name, customer_id
         } = it.attributes
         return (
           <li key={it.id} className={'text-lg border-b border-dashed py-3 flex items-center'}>
@@ -75,12 +75,18 @@ function LemoOrders () {
               <CircleWavyCheck size={30} weight={'duotone'} className={'opacity-70'}/>
             </span>
             <div>
-              <small>#{it.id} {user_name} & {user_email}</small>
+              <small>#{it.id} {user_name} & {user_email} & ^{customer_id}</small>
               <br/>
               <span
                 className={'font-bold text-pro-300 pr-1'}>{first_order_item.product_name} / {first_order_item.variant_name} </span>
               {subtotal_formatted} / <code>{status_formatted}</code> / {created_at}
             </div>
+
+            <Button
+              className={'text-sm mx-4'} onClick={() => lemon.load(`orders/${it.id}/subscriptions`)}
+            >
+              Load subscriptions ...
+            </Button>
           </li>)
       })}
     </ul>)
@@ -90,7 +96,7 @@ function LemoOrders () {
     <div className={'py-4'}>
       <h1 className={'text-4xl'}>Subscription orders:</h1>
       <p>
-        <Button onClick={lemon.load}>
+        <Button onClick={() => lemon.load()}>
           Load orders
         </Button>
       </p>
