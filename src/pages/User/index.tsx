@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 // setup amplify configures
 setupAuthConfigure(authConfig)
 
-function LemonPaymentButton ({ username, email }: Partial<{ username: string, email: string }>) {
+function LemonPaymentButton ({ userId, username, email }: Partial<{ userId: string, username: string, email: string }>) {
   const proState = useProState()
   const lemon = useLemonState()
 
@@ -43,7 +43,7 @@ function LemonPaymentButton ({ username, email }: Partial<{ username: string, em
   return (
     <a
       href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
-      ?embed=1&media=0&checkout[email]=${email}&custom[username]=${username}`}
+      ?embed=1&media=0&checkout[email]=${email}&checkout[custom][user_uuid]=${userId}`}
       className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-lg">
       Buy Logseq Pro
     </a>
@@ -127,6 +127,9 @@ function UserEntryPage () {
             <b>&lt;Graph limit&gt; {proState.info.GraphCountLimit}</b> <br/>
             <b>&lt;Storage limit&gt; {proState.info.StorageLimit / 1024 / 1024 / 1024} G</b> <br/>
             <b>&lt;Expired At&gt; {(new Date(proState.info.ExpireTime * 1000)).toLocaleDateString()}</b> <br/>
+            <b>&lt;Lemon Status&gt; {proState.info.LemonStatus}</b> <br/>
+            <b>&lt;Lemon Renew At&gt; {proState.info.LemonRenewsAt}</b> <br/>
+            <b>&lt;Lemon Ends At&gt; {proState.info.LemonEndsAt}</b> <br/>
           </>) :
           (<b>Not a Pro user!</b>)
       }
@@ -149,6 +152,7 @@ function UserEntryPage () {
 
           <LemonPaymentButton
             email={userInfo.attributes?.email}
+            userId={userInfo.attributes?.sub}
             username={userInfo.username}
           />
 

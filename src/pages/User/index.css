@@ -12,5 +12,5 @@
 }
 
 .federated-sign-in-container {
-  display: none;
+  display: none !important;
 }

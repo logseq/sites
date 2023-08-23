@@ -9,12 +9,23 @@ import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
 
 export const isDev = process.env.NODE_ENV !== 'production'
-export const authConfig = {
-  region: 'us-east-1',
-  userPoolId: 'us-east-1_dtagLnju8',
-  userPoolWebClientId: '69cs1lgme7p8kbgld8n5kseii6',
-  oauthProviders: []
-}
+export const authConfig = isDev ?
+  {
+    region: 'us-east-2',
+    userPoolId: 'us-east-2_kAqZcxIeM',
+    userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
+    oauthProviders: []
+  } : {
+    // TODO: production
+    // region: 'us-east-1',
+    // userPoolId: 'us-east-1_dtagLnju8',
+    // userPoolWebClientId: '69cs1lgme7p8kbgld8n5kseii6',
+    // oauthProviders: []
+    region: 'us-east-2',
+    userPoolId: 'us-east-2_kAqZcxIeM',
+    userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
+    oauthProviders: []
+  }
 
 function getAuthValueFromStorage (key: string) {
   const prefix = `CognitoIdentityServiceProvider.${authConfig.userPoolWebClientId}`
@@ -64,7 +75,7 @@ const proState =
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
-const fileSyncEndpoint = 'https://api.logseq.com/file-sync'
+const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
 const lemoEndpoint = isDev ? 'http://127.0.0.1:8787/lemon/api' : 'https://plugins.logseq.io/lemon/api'
 
 export function useAuthUserInfoState () {

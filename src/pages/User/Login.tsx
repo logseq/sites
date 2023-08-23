@@ -1,10 +1,9 @@
 import { Authenticator, CheckboxField, useAuthenticator, AccountSettings } from '@aws-amplify/ui-react'
-import { useAppState, useProState } from '../../state'
-import { Auth } from 'aws-amplify'
 
 function LSAuthenticator ({ termsLink, children }: any) {
-  return (<div>
+  return (
     <Authenticator
+      initialState="signUp"
       formFields={{
         signUp: {
           email: { order: 1 },
@@ -17,25 +16,25 @@ function LSAuthenticator ({ termsLink, children }: any) {
       socialProviders={['google']}
       components={{
         SignUp: {
-          FormFields () {
-            const { validationErrors } = useAuthenticator()
-
-            return (
-              <>
-                {/* Re-use default `Authenticator.SignUp.FormFields` */}
-                <Authenticator.SignUp.FormFields/>
-
-                {/* Append & require Terms & Conditions field to sign up  */}
-                <CheckboxField
-                  errorMessage={validationErrors.acknowledgement as string}
-                  hasError={!!validationErrors.acknowledgement}
-                  name="acknowledgement"
-                  value="yes"
-                  label={(<a href={termsLink}>I agree with the Terms & Conditions</a>)}
-                />
-              </>
-            )
-          },
+          // FormFieldsTODO () {
+          //   const { validationErrors } = useAuthenticator()
+          //
+          //   return (
+          //     <div>
+          //       {/* Re-use default `Authenticator.SignUp.FormFields` */}
+          //       <Authenticator.SignUp.FormFields/>
+          //
+          //       {/* Append & require Terms & Conditions field to sign up  */}
+          //       <CheckboxField
+          //         errorMessage={validationErrors.acknowledgement as string}
+          //         hasError={!!validationErrors.acknowledgement}
+          //         name="acknowledgement"
+          //         value="yes"
+          //         label={(<a href={termsLink}>I agree with the Terms & Conditions</a>)}
+          //       />
+          //     </div>
+          //   )
+          // },
         },
       }}
       services={{
@@ -49,8 +48,7 @@ function LSAuthenticator ({ termsLink, children }: any) {
       }}
     >
       {children}
-    </Authenticator>
-  </div>)
+    </Authenticator>)
 }
 
 function LSAuthenticatorChangePassword (
@@ -62,10 +60,8 @@ function LSAuthenticatorChangePassword (
 }
 
 export function LoginPane () {
-  const appState = useAppState()
-
   return (
-    <div className={'login-pane'}>
+    <div className={'login-pane border'}>
       <LSAuthenticator>
         {({ user }: any) => {}}
       </LSAuthenticator>
