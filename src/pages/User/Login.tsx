@@ -3,7 +3,6 @@ import { Authenticator, CheckboxField, useAuthenticator, AccountSettings } from 
 function LSAuthenticator ({ termsLink, children }: any) {
   return (
     <Authenticator
-      initialState="signUp"
       formFields={{
         signUp: {
           email: { order: 1 },
@@ -61,7 +60,7 @@ function LSAuthenticatorChangePassword (
 
 export function LoginPane () {
   return (
-    <div className={'login-pane border'}>
+    <div className={'login-pane'}>
       <LSAuthenticator>
         {({ user }: any) => {}}
       </LSAuthenticator>
