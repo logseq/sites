@@ -3,37 +3,29 @@ import { Authenticator, CheckboxField, useAuthenticator, AccountSettings } from 
 function LSAuthenticator ({ termsLink, children }: any) {
   return (
     <Authenticator
-      formFields={{
-        signUp: {
-          email: { order: 1 },
-          username: { order: 2 },
-          password: { order: 3 },
-          confirm_password: { order: 4 },
-        }
-      }}
       loginMechanisms={['username']}
       socialProviders={['google']}
       components={{
         SignUp: {
-          // FormFieldsTODO () {
-          //   const { validationErrors } = useAuthenticator()
-          //
-          //   return (
-          //     <div>
-          //       {/* Re-use default `Authenticator.SignUp.FormFields` */}
-          //       <Authenticator.SignUp.FormFields/>
-          //
-          //       {/* Append & require Terms & Conditions field to sign up  */}
-          //       <CheckboxField
-          //         errorMessage={validationErrors.acknowledgement as string}
-          //         hasError={!!validationErrors.acknowledgement}
-          //         name="acknowledgement"
-          //         value="yes"
-          //         label={(<a href={termsLink}>I agree with the Terms & Conditions</a>)}
-          //       />
-          //     </div>
-          //   )
-          // },
+          FormFields () {
+            const { validationErrors } = useAuthenticator()
+
+            return (
+              <div>
+                {/*Re-use default `Authenticator.SignUp.FormFields` */}
+                <Authenticator.SignUp.FormFields/>
+
+                {/*Append & require Terms & Conditions field to sign up  */}
+                <CheckboxField
+                  errorMessage={validationErrors.acknowledgement as string}
+                  hasError={!!validationErrors.acknowledgement}
+                  name="acknowledgement"
+                  value="yes"
+                  label={(<a href={termsLink}>I agree with the Terms & Conditions</a>)}
+                />
+              </div>
+            )
+          }
         },
       }}
       services={{

@@ -79,12 +79,10 @@ const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
 const lemoEndpoint = isDev ? 'http://127.0.0.1:8787/lemon/api' : 'https://plugins.logseq.io/lemon/api'
 
 export function useAuthUserInfoState () {
-  const { user }: any = useAuthenticator(
-    ({ route, signOut, user }) => [route, signOut, user]
-  )
+  const { user }: any = useAuthenticator(({ user }) => [user])
 
   useEffect(() => {
-    if (user?.username && user?.pool) {
+    if (user?.username && user?.pool && user?.signInUserSession) {
       appState.userInfo.set({
         signOut: async () => {
           console.time()

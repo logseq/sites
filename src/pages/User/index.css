@@ -1,6 +1,61 @@
 [data-amplify-authenticator] [data-amplify-router] {
-  --amplify-components-authenticator-router-background-color: #F5FEFB;
+  --amplify-colors-brand-primary-10: #b7d5d5;
+  --amplify-colors-brand-primary-20: #8EC2C2;
+  --amplify-colors-brand-primary-40: #2c7d8f;
+  --amplify-colors-brand-primary-60: #266C7D;
+  --amplify-colors-brand-primary-80: #094b5a;
+  --amplify-colors-brand-primary-90: #023643;
+  --amplify-colors-brand-primary-100: #01222a;
+  --amplify-components-text-error-color: #be3333;
+  --amplify-components-fieldcontrol-error-border-color: #be3333;
+
+  --amplify-components-heading-color: var(--amplify-colors-brand-primary-10);
+  --amplify-components-tabs-item-active-color: var(--amplify-colors-brand-primary-20);
+  --amplify-components-tabs-item-hover-color: var(--amplify-colors-brand-primary-20);
+  --amplify-components-tabs-item-focus-color: var(--amplify-colors-brand-primary-20);
+  --amplify-components-button-color: var(--amplify-colors-brand-primary-20);
+
+  --amplify-components-text-color: var(--amplify-colors-brand-primary-10);
+  --amplify-components-field-label-color: var(--amplify-colors-brand-primary-10);
+  --amplify-components-authenticator-router-background-color: transparent;
   --amplify-components-authenticator-state-inactive-background-color: #cde9ff;
+
+  border-radius: 8px;
+  overflow: hidden;
+
+  .amplify-icon > svg {
+    color: var(--amplify-colors-brand-primary-10);
+  }
+}
+
+.amplify-input {
+  color: var(--amplify-colors-brand-primary-10) !important;
+}
+
+.amplify-tabs[data-indicator-position="top"] {
+  border: 0 !important;
+}
+
+[data-amplify-authenticator] [data-state="inactive"] {
+  opacity: .7;
+}
+
+form[data-amplify-authenticator-signup] {
+  .amplify-field {
+    @apply mb-4;
+  }
+}
+
+form[data-amplify-authenticator-signin] {
+  fieldset {
+    @apply mb-3;
+  }
+}
+
+form[data-amplify-authenticator-confirmsignup] {
+  .amplify-field-group__control:last-child {
+    margin-top: 12px;
+  }
 }
 
 .app-page.user-entry {

@@ -14,7 +14,6 @@
     "@types/js-cookie": "3.0.3",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
-    "aws-amplify-react": "^5.1.43",
     "buffer": "6.0.3",
     "events": "^3.1.0",
     "parcel": "2.9.3",
@@ -31,7 +30,8 @@
     "wrangler": "3.5.0"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^5.1.0",
+    "@aws-amplify/ui": "^5.7.2",
+    "@aws-amplify/ui-react": "^5.2.0",
     "@hookstate/core": "4.0.1",
     "aws-amplify": "5.3.7",
     "classnames": "2.3.2",

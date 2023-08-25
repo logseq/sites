@@ -1,19 +1,18 @@
 import './amplify.css'
 import { Amplify, I18n } from 'aws-amplify'
-import { dict as d } from 'aws-amplify-react/lib-esm/AmplifyI18n'
+import { translations } from '@aws-amplify/ui'
 
 // fix i18n
-const dict: any = d
-dict.zh['Reset Password'] = '重置密码'
-dict.zh['Enter your username'] = '请输入用户名'
-dict.zh['Enter your email'] = '请输入邮箱'
-dict.zh['Enter your password'] = '请输入密码'
-dict.zh['Confirm Password'] = '确认密码'
-dict.zh['Please confirm your Password'] = '请确认密码'
-dict.zh['Incorrect username or password.'] = '用户名或者密码不正确。如果您的邮箱未验证，请尝试使用用户名(非邮箱)登录，以保证再次邮箱验证流程。'
+translations.zh['Reset Password'] = '重置密码'
+translations.zh['Enter your username'] = '请输入用户名'
+translations.zh['Enter your email'] = '请输入邮箱'
+translations.zh['Enter your password'] = '请输入密码'
+translations.zh['Confirm Password'] = '确认密码'
+translations.zh['Please confirm your Password'] = '请确认密码'
+translations.zh['Incorrect username or password.'] = '用户名或者密码不正确。如果您的邮箱未验证，请尝试使用用户名(非邮箱)登录，以保证再次邮箱验证流程。'
 
 // @ts-ignore attach defaults
-dict.en = {
+translations.en = {
   'Incorrect username or password.': 'Incorrect username or password!   ' +
     'For unconfirmed users, please input your username instead of Email to receive the code.'
 }
@@ -29,8 +28,8 @@ const fixesMapping = {
   'Enter your username': ['Enter your Username']
 }
 
-Object.keys(dict).forEach((k) => {
-  const target = dict[k]
+Object.keys(translations).forEach((k) => {
+  const target = translations[k]
   Object.entries(fixesMapping).forEach(([k1, v1]) => {
     if (target?.hasOwnProperty(k1)) {
       const vs = Array.isArray(v1) ? v1 : [v1]
@@ -41,7 +40,7 @@ Object.keys(dict).forEach((k) => {
   })
 })
 
-I18n.putVocabularies(dict)
+I18n.putVocabularies(translations)
 
 export function setupAuthConfigure (config: any) {
   const {
