@@ -69,6 +69,7 @@ form[data-amplify-authenticator-signin] {
 form[data-amplify-authenticator-confirmsignup] {
   .amplify-field-group__control:last-child {
     margin-top: 12px;
+    margin-bottom: 16px;
   }
 }
 
