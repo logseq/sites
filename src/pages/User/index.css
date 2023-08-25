@@ -8,6 +8,8 @@
   --amplify-colors-brand-primary-100: #01222a;
   --amplify-components-text-error-color: #be3333;
   --amplify-components-fieldcontrol-error-border-color: #be3333;
+  --amplify-components-authenticator-form-padding: 40px;
+  --amplify-components-authenticator-footer-padding-bottom: 25px;
 
   --amplify-components-heading-color: var(--amplify-colors-brand-primary-10);
   --amplify-components-tabs-item-active-color: var(--amplify-colors-brand-primary-20);
@@ -32,6 +34,14 @@
   color: var(--amplify-colors-brand-primary-10) !important;
 }
 
+[data-amplify-authenticator] [data-amplify-form] {
+  padding-bottom: 20px !important;
+}
+
+[data-amplify-authenticator] {
+  @apply relative top-[-55px];
+}
+
 .amplify-tabs[data-indicator-position="top"] {
   border: 0 !important;
 }
@@ -43,6 +53,10 @@
 form[data-amplify-authenticator-signup] {
   .amplify-field {
     @apply mb-4;
+  }
+
+  fieldset {
+    margin-bottom: 10px;
   }
 }
 
@@ -59,10 +73,10 @@ form[data-amplify-authenticator-confirmsignup] {
 }
 
 .app-page.user-entry {
-  @apply pt-[100px] w-full xl:max-w-screen-xl mx-auto;
+  @apply pt-[100px] w-full;
 
   .login-pane {
-    @apply min-h-[88vh] w-full p-10 flex items-center justify-center;
+    @apply min-h-[90vh] w-full p-10 flex items-center justify-center;
   }
 }
 

@@ -7,11 +7,16 @@ import { Card } from '@aws-amplify/ui-react'
 import { setupAuthConfigure } from './amplify'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
+import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 
 // setup amplify configures
 setupAuthConfigure(authConfig)
 
-function LemonPaymentButton ({ userId, username, email }: Partial<{ userId: string, username: string, email: string }>) {
+function LemonPaymentButton ({ userId, username, email }: Partial<{
+  userId: string,
+  username: string,
+  email: string
+}>) {
   const proState = useProState()
   const lemon = useLemonState()
 
@@ -175,8 +180,16 @@ function UserEntryPage () {
   }
 
   return (
-    <div className={'app-page user-entry page-inner'}>
+    <div className={'app-page user-entry'}>
       {pane}
+
+      <div className="page-inner-full-wrap b relative">
+        <div className="page-inner footer-nav">
+          <div className="page-inner">
+            <LandingFooterNav/>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
