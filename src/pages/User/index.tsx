@@ -141,7 +141,7 @@ function UserEntryPage () {
     }
 
     pane = (
-      <div>
+      <div className={'user-pane-content min-h-[90vh]'}>
         <div className={'flex space-x-6 items-center justify-around relative'}>
           <h1 className={'text-4xl'}>Hi, {userInfo.username}!</h1>
           <Button
