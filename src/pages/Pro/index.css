@@ -34,7 +34,7 @@
       }
 
       .pro-flag {
-        @apply relative top-[-4px] sm:top-0;
+        @apply relative top-[-4px] sm:top-[-14px] sm:ml-0;
       }
     }
 

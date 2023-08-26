@@ -32,12 +32,12 @@ function ProInfoSection () {
     <section className={'pro-info'}>
       {/*head text*/}
       <div className={'flex flex-col sm:items-center z-10 font-bold pt-10 sm:pt-12'}>
-        <h1 className={'text-3xl sm:flex items-center sm:text-6xl tracking-wide leading-[2.5rem]'}>
-          <span>Experience</span>
-          <b className={'ml-2 sm:ml-4'}>
+        <h1
+          className={'text-3xl tracking-wide sm:-ml-3 sm:flex-wrap sm:flex sm:items-center sm:text-6xl sm:leading-[80px] sm:space-x-4 sm:mb-1'}>
+          <span className={'sm:pl-3'}>Experience</span>
+          <b className={'ml-2 sm:ml-0'}>
             the {appState.sm.get() ? <br/> : ''} benefits of</b>
-          <strong className={'pro-flag'}>PRO</strong>
-          <b>.</b>
+          <b><strong className={'pro-flag'}>PRO</strong>.</b>
         </h1>
 
         <h2 className={'hidden sm:block text-4xl font-medium'}>
@@ -186,8 +186,7 @@ function TweetsSection () {
                   <b className={'ls'}>Via</b>
                   <TwitterLogo weight={'duotone'} size={28}/>
                   <label>Twitter </label>
-                  <a href={'javascript:;'}
-                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                  <a className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
                 </span>
               </p>
             </div>
@@ -212,8 +211,7 @@ function TweetsSection () {
                   <b className={'ls'}>Via</b>
                   <TwitterLogo weight={'duotone'} size={28}/>
                   <label>Twitter </label>
-                  <a href={'javascript:;'}
-                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                  <a className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
                 </span>
               </p>
             </div>
@@ -237,8 +235,7 @@ function TweetsSection () {
                   <b className={'ls'}>Via</b>
                   <TwitterLogo weight={'duotone'} size={28}/>
                   <label>Twitter </label>
-                  <a href={'javascript:;'}
-                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                  <a className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
                 </span>
               </p>
             </div>
@@ -263,8 +260,7 @@ function TweetsSection () {
                   <b className={'ls'}>Via</b>
                   <TwitterLogo weight={'duotone'} size={28}/>
                   <label>Twitter </label>
-                  <a href={'javascript:;'}
-                     className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
+                  <a className={'link'}><ArrowSquareOut weight={'duotone'} size={20}/></a>
                 </span>
               </p>
             </div>
