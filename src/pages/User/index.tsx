@@ -48,7 +48,7 @@ function LemonPaymentButton ({ userId, username, email }: Partial<{
   return (
     <a
       href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
-      ?embed=1&media=0&checkout[email]=${email}&checkout[custom][user_uuid]=${userId}`}
+      ?embed=1&media=0&checkout[email]=${encodeURIComponent(email)}&checkout[custom][user_uuid]=${userId}`}
       className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-lg">
       Buy Logseq Pro
     </a>
