@@ -16,6 +16,7 @@ import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
 import { useAppState } from '../../state'
+import { useNavigate } from 'react-router-dom'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -302,6 +303,7 @@ function ChoosePlanSection () {
   }, [])
   const [foldedSet, setFoldSet] = useState(new Set())
   const appState = useAppState()
+  const navigate = useNavigate()
 
   return (
     <div className={'choose-plan-section-wrap page-inner-full-wrap b'} id={'choose-the-plan-for-you'}>
@@ -351,7 +353,10 @@ function ChoosePlanSection () {
 
               {/* link button */}
               <div className="flex justify-center pt-6 pb-3">
-                <Button className={'w-full !bg-logseq-700/70 !justify-center'}>
+                <Button
+                  className={'w-full !bg-logseq-700/70 !justify-center'}
+                  onClick={() => navigate('/login')}
+                >
                   <div className="flex items-center space-x-2">
                     <UserCirclePlus weight={'duotone'} size={20}/>
                     <span>Create a Logseq account</span>
