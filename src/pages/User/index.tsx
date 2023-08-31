@@ -7,7 +7,7 @@ import { Card } from '@aws-amplify/ui-react'
 import { setupAuthConfigure } from './amplify'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { LandingFooterDesc, LandingFooterNav } from '../Landing'
+import { LandingFooterNav } from '../Landing'
 
 // setup amplify configures
 setupAuthConfigure(authConfig)

@@ -1,4 +1,6 @@
 import { Authenticator, CheckboxField, useAuthenticator, AccountSettings } from '@aws-amplify/ui-react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { applyLoginUser } from '../../state'
 
 function LSAuthenticator ({ termsLink, children }: any) {
   return (
@@ -51,10 +53,17 @@ function LSAuthenticatorChangePassword (
 }
 
 export function LoginPane () {
+  const routeLocation = useLocation()
+  const navigate = useNavigate()
+
   return (
     <div className={'login-pane'}>
       <LSAuthenticator>
-        {({ user }: any) => {}}
+        {({ user }: any) => {
+          setTimeout(() => {
+            applyLoginUser(user, { navigate, routeLocation, inComponent: true })
+          }, 50)
+        }}
       </LSAuthenticator>
     </div>)
 }

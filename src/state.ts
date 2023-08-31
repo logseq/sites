@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
+import { Location, NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
 
 export const isDev = process.env.NODE_ENV !== 'production'
 export const authConfig = isDev ?
@@ -78,31 +79,50 @@ const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_coun
 const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
 const lemoEndpoint = isDev ? 'http://127.0.0.1:8787/lemon/api' : 'https://plugins.logseq.io/lemon/api'
 
-export function useAuthUserInfoState () {
-  const { user }: any = useAuthenticator(({ user }) => [user])
+export function applyLoginUser (
+  user: any, t: {
+    navigate: NavigateFunction,
+    routeLocation: Location,
+    inComponent?: boolean
+  }
+) {
+  if (user?.username && user?.pool && user?.signInUserSession) {
+    appState.userInfo.set({
+      signOut: async () => {
+        console.time()
+        appState.userInfo.pending.set(true)
+        await Auth.signOut()
+        appState.userInfo.pending.set(false)
+        console.timeEnd()
+        appState.userInfo.set({} as any)
+      }, username: user.username,
+      signInUserSession: user.signInUserSession,
+      attributes: user.attributes,
+      pending: false
+    })
 
-  useEffect(() => {
-    if (user?.username && user?.pool && user?.signInUserSession) {
-      appState.userInfo.set({
-        signOut: async () => {
-          console.time()
-          appState.userInfo.pending.set(true)
-          await Auth.signOut()
-          appState.userInfo.pending.set(false)
-          console.timeEnd()
-          appState.userInfo.set({} as any)
-        }, username: user.username,
-        signInUserSession: user.signInUserSession,
-        attributes: user.attributes,
-        pending: false
-      })
-
-      // TODO: debug
+    // TODO: debug
+    if (!t.inComponent) {
       toast.success(
         `Hi, ${user.username} !`, {
           position: 'top-center'
         })
     }
+
+    if (t.routeLocation.pathname === '/login') {
+      t.navigate('/account')
+    }
+  }
+
+}
+
+export function useAuthUserInfoState () {
+  const { user }: any = useAuthenticator(({ user }) => [user])
+  const routeLocation = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    applyLoginUser(user, { navigate, routeLocation })
   }, [user?.username])
 }
 

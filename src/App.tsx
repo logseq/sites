@@ -50,7 +50,8 @@ export function App () {
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/pro'} element={<ProPage/>}></Route>
-          <Route path={'/users'} element={<UserEntryPage/>}></Route>
+          <Route path={'/login'} element={<UserEntryPage/>}></Route>
+          <Route path={'/account'} element={<UserEntryPage/>}></Route>
         </Routes>
       </main>
     </div>
