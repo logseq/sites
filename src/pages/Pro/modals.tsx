@@ -1,9 +1,9 @@
-import { Check, Info, UserCirclePlus } from 'phosphor-react'
+import { CaretLeft, Check, IdentificationBadge, Info, Student, UserCirclePlus } from 'phosphor-react'
 
 export function UnlockStudentDiscount () {
   return (
     <div className={'app-unlock-student-discount text-logseq-50 py-4 px-2'}>
-      <h1 className={'text-3xl tracking-wide'}>
+      <h1 className={'text-4xl tracking-wide'}>
         <b>Unlock</b> your student discount.
       </h1>
 
@@ -41,13 +41,33 @@ export function UnlockStudentDiscount () {
           <strong>2</strong>
           <p>
             <h3>Request your discount</h3>
-            <div className={'min-h-[280px]'}>-</div>
+            <div className={'flex space-x-6 pt-2'}>
+              <div className="as-card flex-1">
+                <h3>Already used a school email address for sign-up?</h3>
+                <h4>Simply email us directly from that school/university email address to request your discount. Make sure to also mention the username you chose for your Logseq account.</h4>
+                <button className="as-button">
+                  <Student size={15} weight={'duotone'} />
+                  <span>Email with university address</span>
+                  <CaretLeft className={'opacity-60'} weight={'bold'} />
+                </button>
+              </div>
+
+              <div className="as-card flex-1">
+                <h3>Signed up with a non-educational email address?</h3>
+                <h4>Email us a clear picture or scan of your valid student ID or other proof of student status. Mention both the email address and username you used for your Logseq account.</h4>
+                <button className="as-button logseq">
+                  <IdentificationBadge size={15} weight={'duotone'} />
+                  <span>Email with university address</span>
+                  <CaretLeft className={'opacity-60'} weight={'bold'} />
+                </button>
+              </div>
+            </div>
           </p>
         </li>
         <li>
           <strong><Check size={24} weight={'bold'}/></strong>
           <p className={'leading-5 tracking-wide pt-1'}>
-            <strong className={'text-sm font-semibold'}>
+            <strong className={'text-sm font-semibold text-gray-200'}>
               Once your status is verified, we’ll provide you with a unique discount code.
             </strong> <br/>
             <span

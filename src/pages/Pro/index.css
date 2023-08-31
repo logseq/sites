@@ -459,5 +459,25 @@
     @apply bg-pro-600 mr-10 rounded-md leading-none tracking-wide
     px-2 py-1 text-sm flex space-x-2 items-center text-gray-50
     opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer;
+
+    &.logseq {
+      @apply bg-logseq-500;
+    }
+  }
+
+  .as-card {
+    @apply bg-logseq-600 rounded-lg p-4 tracking-wide;
+
+    > h3 {
+      @apply leading-5 text-gray-200 font-semibold text-[15px];
+    }
+
+    > h4 {
+      @apply py-3 text-sm text-gray-300 opacity-70;
+    }
+
+    > .as-button {
+      @apply w-full my-1 py-1.5;
+    }
   }
 }
