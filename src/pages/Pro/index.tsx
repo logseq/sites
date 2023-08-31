@@ -17,6 +17,7 @@ import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
 import { useAppState, useModalsState } from '../../state'
 import { useNavigate } from 'react-router-dom'
+import { UnlockStudentDiscount } from './modals'
 
 function ProCard ({ children, className, ...rest }: any) {
   return (
@@ -125,7 +126,7 @@ function ProInfoSection () {
               <a
                 onClick={() => {
                   modalsState
-                    .create((d) => <h1 className={'text-2xl'}>Hello, modal!</h1>)
+                    .create(() => <UnlockStudentDiscount />)
                     .show()
                 }}
                 className={'bg-pro-600 mr-10 mt-1 rounded-md leading-none px-2 py-1.5 text-xs flex space-x-1 items-center ' +

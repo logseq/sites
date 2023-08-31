@@ -430,3 +430,34 @@
     tracking-wide text-pro-600/90;
   }
 }
+
+.app-unlock-student-discount {
+  @apply bg-logseq-700;
+
+  b {
+    @apply text-gray-50 font-semibold;
+  }
+
+  > ul li {
+    @apply flex py-3;
+
+    > strong {
+      @apply w-[44px] h-[44px] leading-none rounded-full bg-logseq-600 flex items-center justify-center
+      text-lg;
+    }
+
+    > p {
+      @apply pl-6 w-full;
+
+      > h3 {
+        @apply font-medium text-gray-50 text-xl pt-2.5 pb-1.5;
+      }
+    }
+  }
+
+  .as-button {
+    @apply bg-pro-600 mr-10 rounded-md leading-none tracking-wide
+    px-2 py-1 text-sm flex space-x-2 items-center text-gray-50
+    opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer;
+  }
+}

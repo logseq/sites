@@ -193,18 +193,18 @@ body {
 
 .ls-modal {
   @apply fixed w-screen h-screen flex items-center justify-center
-  top-0 left-0 z-20 bg-black/50;
+  top-0 left-0 z-50 bg-black/50 select-none;
 
   &-inner {
     @apply relative;
   }
 
   &-content {
-    @apply relative bg-logseq-500 rounded-lg w-[500px] min-h-[300px] p-6;
+    @apply relative bg-logseq-700 rounded-xl w-[80vw] max-w-[840px] min-h-[600px] p-6;
   }
 
   &-close {
-    @apply absolute top-4 right-4 opacity-70 hover:opacity-100
+    @apply absolute top-6 right-6 opacity-60 hover:opacity-80
     cursor-pointer active:opacity-50 select-none;
   }
 }
