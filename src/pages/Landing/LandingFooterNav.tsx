@@ -6,7 +6,7 @@ import {
 import { Button } from '../../components/Buttons'
 import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './common'
 import { WrapGlobalDownloadButton } from '../Downloads'
-import { useAppState } from '../../state'
+import { useAppState, useModalsState } from '../../state'
 import { openLiveDemo } from '../../components/utils'
 
 export function FooterDescCard (props: any) {

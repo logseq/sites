@@ -161,24 +161,21 @@ body {
 
 .app-logo-embossed {
   background: linear-gradient(to right, #0E2A35, #0E2A35) content-box content-box,
-              linear-gradient(to bottom, rgba(133,200,200,0.1), rgba(133,200,200,0), rgba(0,0,0,0.2)) border-box,
-              #0E2A35 border-box;
+  linear-gradient(to bottom, rgba(133, 200, 200, 0.1), rgba(133, 200, 200, 0), rgba(0, 0, 0, 0.2)) border-box,
+  #0E2A35 border-box;
   padding: 2px;
   display: grid;
   place-items: center;
   border-radius: 16px;
-  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2))
-          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2)) drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
   transition: filter 300ms ease-out;
 
 }
 
 .dockify-app-logo:hover .app-logo-embossed {
   cursor: pointer;
-  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3))
-          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3)) drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));
 }
-
 
 .app-privacy-banner {
   @apply fixed left-0 bottom-0 right-0 p-6 flex justify-center
@@ -191,5 +188,23 @@ body {
     > button {
       @apply justify-center;
     }
+  }
+}
+
+.ls-modal {
+  @apply fixed w-screen h-screen flex items-center justify-center
+  top-0 left-0 z-20 bg-black/50;
+
+  &-inner {
+    @apply relative;
+  }
+
+  &-content {
+    @apply relative bg-logseq-500 rounded-lg w-[500px] min-h-[300px] p-6;
+  }
+
+  &-close {
+    @apply absolute top-4 right-4 opacity-70 hover:opacity-100
+    cursor-pointer active:opacity-50 select-none;
   }
 }

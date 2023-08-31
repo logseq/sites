@@ -3,7 +3,7 @@ import { IProInfo } from './types'
 
 // @ts-ignore
 import os from 'platform-detect/os.mjs'
-import { useEffect } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
@@ -73,6 +73,15 @@ const proState =
     lastOrder: {},
     e: Error
   }>>({})
+
+const modalsState =
+  hookstate<Partial<{
+    modals: Array<{
+      id: number,
+      visible: boolean,
+      content: ReactElement
+    }>
+  }>>({ modals: [] })
 
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
@@ -268,6 +277,35 @@ export function useLemonState () {
       }
     }
   }
+}
+
+export function useModalsState () {
+  const hookModalsState = useHookstate(modalsState)
+
+  const ret = {
+    modals: hookModalsState.modals,
+    remove: (id: number) => hookModalsState.modals.set((v) => {
+      const i = v.findIndex((m) => m.id === id)
+      if (i != -1) v.splice(i, 1)
+      return v
+    }),
+    create: (contentFn: (destroy: () => void) => ReactElement) => {
+      const id = Date.now()
+      const idx = hookModalsState.modals.length
+      hookModalsState.modals.set((v) => {
+        v.push({ id, visible: false, content: contentFn(() => ret.remove(id)) })
+        return v
+      })
+
+      return {
+        show: () => hookModalsState.modals[idx].visible.set(true),
+        hide: () => hookModalsState.modals[idx].visible.set(false),
+        destroy: () => ret.remove(id)
+      }
+    }
+  }
+
+  return ret
 }
 
 // @ts-ignore

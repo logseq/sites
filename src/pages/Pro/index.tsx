@@ -15,7 +15,7 @@ import {
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
-import { useAppState } from '../../state'
+import { useAppState, useModalsState } from '../../state'
 import { useNavigate } from 'react-router-dom'
 
 function ProCard ({ children, className, ...rest }: any) {
@@ -28,6 +28,7 @@ function ProCard ({ children, className, ...rest }: any) {
 
 function ProInfoSection () {
   const appState = useAppState()
+  const modalsState = useModalsState()
 
   return (
     <section className={'pro-info'}>
@@ -122,6 +123,11 @@ function ProInfoSection () {
               <strong className={'flex text-xl font-medium items-center'}>Student pricing
                 <i className={'ml-1 text-pro-200'}><CircleWavyQuestion/></i></strong>
               <a
+                onClick={() => {
+                  modalsState
+                    .create((d) => <h1 className={'text-2xl'}>Hello, modal!</h1>)
+                    .show()
+                }}
                 className={'bg-pro-600 mr-10 mt-1 rounded-md leading-none px-2 py-1.5 text-xs flex space-x-1 items-center ' +
                   'opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer'}>
                 <ChatsCircle weight={'duotone'} size={14}/>

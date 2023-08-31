@@ -5,19 +5,22 @@ import { Headbar } from './components/Headbar'
 import {
   checkSmBreakPoint,
   useAppState, useAuthUserInfoState,
-  useDiscordState,
+  useDiscordState, useModalsState,
   useReleasesState,
 } from './state'
 import React, { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { ProPage } from './pages/Pro'
 import { UserEntryPage } from './pages/User'
+import { Modal } from './components/Modal'
+import { createPortal } from 'react-dom'
 
 export function App () {
   const appState = useAppState()
+  const modalsState = useModalsState()
 
   // load global state
-  useAuthUserInfoState()
+  // useAuthUserInfoState()
   useReleasesState()
   useDiscordState()
 
@@ -53,6 +56,18 @@ export function App () {
           <Route path={'/login'} element={<UserEntryPage/>}></Route>
           <Route path={'/account'} element={<UserEntryPage/>}></Route>
         </Routes>
+
+        {/*  modals */}
+        {modalsState.modals.get({ noproxy: true })?.map(m => {
+          return (
+            createPortal(
+              <Modal id={m.id} key={m.id}
+                     visible={m.visible}
+                     destroy={() => modalsState.remove(m.id)}
+              >
+                {m.content}</Modal>,
+              document.body))
+        })}
       </main>
     </div>
   )
