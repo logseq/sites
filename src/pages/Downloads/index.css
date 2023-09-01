@@ -116,30 +116,6 @@
 }
 
 .global-downloads-wrap {
-  @apply relative whitespace-nowrap;
-
-  .sub-items {
-    display: none;
-    min-width: 270px;
-    z-index: 99;
-
-    &-inner {
-      @apply border bg-logseq-600 rounded-md overflow-hidden
-      border-logseq-400 p-1;
-
-      > a {
-        @apply select-none cursor-pointer rounded-md
-        pl-3 pr-2 py-1.5 hover:bg-logseq-400/80 transition-all;
-      }
-    }
-  }
-
-  &:hover {
-    .sub-items {
-      display: flex !important;
-    }
-  }
-
   &.is-super-button {
     .sub-items {
       top: 36px;

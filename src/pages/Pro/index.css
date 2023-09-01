@@ -432,13 +432,13 @@
 }
 
 .app-unlock-student-discount {
-  @apply bg-logseq-700;
+  @apply bg-logseq-700 text-[#a4b5b6];
 
   b {
     @apply text-gray-50 font-semibold;
   }
 
-  > ul li {
+  > ul > li {
     @apply flex py-3;
 
     > strong {
@@ -457,7 +457,7 @@
 
   .as-button {
     @apply bg-pro-600 mr-10 rounded-md leading-none tracking-wide
-    px-2 py-1 text-sm flex space-x-2 items-center text-gray-50
+    px-2 py-1.5 text-sm flex space-x-2 items-center text-gray-50
     opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer;
 
     &.logseq {
@@ -473,11 +473,21 @@
     }
 
     > h4 {
-      @apply py-3 text-sm text-gray-300 opacity-70;
+      @apply py-3 text-sm opacity-90;
     }
 
-    > .as-button {
+    .as-button {
       @apply w-full my-1 py-1.5;
+    }
+
+    .ui-dropdown {
+      > .trigger button {
+        @apply cursor-default;
+      }
+
+      .sub-items {
+        @apply pt-3;
+      }
     }
   }
 }

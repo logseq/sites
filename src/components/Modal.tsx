@@ -7,7 +7,7 @@ export function Modal (props: any) {
   const refInner = useRef<HTMLDivElement>()
 
   return (
-    <div className={cx('ls-modal', className, visible ? '' : 'hidden')}
+    <div className={cx('ui-modal', className, visible ? '' : 'hidden')}
          onClick={({ target }) => {
            if (target && refInner.current?.contains(target as any)) {
              return
@@ -17,11 +17,11 @@ export function Modal (props: any) {
          }}
 
          {...rest}>
-      <div className={'ls-modal-inner'} ref={refInner}>
-        <div className={'ls-modal-content'}>
+      <div className={'ui-modal-inner'} ref={refInner}>
+        <div className={'ui-modal-content'}>
           {children}
         </div>
-        <a className={'ls-modal-close'}
+        <a className={'ui-modal-close'}
            onClick={destroy}
         >
           <XCircle size={30} weight={'duotone'}/>
