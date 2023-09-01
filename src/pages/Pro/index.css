@@ -477,7 +477,7 @@
     }
 
     .as-button {
-      @apply w-full my-1 py-1.5;
+      @apply w-full my-1 py-[7px];
     }
 
     .ui-dropdown {
@@ -486,7 +486,7 @@
       }
 
       .sub-items {
-        @apply pt-3;
+        @apply pt-4;
       }
     }
   }

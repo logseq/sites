@@ -10,7 +10,10 @@ type MenuDataItem = {
   render?: ((e?: any) => ReactElement) | ReactElement
 }
 
-export const Dropdown = React.forwardRef<HTMLDivElement, any>((props, ref) => {
+export const Dropdown = React.forwardRef<HTMLDivElement, Partial<{
+  items: Array<MenuDataItem>,
+  [k: string]: any
+}>>((props, ref) => {
   const { className, children, wrapItems, items, ...rest } = props
   const wrapSubItems = (children: ReactElement) => (
     (wrapItems === false ? children :
@@ -33,7 +36,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, any>((props, ref) => {
         (items?.length > 0 &&
           wrapSubItems(
             items.map((it: MenuDataItem, idx: number) => {
-              const { className, ...rest } = it.props
+              const { className, ...rest } = it.props || {}
 
               if (it.render) return (
                 <span key={it.key || idx} className={cx('ui-menu-item', className)} {...rest}>
@@ -45,7 +48,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                   {it.text}
                 </a>
               )
-            })))}
+            }) as any))}
     </div>
   )
 })

@@ -1,7 +1,21 @@
-import { CaretLeft, Check, IdentificationBadge, Info, Student, UserCirclePlus } from 'phosphor-react'
+import {
+  CaretLeft,
+  Check, CopySimple,
+  IdentificationBadge,
+  Info, PaperPlaneTilt,
+  Student,
+  UserCirclePlus
+} from 'phosphor-react'
+import copy from 'copy-to-clipboard'
 import { Dropdown } from '../../components/Dropdown'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
-export function UnlockStudentDiscount () {
+export function UnlockStudentDiscount (props: any) {
+  const { close } = props || {}
+  const navigate = useNavigate()
+  const supportEmail = 'support@logseq.com'
+
   return (
     <div className={'app-unlock-student-discount text-logseq-50 py-4 px-2'}>
       <h1 className={'text-4xl tracking-wide'}>
@@ -21,7 +35,12 @@ export function UnlockStudentDiscount () {
             <h3>Create a Logseq account</h3>
             <span className={'text-sm'}>
               <span>Start by setting up your Logseq account at </span>
-              <a className={'underline'} href={'https://logseq.com/login'}>Logseq.com/login</a>.
+              <a className={'underline cursor-pointer'}
+                 onClick={() => {
+                   close()
+                   navigate('/login')
+                 }}
+              >Logseq.com/login</a>.
             </span>
 
             <blockquote
@@ -30,7 +49,9 @@ export function UnlockStudentDiscount () {
               <span>Using a university email during this step speeds up your student discount approval.</span>
             </blockquote>
 
-            <button className={'as-button'}>
+            <button className={'as-button'}
+                    onClick={close}
+            >
               <UserCirclePlus size={18} weight={'duotone'}/>
               <span className={'mx-2'}>Sign up</span>
               <code
@@ -48,9 +69,7 @@ export function UnlockStudentDiscount () {
                 <h4>Simply email us directly from that school/university email address to request your discount. Make
                   sure to also mention the username you chose for your Logseq account.</h4>
 
-                <Dropdown
-                  items={<h1 className={'text-xl'}>Hello</h1>}
-                >
+                <Dropdown>
                   <button className="as-button">
                     <Student size={15} weight={'duotone'}/>
                     <span>Email with university address</span>
@@ -64,7 +83,57 @@ export function UnlockStudentDiscount () {
                 <h4>Email us a clear picture or scan of your valid student ID or other proof of student status. Mention
                   both the email address and username you used for your Logseq account.</h4>
 
-                <Dropdown>
+                <Dropdown
+                  items={[{
+                    text: (
+                      <div className="flex items-center">
+                        <div className="flex pr-2">
+                          <span className={'bg-black w-8 h-8 flex items-center justify-center rounded'}>
+                            <PaperPlaneTilt size={20} weight={'duotone'}/>
+                          </span>
+                        </div>
+
+                        <div className={'w-full flex flex-col opacity-80'}>
+                          <span className="text-sm">
+                            Open email client
+                          </span>
+                          <span className="text-[11px] opacity-60 leading-[14px]">
+                            Use our pre-filled template to request your student discount
+                          </span>
+                        </div>
+                      </div>
+                    ),
+                    props: {
+                      href: `mailto://${supportEmail}?subject=Unlock Your Student Discount for Logseq Pro! 🎓`
+                    }
+                  },
+                    {
+                      text: (
+                        <div className="flex items-center">
+                          <div className="flex pr-2">
+                            <span className={'bg-black w-8 h-8 flex items-center justify-center rounded'}>
+                              <CopySimple size={20} weight={'duotone'}/>
+                            </span>
+                          </div>
+
+                          <div className={'w-full flex flex-col opacity-80'}>
+                          <span className="text-sm">
+                            Copy support email address
+                          </span>
+                            <span className="text-[11px] opacity-60 leading-[14px]">
+                             Paste it into your preferred email platform and send your request
+                            </span>
+                          </div>
+                        </div>
+                      ),
+                      props: {
+                        onClick () {
+                          copy(supportEmail)
+                          toast('copied!')
+                        }
+                      }
+                    }]}
+                >
                   <button className="as-button logseq">
                     <IdentificationBadge size={15} weight={'duotone'}/>
                     <span>Email with university address</span>

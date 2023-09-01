@@ -116,6 +116,8 @@
 }
 
 .global-downloads-wrap {
+  @apply whitespace-nowrap;
+
   &.is-super-button {
     .sub-items {
       top: 36px;
