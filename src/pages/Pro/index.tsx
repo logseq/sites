@@ -126,7 +126,7 @@ function ProInfoSection () {
               <a
                 onClick={() => {
                   modalsState
-                    .create(() => <UnlockStudentDiscount />)
+                    .create(() => <UnlockStudentDiscount/>, { ['data-student-count-modal']: true })
                     .show()
                 }}
                 className={'bg-pro-600 mr-10 mt-1 rounded-md leading-none px-2 py-1.5 text-xs flex space-x-1 items-center ' +

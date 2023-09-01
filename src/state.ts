@@ -79,7 +79,8 @@ const modalsState =
     modals: Array<{
       id: number,
       visible: boolean,
-      content: ReactElement
+      content: ReactElement,
+      props?: Record<string, any>
     }>
   }>>({ modals: [] })
 
@@ -289,11 +290,11 @@ export function useModalsState () {
       if (i != -1) v.splice(i, 1)
       return v
     }),
-    create: (contentFn: (destroy: () => void) => ReactElement) => {
+    create: (contentFn: (destroy: () => void) => ReactElement, props?: any) => {
       const id = Date.now()
       const idx = hookModalsState.modals.length
       hookModalsState.modals.set((v) => {
-        v.push({ id, visible: false, content: contentFn(() => ret.remove(id)) })
+        v.push({ id, visible: false, content: contentFn(() => ret.remove(id)), props })
         return v
       })
 

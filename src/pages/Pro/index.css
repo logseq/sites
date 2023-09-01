@@ -491,3 +491,9 @@
     }
   }
 }
+
+.ui-modal[data-student-count-modal] {
+  .ui-modal-inner {
+    @apply animate-in slide-in-from-top duration-300;
+  }
+}

@@ -64,6 +64,7 @@ export function App () {
               <Modal id={m.id} key={m.id}
                      visible={m.visible}
                      destroy={() => modalsState.remove(m.id)}
+                     {...m.props}
               >
                 {m.content}</Modal>,
               document.body))
