@@ -84,3 +84,7 @@ form[data-amplify-authenticator-confirmsignup] {
 .federated-sign-in-container {
   display: none !important;
 }
+
+.app-account {
+
+}

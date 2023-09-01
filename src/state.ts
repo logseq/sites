@@ -43,7 +43,7 @@ export const checkSmBreakPoint = () => {
   ) <= 640
 }
 
-const appState = hookstate({
+const defaultAppState = {
   isDev, os, sm: checkSmBreakPoint(),
   userInfo: {
     pending: false,
@@ -62,7 +62,13 @@ const appState = hookstate({
     approximate_member_count: 0,
     approximate_presence_count: 0,
   },
-})
+}
+
+const appState = hookstate(defaultAppState)
+
+export type IAppState = typeof appState
+export type IAppUserInfoState = typeof appState.userInfo
+export type IAppUserInfo = typeof defaultAppState.userInfo
 
 const proState =
   hookstate<Partial<{
@@ -71,8 +77,11 @@ const proState =
     orders: {},
     ordersFetching: boolean,
     lastOrder: {},
+    lemon_list_subscriptions: {},
     e: Error
   }>>({})
+
+export type IProState = typeof proState
 
 const modalsState =
   hookstate<Partial<{
@@ -87,7 +96,7 @@ const modalsState =
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
 const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
-const lemoEndpoint = isDev ? 'http://127.0.0.1:8787/lemon/api' : 'https://plugins.logseq.io/lemon/api'
+const logseqEndpoint = isDev ? 'https://api-dev.logseq.com/logseq' : 'https://api-dev.logseq.com/logseq'
 
 export function applyLoginUser (
   user: any, t: {
@@ -259,15 +268,15 @@ export function useLemonState () {
   const proState = useProState()
 
   return {
-    get: () => proState.orders.value,
+    getSubscriptions: () => proState.lemon_list_subscriptions.get({ noproxy: true }),
     fetching: proState.ordersFetching.get(),
-    load: async (type: string = 'orders') => {
+    load: async (type: string = 'lemon_list_subscriptions', init?: RequestInit) => {
       try {
         // @ts-ignore
         const idToken = userInfo.signInUserSession?.idToken?.jwtToken
         proState.ordersFetching.set(true)
-        const res = await fetch(`${lemoEndpoint}/${type}`,
-          { method: 'GET', headers: { Authorization: `Bearer ${idToken}` } })
+        const res = await fetch(`${logseqEndpoint}/${type}`,
+          { method: init?.method || 'POST', headers: { Authorization: `Bearer ${idToken}` } })
         const json = await res.json()
 
         proState[type].set(json)
