@@ -1,4 +1,5 @@
 import { CaretLeft, Check, IdentificationBadge, Info, Student, UserCirclePlus } from 'phosphor-react'
+import { Dropdown } from '../../components/Dropdown'
 
 export function UnlockStudentDiscount () {
   return (
@@ -44,23 +45,45 @@ export function UnlockStudentDiscount () {
             <div className={'flex space-x-6 pt-2'}>
               <div className="as-card flex-1">
                 <h3>Already used a school email address for sign-up?</h3>
-                <h4>Simply email us directly from that school/university email address to request your discount. Make sure to also mention the username you chose for your Logseq account.</h4>
-                <button className="as-button">
-                  <Student size={15} weight={'duotone'} />
-                  <span>Email with university address</span>
-                  <CaretLeft className={'opacity-60'} weight={'bold'} />
-                </button>
+                <h4>Simply email us directly from that school/university email address to request your discount. Make
+                  sure to also mention the username you chose for your Logseq account.</h4>
+
+                <Dropdown
+                  items={<h1 className={'text-xl'}>Hello</h1>}
+                >
+                  <button className="as-button">
+                    <Student size={15} weight={'duotone'}/>
+                    <span>Email with university address</span>
+                    <CaretLeft className={'opacity-60'} weight={'bold'}/>
+                  </button>
+                </Dropdown>
               </div>
 
               <div className="as-card flex-1">
                 <h3>Signed up with a non-educational email address?</h3>
-                <h4>Email us a clear picture or scan of your valid student ID or other proof of student status. Mention both the email address and username you used for your Logseq account.</h4>
-                <button className="as-button logseq">
-                  <IdentificationBadge size={15} weight={'duotone'} />
-                  <span>Email with university address</span>
-                  <CaretLeft className={'opacity-60'} weight={'bold'} />
-                </button>
+                <h4>Email us a clear picture or scan of your valid student ID or other proof of student status. Mention
+                  both the email address and username you used for your Logseq account.</h4>
+
+                <Dropdown>
+                  <button className="as-button logseq">
+                    <IdentificationBadge size={15} weight={'duotone'}/>
+                    <span>Email with university address</span>
+                    <CaretLeft className={'opacity-60'} weight={'bold'}/>
+                  </button>
+                </Dropdown>
               </div>
+            </div>
+            <div className="py-2">
+              <h4 className={'text-gray-200 pt-4'}>Please note:</h4>
+              <ul className={'list-disc ml-1 pt-2 text-sm pl-4'}>
+                <li>
+                  Ensure your ID displays a visible expiry date.
+                </li>
+                <li>
+                  Feel free to blur out any sensitive information (beside your name and the university name); <br/>
+                  we only need to verify your student status.
+                </li>
+              </ul>
             </div>
           </p>
         </li>
@@ -71,7 +94,7 @@ export function UnlockStudentDiscount () {
               Once your status is verified, we’ll provide you with a unique discount code.
             </strong> <br/>
             <span
-              className={'text-sm opacity-70'}>Use this code when subscribing to Logseq Pro to get the discount.</span>
+              className={'text-sm opacity-80'}>Use this code when subscribing to Logseq Pro to get the discount.</span>
           </p>
         </li>
       </ul>
