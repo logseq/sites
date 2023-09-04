@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/Home'
 import { DownloadsPage } from './pages/Downloads'
 import { Headbar } from './components/Headbar'
@@ -14,10 +14,16 @@ import { ProPage } from './pages/Pro'
 import { UserEntryPage } from './pages/User'
 import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
+import { scrollToTop } from './components/utils'
 
 export function App () {
   const appState = useAppState()
   const modalsState = useModalsState()
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    scrollToTop()
+  }, [pathname])
 
   // load global state
   // useAuthUserInfoState()

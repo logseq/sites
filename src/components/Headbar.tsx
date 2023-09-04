@@ -42,7 +42,6 @@ export function LinksGroup (
               :
               <NavLink
                 to={it.link}
-                onClick={() => (scrollToTop(), setTimeout(scrollToTop, 100))}
                 className={({ isActive }) => {
                   return cx('h-full flex items-center group transition-colors',
                     isActive && 'app-link-active')
