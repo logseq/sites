@@ -21,8 +21,8 @@ export function IconsIntel (
   )
 }
 
-export function LSSpinner () {
+export function LSSpinner (props: any) {
   return (
-    <BeatLoader size={12} color={'#cecece'}/>
+    <BeatLoader size={12} color={'#cecece'} {...props}/>
   )
 }

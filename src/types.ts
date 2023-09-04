@@ -1,12 +1,15 @@
 export type IProInfo = {
-  ExpireTime: number
-  GraphCountLimit: number
-  LemonEndsAt: number
-  LemonRenewsAt: number
-  LemonStatus: string
+  FileSyncExpireAt: number
+  FileSyncGraphCountLimit: number
+  FileSyncStorageLimit: number
   ProUser: boolean
-  StorageLimit: number
   UserGroups: 'alpha-tester' | string
+
+  LemonSubscriptionID: { ['LogseqPro']: string }
+  LemonCustomerID: { ['LogseqPro']: string }
+  LemonEndsAt: { ['LogseqPro']: string }
+  LemonRenewsAt: { ['LogseqPro']: string }
+  LemonStatus: { ['LogseqPro']: string }
 }
 
 declare global {

@@ -5,15 +5,15 @@ import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
 import Avatar from 'react-avatar'
 import cx from 'classnames'
-import { GlassCard } from '../../components/Cards'
 import { LSSpinner } from '../../components/Icons'
+import { none, useHookstate } from '@hookstate/core'
 
 function LemonPaymentButton ({ userId, username, email }: Partial<{
   userId: string,
   username: string,
   email: string
 }>) {
-  const proState = useProState()
+  const { proState, loadProInfo } = useProState()
   const lemon = useLemonState()
 
   useEffect(() => {
@@ -26,7 +26,8 @@ function LemonPaymentButton ({ userId, username, email }: Partial<{
           if (e?.event === 'Checkout.Success') {
             proState.lastOrder.set(e?.data)
             window.LemonSqueezy.Url.Close()
-            lemon.load().catch(null)
+            loadProInfo().catch(null)
+            // lemon.loadSubscriptions().catch(null)
 
             toast.success(
               <div>
@@ -39,24 +40,26 @@ function LemonPaymentButton ({ userId, username, email }: Partial<{
     }, 2000)
   }, [])
 
-  if (!email) return
+  if (proState.value.info?.ProUser === true) return
 
   return (
     <a
       href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
       ?embed=1&media=0&checkout[email]=${encodeURIComponent(email)}&checkout[custom][user_uuid]=${userId}`}
-      className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-lg">
-      Buy Logseq Pro
+      className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-xl mb-8">
+      Subscribe Logseq Pro
     </a>
   )
 }
 
 function LemoOrders () {
   const lemon = useLemonState()
+  const { proState, loadProInfo } = useProState()
   const lemonSubscriptions = lemon.getSubscriptions() as any
+  const cancellingState = useHookstate({})
 
   useEffect(() => {
-    lemon.load().catch(null)
+    lemon.loadSubscriptions().catch(null)
   }, [])
 
   let pane = <></>
@@ -66,19 +69,55 @@ function LemoOrders () {
   } else {
     pane = (<ul className={'py-2'}>
       {Array.isArray(lemonSubscriptions) && lemonSubscriptions.map(it => {
+
+        // https://docs.lemonsqueezy.com/api/subscriptions
         const {
-          status_formatted, subtotal_formatted, created_at, user_email,
+          status, status_formatted, subtotal_formatted, created_at, user_email,
           user_name, customer_id, product_name, variant_name
         } = it.attributes
+
+        const isActive = status === 'active'
+        const isPaused = status === 'paused'
+        const isUnpaid = status === 'unpaid'
+        const isCancelled = status === 'cancelled'
+        const isExpired = status === 'expired'
+        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
+
         return (
-          <li key={it.id} className={'text-lg py-3 flex items-center'}>
-            <GlassCard className={'w-full'}>
+          <li key={it.id} className={
+            cx('text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
+              isCancelled ? 'bg-red-600/50' :
+                (isBindSubscription ? 'bg-green-800/80' : 'bg-pro-800')
+            )}>
+            <div className={'w-full'}>
               <small>#{it.id} {user_name} & {user_email} & ^{customer_id}</small>
               <br/>
               <span
                 className={'font-bold text-pro-300 pr-1'}>{product_name} / {variant_name} </span>
-              {subtotal_formatted} / <code>{status_formatted}</code> / {created_at}
-            </GlassCard>
+              {subtotal_formatted} / <code>{status_formatted}</code> / {new Date(created_at).toLocaleDateString()}
+            </div>
+
+            {isActive &&
+              (<Button
+                className={'absolute top-1 right-1 !bg-transparent'}
+                onClick={async () => {
+                  try {
+                    cancellingState.merge({ [it.id]: true })
+                    await lemon.cancelSubscription(it.id)
+                    await lemon.loadSubscriptions()
+
+                    if (isBindSubscription) {
+                      await loadProInfo()
+                    }
+                  } finally {
+                    cancellingState.merge({ [it.id]: none })
+                  }
+                }}>
+
+
+                {cancellingState.value[it.id] ?
+                  <LSSpinner size={10} color={'#ffffff'}/> : 'Cancel'}
+              </Button>)}
           </li>)
       })}
     </ul>)
@@ -88,7 +127,7 @@ function LemoOrders () {
     <div className={'py-4 w-full'}>
       <div className={'flex justify-between'}>
         <h1 className={'text-4xl'}>Subscription orders:</h1>
-        <Button onClick={() => lemon.load()} className={'!bg-transparent'}>
+        <Button onClick={() => lemon.loadSubscriptions()} className={'!bg-transparent'}>
           <ArrowsClockwise weight={'duotone'} size={24} className={'opacity-70'}/>
         </Button>
       </div>
@@ -112,12 +151,14 @@ function UserInfoContent (props: { proState: IProState }) {
         (<>
           <b>&lt;Status&gt; Pro user! </b> <br/>
           <b>&lt;Group&gt; {proState.info.UserGroups?.toString()}</b> <br/>
-          <b>&lt;Graph limit&gt; {proState.info.GraphCountLimit}</b> <br/>
-          <b>&lt;Storage limit&gt; {proState.info.StorageLimit / 1024 / 1024 / 1024} G</b> <br/>
-          <b>&lt;Expired At&gt; {(new Date(proState.info.ExpireTime * 1000)).toLocaleDateString()}</b> <br/>
-          <b>&lt;Lemon Status&gt; {proState.info.LemonStatus}</b> <br/>
-          <b>&lt;Lemon Renew At&gt; {proState.info.LemonRenewsAt}</b> <br/>
-          <b>&lt;Lemon Ends At&gt; {proState.info.LemonEndsAt}</b> <br/>
+          <b>&lt;FileSyncGraph limit&gt; {proState.info.FileSyncGraphCountLimit}</b> <br/>
+          <b>&lt;FileSyncStorage limit&gt; {proState.info.FileSyncStorageLimit / 1024 / 1024 / 1024} G</b> <br/>
+          <b>&lt;FileSyncExpired At&gt; {(new Date(proState.info.FileSyncExpireAt)).toLocaleDateString()}</b> <br/>
+
+          <b>&lt;Lemon Status&gt; {proState.info.LemonStatus.LogseqPro}</b> <br/>
+          <b>&lt;Lemon Renew At&gt; {proState.info.LemonRenewsAt.LogseqPro}</b> <br/>
+          <b>&lt;Lemon Subscription ID&gt; {proState.info.LemonSubscriptionID.LogseqPro}</b> <br/>
+          <b>&lt;Lemon Ends At&gt; {proState.info.LemonEndsAt.LogseqPro}</b> <br/>
         </>) :
         (<b>Not a Pro user!</b>)
     }
@@ -128,7 +169,7 @@ export function AccountPane ({ userInfo }: {
   userInfo: IAppUserInfo
 }) {
   const [active, setActive] = useState<string>()
-  const proState = useProState()
+  const { proState, loadProInfo } = useProState()
   let activeContent = <></>
 
   switch (active) {
@@ -139,21 +180,27 @@ export function AccountPane ({ userInfo }: {
       break
     default:
       activeContent = (
-        <>
-          <LemonPaymentButton
-            email={userInfo.attributes?.email}
-            userId={userInfo.attributes?.sub}
-            username={userInfo.username}
-          />
-
-          <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6'}>
-            <UserInfoContent proState={proState}/>
+        <div className={'py-2'}>
+          <div className={'flex justify-between items-center'}>
+            <LemonPaymentButton
+              email={userInfo.attributes?.email}
+              userId={userInfo.attributes?.sub}
+              username={userInfo.username}
+            />
           </div>
 
-          <pre className={'whitespace-pre w-56 p-4'}>
-            {JSON.stringify(userInfo.attributes, null, 2)}
-          </pre>
-        </>
+          {proState.value.info?.ProUser &&
+            <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
+              <UserInfoContent proState={proState}/>
+
+              <a className={'absolute top-4 right-4 cursor-pointer active:opacity-50 opacity-80 hover:opacity-100'}
+                 onClick={loadProInfo}
+              >
+                <ArrowsClockwise size={18} weight={'bold'}/>
+              </a>
+            </div>
+          }
+        </div>
       )
   }
 
@@ -188,6 +235,7 @@ export function AccountPane ({ userInfo }: {
           </h1>
           <h2 className={'text-2xl px-2 pt-4 pb-1 font-medium'}>
             {userInfo.username}
+            {proState.value.info?.ProUser && (<sup className={'opacity-30 pl-1.5 scale-75'}>PRO+</sup>)}
           </h2>
           <h3 className={'px-2 text-sm text-gray-500'}>
             {userInfo.attributes?.email}

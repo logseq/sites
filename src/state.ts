@@ -238,53 +238,77 @@ export function useProState () {
     if (!idToken) {
       hookProState.set({})
     } else if (!hookProState.get().info) {
-      hookProState.infoFetching?.set(true)
-      requestProInfo()
-        .then((info) => hookProState.info.set(info))
-        .catch(e => {
-          console.error('[Request ProState] ', e)
-          hookProState.e.set(e)
-        })
-        .finally(() => hookProState.infoFetching?.set(false))
+      loadProInfo().catch(null)
     }
+  }, [idToken])
 
-    async function requestProInfo () {
-      const resp = await fetch(`${fileSyncEndpoint}/user_info`,
+  async function loadProInfo () {
+    try {
+      hookProState.infoFetching?.set(true)
+
+      const resp = await fetch(`${logseqEndpoint}/user_info`,
         { method: 'POST', headers: { Authorization: `Bearer ${idToken}` } })
 
       if (resp.status !== 200) {
         throw new Error(resp.statusText)
       }
 
-      return resp.json()
+      const info = await resp.json()
+      hookProState.info.set(info)
+    } catch (e: any) {
+      console.error('[Request ProState] ', e)
+      hookProState.e.set(e)
+    } finally {
+      hookProState.infoFetching?.set(false)
     }
-  }, [idToken])
+  }
 
-  return hookProState
+  return {
+    proState: hookProState,
+    loadProInfo
+  }
 }
 
 export function useLemonState () {
   const userInfo = useAppState().userInfo.get()
-  const proState = useProState()
+  const { proState } = useProState()
+
+  async function loadAPI (
+    type: string,
+    setState: boolean = false,
+    init?: RequestInit) {
+    try {
+      // @ts-ignore
+      const idToken = userInfo.signInUserSession?.idToken?.jwtToken
+      const res = await fetch(`${logseqEndpoint}/${type}`,
+        Object.assign(init || {}, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${idToken}`, ...(init?.headers || {}) }
+        }))
+
+      if (setState) {
+        const json = await res.json()
+
+        proState[type].set(json)
+      }
+    } catch (e: any) {
+      toast.error(e.message)
+    }
+  }
 
   return {
     getSubscriptions: () => proState.lemon_list_subscriptions.get({ noproxy: true }),
     fetching: proState.ordersFetching.get(),
-    load: async (type: string = 'lemon_list_subscriptions', init?: RequestInit) => {
-      try {
-        // @ts-ignore
-        const idToken = userInfo.signInUserSession?.idToken?.jwtToken
-        proState.ordersFetching.set(true)
-        const res = await fetch(`${logseqEndpoint}/${type}`,
-          { method: init?.method || 'POST', headers: { Authorization: `Bearer ${idToken}` } })
-        const json = await res.json()
-
-        proState[type].set(json)
-      } catch (e: any) {
-        toast.error(e.message)
-      } finally {
-        proState.ordersFetching.set(false)
-      }
+    loadSubscriptions: () => {
+      proState.ordersFetching.set(true)
+      return loadAPI('lemon_list_subscriptions', true)
+        .finally(() =>
+          proState.ordersFetching.set(false))
+    },
+    cancelSubscription: async (subId: string) => {
+      await loadAPI(
+        'lemon_cancel_subscription', false,
+        { body: JSON.stringify({ 'subscription-id': subId }) })
     }
   }
 }
