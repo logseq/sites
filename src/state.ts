@@ -8,6 +8,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react'
 import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
 import { Location, NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
+import camelcase from 'camelcase'
 
 export const isDev = process.env.NODE_ENV !== 'production'
 export const authConfig = isDev ?
@@ -75,9 +76,10 @@ const proState =
     info: IProInfo,
     infoFetching: boolean,
     orders: {},
-    ordersFetching: boolean,
-    lastOrder: {},
-    lemon_list_subscriptions: {},
+    lastSubscription: {},
+    subscriptionsFetching: boolean,
+    cancelingSubscriptions: {},
+    lemonListSubscriptions: {},
     e: Error
   }>>({})
 
@@ -265,6 +267,7 @@ export function useProState () {
 
   return {
     proState: hookProState,
+    proStateValue: hookProState.get({ noproxy: true }),
     loadProInfo
   }
 }
@@ -289,7 +292,7 @@ export function useLemonState () {
       if (setState) {
         const json = await res.json()
 
-        proState[type].set(json)
+        proState[camelcase(type)].set(json)
       }
     } catch (e: any) {
       toast.error(e.message)
@@ -297,13 +300,13 @@ export function useLemonState () {
   }
 
   return {
-    getSubscriptions: () => proState.lemon_list_subscriptions.get({ noproxy: true }),
-    fetching: proState.ordersFetching.get(),
+    getSubscriptions: () => proState.lemonListSubscriptions.get({ noproxy: true }),
+    subscriptionsFetching: proState.subscriptionsFetching.get(),
     loadSubscriptions: () => {
-      proState.ordersFetching.set(true)
+      proState.subscriptionsFetching.set(true)
       return loadAPI('lemon_list_subscriptions', true)
         .finally(() =>
-          proState.ordersFetching.set(false))
+          proState.subscriptionsFetching.set(false))
     },
     cancelSubscription: async (subId: string) => {
       await loadAPI(

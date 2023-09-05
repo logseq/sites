@@ -24,13 +24,17 @@ function LemonPaymentButton ({ userId, username, email }: Partial<{
       window.LemonSqueezy.Setup({
         eventHandler: (e: any) => {
           if (e?.event === 'Checkout.Success') {
-            proState.lastOrder.set(e?.data)
-            window.LemonSqueezy.Url.Close()
-            loadProInfo().catch(null)
-            // lemon.loadSubscriptions().catch(null)
+            proState.lastSubscription.set(e?.data)
+
+            // TODO: wait for server state
+            setTimeout(() => {
+              loadProInfo().catch(null)
+              window.LemonSqueezy.Url.Close()
+              // lemon.loadSubscriptions().catch(null)
+            }, 200)
 
             toast.success(
-              <div>
+              <div className={'p-4'}>
                 <h1 className={'text-xl'}>😀 Thanks for your support!</h1>
               </div>
             )
@@ -56,7 +60,6 @@ function LemoOrders () {
   const lemon = useLemonState()
   const { proState, loadProInfo } = useProState()
   const lemonSubscriptions = lemon.getSubscriptions() as any
-  const cancellingState = useHookstate({})
 
   useEffect(() => {
     lemon.loadSubscriptions().catch(null)
@@ -64,9 +67,9 @@ function LemoOrders () {
 
   let pane = <></>
 
-  if (lemon.fetching) {
-    pane = <div className={'py-4 text-2xl flex'}><LSSpinner/></div>
-  } else {
+  // if (lemon.subscriptionsFetching) {
+  //   pane = <div className={'py-4 text-2xl flex'}><LSSpinner/></div>
+  // } else {
     pane = (<ul className={'py-2'}>
       {Array.isArray(lemonSubscriptions) && lemonSubscriptions.map(it => {
 
@@ -86,7 +89,7 @@ function LemoOrders () {
         return (
           <li key={it.id} className={
             cx('text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
-              isCancelled ? 'bg-red-600/50' :
+              isCancelled ? 'bg-red-600/50 opacity-50' :
                 (isBindSubscription ? 'bg-green-800/80' : 'bg-pro-800')
             )}>
             <div className={'w-full'}>
@@ -102,7 +105,7 @@ function LemoOrders () {
                 className={'absolute top-1 right-1 !bg-transparent'}
                 onClick={async () => {
                   try {
-                    cancellingState.merge({ [it.id]: true })
+                    proState.cancelingSubscriptions.merge({ [it.id]: true })
                     await lemon.cancelSubscription(it.id)
                     await lemon.loadSubscriptions()
 
@@ -110,24 +113,24 @@ function LemoOrders () {
                       await loadProInfo()
                     }
                   } finally {
-                    cancellingState.merge({ [it.id]: none })
+                    proState.cancelingSubscriptions.merge({ [it.id]: none })
                   }
                 }}>
 
-
-                {cancellingState.value[it.id] ?
+                {proState.cancelingSubscriptions.value?.[it.id] ?
                   <LSSpinner size={10} color={'#ffffff'}/> : 'Cancel'}
               </Button>)}
           </li>)
       })}
     </ul>)
-  }
+  // }
 
   return (
     <div className={'py-4 w-full'}>
       <div className={'flex justify-between'}>
         <h1 className={'text-4xl'}>Subscription orders:</h1>
-        <Button onClick={() => lemon.loadSubscriptions()} className={'!bg-transparent'}>
+        <Button onClick={() => lemon.loadSubscriptions()} className={
+          cx('!bg-transparent', (lemon.subscriptionsFetching && 'animate-spin'))}>
           <ArrowsClockwise weight={'duotone'} size={24} className={'opacity-70'}/>
         </Button>
       </div>
