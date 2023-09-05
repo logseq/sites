@@ -147,13 +147,18 @@ function UserInfoContent (props: { proState: IProState }) {
         <span>Loading Pro Info ...</span>
       </b>
     } else {
-      return proState.info?.ProUser ?
+      return (typeof proState.info?.ProUser === 'boolean') ?
         (<>
-          <b>&lt;Status&gt; Pro user! </b> <br/>
+          <b>&lt;Pro Status&gt; {proState.info?.ProUser ? 'True' : 'False'} </b> <br/>
           <b>&lt;Group&gt; {proState.info.UserGroups?.toString()}</b> <br/>
+
+          <hr className={'my-4'}/>
+
           <b>&lt;FileSyncGraph limit&gt; {proState.info.FileSyncGraphCountLimit}</b> <br/>
           <b>&lt;FileSyncStorage limit&gt; {proState.info.FileSyncStorageLimit / 1024 / 1024 / 1024} G</b> <br/>
           <b>&lt;FileSyncExpired At&gt; {(new Date(proState.info.FileSyncExpireAt)).toLocaleDateString()}</b> <br/>
+
+          <hr className={'my-4'}/>
 
           <b>&lt;Lemon Status&gt; {proState.info.LemonStatus.LogseqPro}</b> <br/>
           <b>&lt;Lemon Renew At&gt; {proState.info.LemonRenewsAt.LogseqPro}</b> <br/>
@@ -181,15 +186,17 @@ export function AccountPane ({ userInfo }: {
     default:
       activeContent = (
         <div className={'py-2'}>
-          <div className={'flex justify-between items-center'}>
-            <LemonPaymentButton
-              email={userInfo.attributes?.email}
-              userId={userInfo.attributes?.sub}
-              username={userInfo.username}
-            />
-          </div>
+          {!proState.value.infoFetching &&
+            (<div className={'flex justify-between items-center'}>
+              <LemonPaymentButton
+                email={userInfo.attributes?.email}
+                userId={userInfo.attributes?.sub}
+                username={userInfo.username}
+              />
+            </div>)}
 
-          {proState.value.info?.ProUser &&
+          {((typeof proState.value.info?.ProUser === 'boolean') ||
+              (proState.value.infoFetching)) &&
             <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
               <UserInfoContent proState={proState}/>
 
