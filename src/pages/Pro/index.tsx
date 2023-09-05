@@ -15,7 +15,7 @@ import {
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'
-import { useAppState, useModalsState } from '../../state'
+import { useAppState, useModalsState, useProState } from '../../state'
 import { useNavigate } from 'react-router-dom'
 import { UnlockStudentDiscount } from './modals'
 
@@ -311,6 +311,7 @@ function ChoosePlanSection () {
   const [foldedSet, setFoldSet] = useState(new Set())
   const appState = useAppState()
   const navigate = useNavigate()
+  const { proStateValue } = useProState()
 
   return (
     <div className={'choose-plan-section-wrap page-inner-full-wrap b'} id={'choose-the-plan-for-you'}>
@@ -358,15 +359,21 @@ function ChoosePlanSection () {
                 </li>
               </ul>
 
-              {/* link button */}
+              {/* free plan button */}
               <div className="flex justify-center pt-6 pb-3">
                 <Button
                   className={'w-full !bg-logseq-700/70 !justify-center'}
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate('/login?t=create')}
                 >
                   <div className="flex items-center space-x-2">
                     <UserCirclePlus weight={'duotone'} size={20}/>
-                    <span>Create a Logseq account</span>
+                    {!appState.userInfo?.value ?
+                      (<span>Create a Logseq account</span>) :
+                      (proStateValue.info?.ProUser ?
+                        <span>Check your account</span> :
+                        <span>Current plan</span>)}
+
+
                     <strong className="dark-flag">Free</strong>
                     <SignIn size={20} className={'opacity-50'}/>
                   </div>
@@ -400,10 +407,17 @@ function ChoosePlanSection () {
               </ul>
 
               <div className="flex justify-center pt-6 pb-3">
-                <Button className={'w-full !bg-pro-500/60 !justify-center'}>
+                <Button
+                  className={'w-full !bg-pro-500/60 !justify-center'}
+                  onClick={() => navigate('/login?t=pro')}
+                >
                   <div className="flex items-center space-x-2">
                     <Wallet weight={'duotone'} size={20}/>
-                    <span>Subscribe to Logseq</span>
+
+                    {proStateValue.info?.ProUser ?
+                      <span>Current plan</span> :
+                      (<span>Subscribe to Logseq</span>)}
+
                     <strong className="light-flag">Pro</strong>
                     <SignIn size={20} className={'opacity-50'}/>
                   </div>

@@ -73,7 +73,7 @@ export type IAppUserInfo = typeof defaultAppState.userInfo
 
 const proState =
   hookstate<Partial<{
-    info: IProInfo,
+    info: IProInfo | null,
     infoFetching: boolean,
     orders: {},
     lastSubscription: {},

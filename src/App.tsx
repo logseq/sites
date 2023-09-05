@@ -26,7 +26,7 @@ export function App () {
   }, [pathname])
 
   // load global state
-  // useAuthUserInfoState()
+  useAuthUserInfoState()
   useReleasesState()
   useDiscordState()
 

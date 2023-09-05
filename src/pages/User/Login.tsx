@@ -6,6 +6,7 @@ function LSAuthenticator ({ termsLink, children }: any) {
   return (
     <Authenticator
       loginMechanisms={['username']}
+      initialState={location.href.includes('t=create') ? 'signUp' : 'signIn'}
       socialProviders={['google']}
       components={{
         SignUp: {
