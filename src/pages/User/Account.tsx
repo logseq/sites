@@ -177,9 +177,10 @@ export function UserInfoContent (props: { proState: IProState }) {
 
 export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
   const { proState, loadProInfo } = useProState()
+  const proStateValue = proState.value
 
   return (<div className={'py-2'}>
-    {!proState.value.infoFetching &&
+    {!proStateValue.infoFetching &&
       (<div className={'flex justify-between items-center'}>
         <LemonPaymentButton
           email={userInfo.attributes?.email}
@@ -188,8 +189,14 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
         />
       </div>)}
 
+    {proStateValue.e &&
+      (<pre className={'bg-red-600/50 p-4 block rounded-lg'}>
+        {proStateValue.e?.message}
+        {proStateValue.e?.stack}
+      </pre>)}
+
     {((typeof proState.value.info?.ProUser === 'boolean') ||
-        (proState.value.infoFetching)) &&
+        (proStateValue.infoFetching)) &&
       <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
         <UserInfoContent proState={proState}/>
 

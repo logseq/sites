@@ -114,6 +114,7 @@ export function applyLoginUser (
         appState.userInfo.pending.set(true)
         await Auth.signOut()
         appState.userInfo.pending.set(false)
+        proState.set({})
         console.timeEnd()
         appState.userInfo.set({} as any)
       }, username: user.username,
@@ -141,6 +142,19 @@ export function useAuthUserInfoState () {
   const { user }: any = useAuthenticator(({ user }) => [user])
   const routeLocation = useLocation()
   const navigate = useNavigate()
+  const { proState, loadProInfo } = useProState()
+  const userInfoValue = appState.userInfo.get()
+
+  // @ts-ignore
+  const idToken = userInfoValue.signInUserSession?.idToken?.jwtToken
+
+  useEffect(() => {
+    if (!idToken) {
+      proState.set({})
+    } else if (!proState.get().info) {
+      loadProInfo().catch(null)
+    }
+  }, [idToken])
 
   useEffect(() => {
     applyLoginUser(user, { navigate, routeLocation })
@@ -235,14 +249,6 @@ export function useProState () {
 
   // @ts-ignore
   const idToken = userInfo.signInUserSession?.idToken?.jwtToken
-
-  useEffect(() => {
-    if (!idToken) {
-      hookProState.set({})
-    } else if (!hookProState.get().info) {
-      loadProInfo().catch(null)
-    }
-  }, [idToken])
 
   async function loadProInfo () {
     try {
