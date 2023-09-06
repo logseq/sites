@@ -4,6 +4,7 @@ import { authConfig, useAppState } from '../../state'
 import { setupAuthConfigure } from './amplify'
 import { LandingFooterNav } from '../Landing'
 import { AccountPane } from './Account'
+import { useLocation } from 'react-router-dom'
 
 // setup amplify configures
 setupAuthConfigure(authConfig)
@@ -11,10 +12,12 @@ setupAuthConfigure(authConfig)
 function UserEntryPage () {
   const appState = useAppState()
   const userInfo = appState.userInfo.get({ noproxy: true })
+  const location = useLocation()
+  const isLoginPath = location.pathname === '/login'
 
   let pane = <></>
 
-  if (userInfo?.username) {
+  if (userInfo?.username && !isLoginPath) {
     pane = <AccountPane userInfo={userInfo}/>
   } else {
     pane = <LoginPane/>

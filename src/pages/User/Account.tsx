@@ -1,14 +1,15 @@
 import { IAppUserInfo, IProState, useLemonState, useProState } from '../../state'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ArrowsClockwise, SignOut } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
 import Avatar from 'react-avatar'
 import cx from 'classnames'
 import { LSSpinner } from '../../components/Icons'
-import { none, useHookstate } from '@hookstate/core'
+import { none } from '@hookstate/core'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-function LemonPaymentButton ({ userId, username, email }: Partial<{
+function LemonPaymentButton ({ userId, email }: Partial<{
   userId: string,
   username: string,
   email: string
@@ -56,7 +57,7 @@ function LemonPaymentButton ({ userId, username, email }: Partial<{
   )
 }
 
-function LemoOrders () {
+export function LemoOrders () {
   const lemon = useLemonState()
   const { proState, loadProInfo } = useProState()
   const lemonSubscriptions = lemon.getSubscriptions() as any
@@ -70,59 +71,60 @@ function LemoOrders () {
   // if (lemon.subscriptionsFetching) {
   //   pane = <div className={'py-4 text-2xl flex'}><LSSpinner/></div>
   // } else {
-    pane = (<ul className={'py-2'}>
-      {Array.isArray(lemonSubscriptions) && lemonSubscriptions.map(it => {
+  pane = (<ul className={'py-2'}>
+    {Array.isArray(lemonSubscriptions) && lemonSubscriptions.map(it => {
 
-        // https://docs.lemonsqueezy.com/api/subscriptions
-        const {
-          status, status_formatted, subtotal_formatted, created_at, user_email,
-          user_name, customer_id, product_name, variant_name
-        } = it.attributes
+      // https://docs.lemonsqueezy.com/api/subscriptions
+      const {
+        status, status_formatted, subtotal_formatted, created_at, user_email,
+        user_name, customer_id, product_name, variant_name, renews_at
+      } = it.attributes
 
-        const isActive = status === 'active'
-        const isPaused = status === 'paused'
-        const isUnpaid = status === 'unpaid'
-        const isCancelled = status === 'cancelled'
-        const isExpired = status === 'expired'
-        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
+      const isActive = status === 'active'
+      const isPaused = status === 'paused'
+      const isUnpaid = status === 'unpaid'
+      const isCancelled = status === 'cancelled'
+      const isExpired = status === 'expired'
+      const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
 
-        return (
-          <li key={it.id} className={
-            cx('text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
-              isCancelled ? 'bg-red-600/50 opacity-50' :
-                (isBindSubscription ? 'bg-green-800/80' : 'bg-pro-800')
-            )}>
-            <div className={'w-full'}>
-              <small>#{it.id} {user_name} & {user_email} & ^{customer_id}</small>
-              <br/>
-              <span
-                className={'font-bold text-pro-300 pr-1'}>{product_name} / {variant_name} </span>
-              {subtotal_formatted} / <code>{status_formatted}</code> / {new Date(created_at).toLocaleDateString()}
-            </div>
+      return (
+        <li key={it.id} className={
+          cx('text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
+            isCancelled ? 'bg-red-600/50 opacity-50' :
+              (isBindSubscription ? 'bg-green-800/80' : 'bg-pro-800')
+          )}>
+          <div className={'w-full'}>
+            <small>#{it.id} {user_name} & {user_email} & ^{customer_id}</small>
+            <br/>
+            <span
+              className={'font-bold text-pro-300 pr-1'}>{product_name} / {variant_name} </span>
+            {subtotal_formatted} / <code>{status_formatted}</code> / {new Date(created_at).toLocaleDateString()}
+            <strong className={'pl-2 font-medium'}>Renew at: {renews_at}</strong>
+          </div>
 
-            {isActive &&
-              (<Button
-                className={'absolute top-1 right-1 !bg-transparent'}
-                onClick={async () => {
-                  try {
-                    proState.cancelingSubscriptions.merge({ [it.id]: true })
-                    await lemon.cancelSubscription(it.id)
-                    await lemon.loadSubscriptions()
+          {isActive &&
+            (<Button
+              className={'absolute top-1 right-1 !bg-transparent'}
+              onClick={async () => {
+                try {
+                  proState.cancelingSubscriptions.merge({ [it.id]: true })
+                  await lemon.cancelSubscription(it.id)
+                  await lemon.loadSubscriptions()
 
-                    if (isBindSubscription) {
-                      await loadProInfo()
-                    }
-                  } finally {
-                    proState.cancelingSubscriptions.merge({ [it.id]: none })
+                  if (isBindSubscription) {
+                    await loadProInfo()
                   }
-                }}>
+                } finally {
+                  proState.cancelingSubscriptions.merge({ [it.id]: none })
+                }
+              }}>
 
-                {proState.cancelingSubscriptions.value?.[it.id] ?
-                  <LSSpinner size={10} color={'#ffffff'}/> : 'Cancel'}
-              </Button>)}
-          </li>)
-      })}
-    </ul>)
+              {proState.cancelingSubscriptions.value?.[it.id] ?
+                <LSSpinner size={10} color={'#ffffff'}/> : 'Cancel'}
+            </Button>)}
+        </li>)
+    })}
+  </ul>)
   // }
 
   return (
@@ -140,7 +142,7 @@ function LemoOrders () {
   )
 }
 
-function UserInfoContent (props: { proState: IProState }) {
+export function UserInfoContent (props: { proState: IProState }) {
   const proState = props.proState.get()
 
   if (proState.infoFetching != undefined) {
@@ -173,46 +175,40 @@ function UserInfoContent (props: { proState: IProState }) {
   }
 }
 
+export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
+  const { proState, loadProInfo } = useProState()
+
+  return (<div className={'py-2'}>
+    {!proState.value.infoFetching &&
+      (<div className={'flex justify-between items-center'}>
+        <LemonPaymentButton
+          email={userInfo.attributes?.email}
+          userId={userInfo.attributes?.sub}
+          username={userInfo.username}
+        />
+      </div>)}
+
+    {((typeof proState.value.info?.ProUser === 'boolean') ||
+        (proState.value.infoFetching)) &&
+      <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
+        <UserInfoContent proState={proState}/>
+
+        <a className={'absolute top-4 right-4 cursor-pointer active:opacity-50 opacity-80 hover:opacity-100'}
+           onClick={loadProInfo}
+        >
+          <ArrowsClockwise size={18} weight={'bold'}/>
+        </a>
+      </div>
+    }
+  </div>)
+}
+
 export function AccountPane ({ userInfo }: {
   userInfo: IAppUserInfo
 }) {
-  const [active, setActive] = useState<string>()
-  const { proState, loadProInfo } = useProState()
-  let activeContent = <></>
-
-  switch (active) {
-    case 'payments':
-      activeContent = (
-        <LemoOrders/>
-      )
-      break
-    default:
-      activeContent = (
-        <div className={'py-2'}>
-          {!proState.value.infoFetching &&
-            (<div className={'flex justify-between items-center'}>
-              <LemonPaymentButton
-                email={userInfo.attributes?.email}
-                userId={userInfo.attributes?.sub}
-                username={userInfo.username}
-              />
-            </div>)}
-
-          {((typeof proState.value.info?.ProUser === 'boolean') ||
-              (proState.value.infoFetching)) &&
-            <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
-              <UserInfoContent proState={proState}/>
-
-              <a className={'absolute top-4 right-4 cursor-pointer active:opacity-50 opacity-80 hover:opacity-100'}
-                 onClick={loadProInfo}
-              >
-                <ArrowsClockwise size={18} weight={'bold'}/>
-              </a>
-            </div>
-          }
-        </div>
-      )
-  }
+  const { proState } = useProState()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <div className={'app-account pt-10'}>
@@ -252,15 +248,16 @@ export function AccountPane ({ userInfo }: {
           </h3>
 
           <ul className={'pt-12 text-gray-500 text-md flex flex-col space-y-2'}>
-            <li onClick={() => setActive(undefined)}>
-              <a className={cx('item cursor-pointer select-none', !active && 'active font-bold text-orange-500')}>
+            <li onClick={() => navigate('/account')}>
+              <a
+                className={cx('item cursor-pointer select-none', (location.pathname === '/account') && 'active font-bold text-orange-500')}>
                 Personal information
               </a>
             </li>
 
-            <li onClick={() => setActive('payments')}>
+            <li onClick={() => navigate('/account/subscriptions')}>
               <a
-                className={cx('item cursor-pointer select-none', active === 'payments' && 'active font-bold text-orange-500')}>
+                className={cx('item cursor-pointer select-none', (location.pathname === '/account/subscriptions') && 'active font-bold text-orange-500')}>
                 Billing & Payments
               </a>
             </li>
@@ -268,7 +265,7 @@ export function AccountPane ({ userInfo }: {
         </div>
 
         <div className="r flex flex-col space-y-6 w-full">
-          {activeContent}
+          <Outlet/>
         </div>
       </div>
     </div>
