@@ -367,7 +367,7 @@ function ChoosePlanSection () {
                 >
                   <div className="flex items-center space-x-2">
                     <UserCirclePlus weight={'duotone'} size={20}/>
-                    {!appState.userInfo?.value ?
+                    {!appState.userInfo?.value?.username ?
                       (<span>Create a Logseq account</span>) :
                       (proStateValue.info?.ProUser ?
                         <span>Check your account</span> :
