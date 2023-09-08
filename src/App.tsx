@@ -15,7 +15,7 @@ import { UserEntryPage } from './pages/User'
 import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
 import { scrollToTop } from './components/utils'
-import { AccountPane, AccountUserInfoPane, LemoOrders } from './pages/User/Account'
+import { AccountPane, AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
 
 export function App () {
   const appState = useAppState()
@@ -64,7 +64,7 @@ export function App () {
           <Route path={'/login'} element={<UserEntryPage/>}></Route>
           <Route path={'/account'} element={<UserEntryPage/>}>
             <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.value}/>}/>
-            <Route path={'subscriptions'} element={<LemoOrders/>}/>
+            <Route path={'subscriptions'} element={<LemoSubscriptions/>}/>
           </Route>
         </Routes>
 
