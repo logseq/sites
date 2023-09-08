@@ -15,7 +15,7 @@ import { UserEntryPage } from './pages/User'
 import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
 import { scrollToTop } from './components/utils'
-import { AccountPane, AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
+import { AccountContent, AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
 
 export function App () {
   const appState = useAppState()

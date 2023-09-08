@@ -1,9 +1,9 @@
 import './index.css'
-import { LoginPane } from './Login'
+import { LoginContent } from './Login'
 import { authConfig, useAppState } from '../../state'
 import { setupAuthConfigure } from './amplify'
 import { LandingFooterNav } from '../Landing'
-import { AccountPane } from './Account'
+import { AccountContent } from './Account'
 import { useLocation } from 'react-router-dom'
 
 // setup amplify configures
@@ -15,18 +15,18 @@ function UserEntryPage () {
   const location = useLocation()
   const isLoginPath = location.pathname === '/login'
 
-  let pane = <></>
+  let content = <></>
 
   if (userInfo?.username && !isLoginPath) {
-    pane = <AccountPane userInfo={userInfo}/>
+    content = <AccountContent userInfo={userInfo}/>
   } else {
-    pane = <LoginPane/>
+    content = <LoginContent/>
   }
 
   return (
     <div className={'app-page user-entry'}>
-      <div className={'page-inner user-pane-content min-h-[90vh]'}>
-        {pane}
+      <div className={'page-inner px-20 min-h-[90vh]'}>
+        {content}
       </div>
 
       {/* global footer */}

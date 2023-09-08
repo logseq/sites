@@ -6,10 +6,21 @@ import {
 } from '../../state'
 import { ReactElement, useEffect } from 'react'
 import {
+  ArrowRight,
   ArrowsClockwise,
   Cardholder,
-  IdentificationCard, LockOpen,
+  Chat,
+  ChatsCircle,
+  DiscordLogo,
+  IdentificationCard,
+  LockKeyOpen,
+  LockOpen,
+  MicrophoneStage,
+  Notebook,
+  PlayCircle,
+  Queue,
   SignOut,
+  Stack,
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -18,6 +29,7 @@ import cx from 'classnames'
 import { LSSpinner } from '../../components/Icons'
 import { none } from '@hookstate/core'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { func } from 'prop-types'
 
 function LemonPaymentButton ({ userId, email }: Partial<{
   userId: string,
@@ -181,43 +193,118 @@ export function LemoSubscriptions () {
   )
 }
 
-export function UserInfoContent (props: { proState: IProState }) {
-  const proState = props.proState.get()
+function AccountFreePlanCard (
+  { proState }: { proState: IProState },
+) {
+  return (
+    <div className={'account-plan-card free'}>
+      free
+    </div>)
+}
 
-  if (proState.infoFetching != undefined) {
-    if (proState.infoFetching) {
+function AccountProPlanCard (
+  { proState }: { proState: IProState },
+) {
+  const proStateValue = proState.value
+
+  return (
+    <div className={'account-plan-card pro'}>
+      <div className="hd">
+        <strong>
+          Pro
+        </strong>
+
+        <a className={'relative top-[-10px]'}
+           onClick={() => toast('TODO: refresh plan ...')}>
+          <ArrowsClockwise size={18} weight={'bold'}/>
+        </a>
+      </div>
+
+      <div className="desc pro">
+        <div className={'flex items-center pt-3'}>
+          <span className={'flex items-center'}>
+            <Stack size={26} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+            <small className={'text-base px-2'}>synced graphs</small>
+          </span>
+          <span className={'px-4'}>-------</span>
+          <span className={'flex items-center'}>
+            <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              10GB
+            </strong>
+            <small className={'text-base px-2'}>
+              storage per graph
+            </small>
+          </span>
+        </div>
+
+        <div className={'flex items-center pt-2'}>
+          <span className={'flex items-center'}>
+            <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              Early access
+            </strong>
+            <small className={'text-base px-2 relative top-[2px]'}>
+              to upcoming features
+            </small>
+          </span>
+        </div>
+      </div>
+
+      <div className="sub-desc">
+        <a className={'flex items-center space-x-2 cursor-pointer'}
+           href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
+           target={'_blank'}
+        >
+          <DiscordLogo size={16} weight={'duotone'}/>
+          <span>Discord community</span>
+          <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+        </a>
+
+        <a className={'flex items-center space-x-2 cursor-pointer'}>
+          <Queue size={16} weight={'duotone'}/>
+          <span>In-app handbook</span>
+          <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+        </a>
+
+        <span className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <ChatsCircle size={16} weight={'duotone'}
+                         className={'text-pro-400'}/>
+            <span>Get support</span>
+          </a>
+
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <MicrophoneStage size={16} weight={'duotone'}
+                             className={'text-pro-400'}/>
+            <span>Exclusive townhalls with team members</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function UserInfoContent (props: {
+  proState: IProState,
+  loadProInfo: () => Promise<void>
+}) {
+  const proStateValue = props.proState.get()
+
+  if (proStateValue.infoFetching != undefined) {
+    if (proStateValue.infoFetching) {
       return <b className={'flex space-x-6 items-center'}>
         <LSSpinner/>
-        <span>Loading Pro Info ...</span>
+        <span>Loading plan...</span>
       </b>
     } else {
-      return (typeof proState.info?.ProUser === 'boolean') ?
-        (<>
-          <b>&lt;Pro Status&gt; {proState.info?.ProUser ? 'True' : 'False'} </b>
-          <br/>
-          <b>&lt;Group&gt; {proState.info.UserGroups?.toString()}</b> <br/>
-
-          <hr className={'my-4'}/>
-
-          <b>&lt;FileSyncGraph
-            limit&gt; {proState.info.FileSyncGraphCountLimit}</b> <br/>
-          <b>&lt;FileSyncStorage limit&gt; {proState.info.FileSyncStorageLimit /
-            1024 / 1024 / 1024} G</b> <br/>
-          <b>&lt;FileSyncExpired At&gt; {(new Date(
-            proState.info.FileSyncExpireAt)).toLocaleDateString()}</b> <br/>
-
-          <hr className={'my-4'}/>
-
-          <b>&lt;Lemon Status&gt; {proState.info.LemonStatus.LogseqPro}</b>
-          <br/>
-          <b>&lt;Lemon Renew At&gt; {proState.info.LemonRenewsAt.LogseqPro}</b>
-          <br/>
-          <b>&lt;Lemon Subscription
-            ID&gt; {proState.info.LemonSubscriptionID.LogseqPro}</b> <br/>
-          <b>&lt;Lemon Ends At&gt; {proState.info.LemonEndsAt.LogseqPro}</b>
-          <br/>
-        </>) :
-        (<b>Not a Pro user!</b>)
+      return (typeof proStateValue.info?.ProUser === 'boolean') ?
+        (<AccountProPlanCard {...props}/>) :
+        (<AccountFreePlanCard {...props}/>)
     }
   }
 }
@@ -247,19 +334,14 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
 
           {((typeof proState.value.info?.ProUser === 'boolean') ||
               (proStateValue.infoFetching)) &&
-            <div className={'!bg-logseq-500 !rounded-2xl !px-8 !py-6 relative'}>
-              <UserInfoContent proState={proState}/>
-
-              <a
-                className={'absolute top-4 right-4 cursor-pointer active:opacity-50 opacity-80 hover:opacity-100'}
-                onClick={loadProInfo}
-              >
-                <ArrowsClockwise size={18} weight={'bold'}/>
-              </a>
-            </div>
+            (<UserInfoContent
+              proState={proState}
+              loadProInfo={loadProInfo}
+            />)
           }
         </div>
       </RowOfPaneContent>
+
       <RowOfPaneContent label={'Profile'}>
         <div className="px-6 min-h-[60px]">
           <h1>
@@ -267,6 +349,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
           </h1>
         </div>
       </RowOfPaneContent>
+
       <RowOfPaneContent label={'Authentication'}>
         <div className="px-6 flex items-center space-x-5">
           <Button
@@ -289,7 +372,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
     </>)
 }
 
-export function AccountPane ({ userInfo }: {
+export function AccountContent ({ userInfo }: {
   userInfo: IAppUserInfo
 }) {
   const { proState } = useProState()

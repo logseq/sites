@@ -497,3 +497,47 @@
     @apply animate-in slide-in-from-top duration-300;
   }
 }
+
+.account-plan-card {
+  @apply bg-logseq-600 rounded-xl px-4 py-6 relative mb-6;
+
+  > .hd {
+    @apply flex justify-between items-center;
+
+    > strong {
+      @apply text-gray-200 font-medium pl-4 relative;
+
+      &:before {
+        @apply w-[8px] h-[8px] absolute overflow-hidden rounded-full bg-green-500;
+
+        top: 8px;
+        left: 0;
+        content: ' ';
+      }
+    }
+
+    > a {
+      @apply opacity-60 hover:opacity-80 active:opacity-100 cursor-pointer;
+    }
+  }
+
+  > .desc {
+    -webkit-font-smoothing: antialiased;
+
+    &.pro {
+      @apply text-[#a6e0fa];
+    }
+  }
+
+  > .sub-desc {
+    @apply pt-4 px-1;
+
+    > a {
+      @apply text-gray-300/70 hover:text-gray-200 text-sm tracking-wide mb-1.5;
+    }
+  }
+
+  &.pro {
+    @apply bg-pro-900;
+  }
+}

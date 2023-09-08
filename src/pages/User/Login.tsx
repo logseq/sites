@@ -53,7 +53,7 @@ function LSAuthenticatorChangePassword (
   )
 }
 
-export function LoginPane () {
+export function LoginContent () {
   const routeLocation = useLocation()
   const navigate = useNavigate()
 
