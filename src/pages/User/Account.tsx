@@ -155,7 +155,7 @@ export function LemoSubscriptions () {
   let inactivePane = <></>
 
   const renderList = (subscriptions: any) => {
-    return (<ul className={'py-2'}>
+    return (<ul>
       {Array.isArray(subscriptions) && subscriptions.map(it => {
 
         // https://docs.lemonsqueezy.com/api/subscriptions
@@ -247,7 +247,7 @@ export function LemoSubscriptions () {
   const activeSubs = []
   const inactiveSubs = []
 
-  lemonSubscriptions?.forEach((it) => {
+  lemonSubscriptions?.forEach((it: any) => {
     if (it.attributes?.status === 'active') {
       activeSubs.push(it)
     } else {
@@ -261,7 +261,7 @@ export function LemoSubscriptions () {
   return (
     <>
       <RowOfPaneContent label={'Current active'}>
-        <div className={'relative'}>
+        <div className={'px-6 relative'}>
           {loadButton}
           {activePane}
         </div>
@@ -392,7 +392,7 @@ function AccountFreePlanCard (
 }
 
 function AccountProPlanCard (
-  { proState, userInfo }: { proState: IProState, userInfo: IAppUserInfo },
+  { proState, userInfo, loadProInfo }: { loadProInfo: () => Promise<any>, proState: IProState, userInfo: IAppUserInfo },
 ) {
   const proStateValue = proState.value
   const fileSyncExpiredAt = proStateValue.info?.FileSyncExpireAt
@@ -406,8 +406,12 @@ function AccountProPlanCard (
 
           <span className={'flex items-center space-x-5'}>
             <small className={'opacity-60'}>Expired at: {(new Date(fileSyncExpiredAt)).toLocaleDateString()}</small>
-            <a className={'relative top-0'}
-               onClick={() => toast('TODO: refresh plan ...')}>
+            <a
+              className={cx('relative top-0 cursor-pointer active:opacity-50 select-none', proStateValue.infoFetching && 'animate-spin')}
+              onClick={() => {
+                if (proStateValue.infoFetching) return
+                loadProInfo().catch(null)
+              }}>
               <ArrowsClockwise size={18} weight={'bold'}/>
             </a>
           </span>
@@ -447,7 +451,7 @@ function AccountProPlanCard (
           </div>
         </div>
         <div className="sub-desc">
-          <a className={'flex items-center space-x-2 cursor-pointer'}
+          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
              href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
              target={'_blank'}
           >
@@ -456,7 +460,7 @@ function AccountProPlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer'}>
+          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}>
             <Queue size={16} weight={'duotone'}/>
             <span>In-app handbook</span>
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
@@ -495,17 +499,15 @@ export function UserInfoContent (props: {
 }) {
   const proStateValue = props.proState.get()
 
-  if (proStateValue.infoFetching != undefined) {
-    if (proStateValue.infoFetching) {
-      return <b className={'flex space-x-6 items-center'}>
-        <LSSpinner/>
-        <span>Loading plan...</span>
-      </b>
-    } else {
-      return (proStateValue.info?.ProUser === true) ?
-        (<AccountProPlanCard {...props}/>) :
-        (<AccountFreePlanCard {...props}/>)
-    }
+  if (!proStateValue.info && proStateValue.infoFetching) {
+    return <b className={'flex space-x-6 items-center'}>
+      <LSSpinner/>
+      <span>Loading plan...</span>
+    </b>
+  } else {
+    return (proStateValue.info?.ProUser === true) ?
+      (<AccountProPlanCard {...props}/>) :
+      (<AccountFreePlanCard {...props}/>)
   }
 }
 
