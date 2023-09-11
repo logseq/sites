@@ -540,6 +540,11 @@
     }
   }
 
+  .line {
+    @apply indent-[-999px] h-[2px] w-[120px] mx-2
+    bg-gradient-to-l from-pro-300 to-transparent overflow-hidden opacity-50;
+  }
+
   &.pro {
     @apply bg-pro-900;
   }
@@ -554,10 +559,5 @@
         @apply border-b border-logseq-200/60 pb-4 mb-4 mx-[-24px] px-6;
       }
     }
-  }
-
-  .pro-flag {
-    @apply border-[2px] border-pro-400 text-pro-400 rounded-md px-2 py-[4px]
-    tracking-widest bg-pro-600/40 text-[12px] leading-none font-bold mx-1;
   }
 }

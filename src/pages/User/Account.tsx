@@ -55,7 +55,7 @@ function LemonPaymentButton ({ userId, email }: Partial<{
               loadProInfo().catch(null)
               window.LemonSqueezy.Url.Close()
               // lemon.loadSubscriptions().catch(null)
-            }, 200)
+            }, 1000)
 
             toast.success(
               <div className={'p-4'}>
@@ -226,7 +226,7 @@ function AccountFreePlanCard (
               className={'text-2xl text-gray-200 font-medium pl-2'}>1</strong>
             <small className={'text-base px-2'}>synced graphs</small>
           </span>
-            <span className={'px-4'}>-------</span>
+            <span className={'line'}>-------</span>
             <span className={'flex items-center'}>
             <Notebook size={26} weight={'duotone'} color={'#608E91'}/>
             <strong
@@ -267,7 +267,7 @@ function AccountFreePlanCard (
               className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
             <small className={'text-base px-2'}>synced graphs</small>
           </span>
-            <span className={'px-4'}>-------</span>
+            <span className={'line'}>-------</span>
             <span className={'flex items-center'}>
             <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
             <strong
@@ -344,7 +344,7 @@ function AccountProPlanCard (
               className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
             <small className={'text-base px-2'}>synced graphs</small>
           </span>
-            <span className={'px-4'}>-------</span>
+            <span className={'line'}>-------</span>
             <span className={'flex items-center'}>
             <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
             <strong
@@ -506,7 +506,7 @@ export function AccountContent ({ userInfo }: {
             <h2 className={'text-xl px-2 font-medium'}>
               <span className={'text-gray-200'}>{userInfo.username}</span>
               {proState.value.info?.ProUser &&
-                (<sup className={'opacity-30 pl-1.5 scale-75'}>PRO+</sup>)}
+                (<span className={'pro-flag relative top-[-3px] left-[3px] opacity-80'}>PRO</span>)}
             </h2>
             <h3 className={'px-2 text-sm text-gray-400/80'}>
               {userInfo.attributes?.email}
@@ -514,7 +514,7 @@ export function AccountContent ({ userInfo }: {
           </div>
         </div>
         <Button
-          className={'!text-lg bg-logseq-600 scale-75 !px-6 !rounded-xl'}
+          className={'!text-[20px] bg-logseq-600 scale-75 !px-6 !rounded-xl !py-4'}
           disabled={userInfo.pending}
           rightIcon={userInfo.pending ? <LSSpinner/> : <SignOut/>}
           onClick={() => {

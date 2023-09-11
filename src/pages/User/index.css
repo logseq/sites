@@ -86,5 +86,8 @@ form[data-amplify-authenticator-confirmsignup] {
 }
 
 .app-account {
-
+  .pro-flag {
+    @apply border-[2px] border-pro-400 text-pro-400 rounded-md px-2 py-[3px]
+    tracking-widest bg-pro-600/40 text-[12px] leading-none font-bold mx-1;
+  }
 }
