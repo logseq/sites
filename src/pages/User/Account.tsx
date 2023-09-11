@@ -16,7 +16,7 @@ import {
   IdentificationCard,
   LockKeyOpen,
   LockOpen,
-  MicrophoneStage,
+  MicrophoneStage, NoteBlank,
   Notebook,
   PlayCircle,
   Queue, Repeat,
@@ -89,6 +89,19 @@ function LemonPaymentButton ({ userId, email }: Partial<{
     </a>)
 }
 
+export function NothingContent ({ text }: { text: string }) {
+  return (
+    <div className="nothing-content py-20">
+      <h1 className={'flex flex-col justify-center items-center'}>
+        <NoteBlank weight={'duotone'} size={70} className={'opacity-20'}/>
+        <span className={'text-gray-600'}>
+          {text}
+        </span>
+      </h1>
+    </div>
+  )
+}
+
 export function RowOfPaneContent (
   props: {
     label: string | ReactElement
@@ -117,6 +130,26 @@ export function LemoSubscriptions () {
       lemon.loadSubscriptions().catch(null)
     }
   }, [])
+
+  const loadButton = (
+    <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
+      <Button onClick={() => lemon.loadSubscriptions()} className={
+        cx('!bg-transparent',
+          (lemon.subscriptionsFetching && 'animate-spin'))}>
+        <ArrowsClockwise weight={'duotone'} size={24}
+                         className={'opacity-70'}/>
+      </Button>
+    </div>)
+
+  if (!lemonSubscriptions || !lemonSubscriptions.length) {
+    return (
+      <div className={'relative'}>
+        {loadButton}
+
+        {!lemon.subscriptionsFetching &&
+          <NothingContent text={'Empty list'}/>}
+      </div>)
+  }
 
   let activePane = <></>
   let inactivePane = <></>
@@ -229,26 +262,15 @@ export function LemoSubscriptions () {
     <>
       <RowOfPaneContent label={'Current active'}>
         <div className={'relative'}>
-
-          {/* load subscriptions button*/}
-          <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
-            <Button onClick={() => lemon.loadSubscriptions()} className={
-              cx('!bg-transparent',
-                (lemon.subscriptionsFetching && 'animate-spin'))}>
-              <ArrowsClockwise weight={'duotone'} size={24}
-                               className={'opacity-70'}/>
-            </Button>
-          </div>
-
+          {loadButton}
           {activePane}
         </div>
       </RowOfPaneContent>
 
-      {proState.value.lemonListSubscriptions != null &&
+      {inactiveSubs?.length != 0 &&
         (<RowOfPaneContent label={'Previous subscriptions'}>
           {inactivePane}
         </RowOfPaneContent>)}
-
     </>
   )
 }
