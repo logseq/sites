@@ -6,11 +6,12 @@ import {
 } from '../../state'
 import { ReactElement, useEffect } from 'react'
 import {
+  ArrowFatLinesUp,
   ArrowRight,
   ArrowsClockwise,
   Cardholder,
   Chat,
-  ChatsCircle,
+  ChatsCircle, Diamond,
   DiscordLogo,
   IdentificationCard,
   LockKeyOpen,
@@ -20,7 +21,7 @@ import {
   PlayCircle,
   Queue,
   SignOut,
-  Stack,
+  Stack, StackSimple,
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -70,14 +71,22 @@ function LemonPaymentButton ({ userId, email }: Partial<{
   if (proState.value.info?.ProUser === true) return
 
   return (
-    <a
-      href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
+    <a href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
       ?embed=1&media=0&checkout[email]=${encodeURIComponent(
-        email)}&checkout[custom][user_uuid]=${userId}`}
-      className="lemonsqueezy-button inline-block py-3 px-4 bg-indigo-600 text-lg rounded-xl mb-8">
-      Subscribe Logseq Pro
-    </a>
-  )
+      email)}&checkout[custom][user_uuid]=${userId}`}
+       className={'lemonsqueezy-button flex justify-between mt-4 bg-pro-700 py-3 px-6 rounded-lg items-center hover:opacity-80 active:opacity-100'}>
+      <strong className={'flex items-center font-normal'}>
+        <ArrowFatLinesUp size={24} weight={'duotone'}/>
+        <span className={'flex flex-col mx-3'}>
+              <b className={'font-semibold text-lg text-gray-100'}>Start free trial</b>
+              <small>Try <span className={'text-gray-100'}>Logseq Pro</span> for 2 weeks</small>
+        </span>
+      </strong>
+
+      <strong>
+        <ArrowRight size={20}/>
+      </strong>
+    </a>)
 }
 
 export function RowOfPaneContent (
@@ -194,42 +203,72 @@ export function LemoSubscriptions () {
 }
 
 function AccountFreePlanCard (
-  { proState }: { proState: IProState },
+  { proState, userInfo }: { proState: IProState, userInfo: IAppUserInfo },
 ) {
   return (
     <div className={'account-plan-card free'}>
-      free
-    </div>)
-}
+      <div className="inner">
+        <div className="hd">
+          <strong>
+            Free
+          </strong>
 
-function AccountProPlanCard (
-  { proState }: { proState: IProState },
-) {
-  const proStateValue = proState.value
+          <a className={'relative top-[-10px]'}
+             onClick={() => toast('TODO: refresh plan ...')}>
+            <ArrowsClockwise size={18} weight={'bold'}/>
+          </a>
+        </div>
+        <div className="desc free">
+          <div className={'flex items-center pt-3'}>
+          <span className={'flex items-center'}>
+            <StackSimple size={26} weight={'duotone'} color={'#608E91'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>1</strong>
+            <small className={'text-base px-2'}>synced graphs</small>
+          </span>
+            <span className={'px-4'}>-------</span>
+            <span className={'flex items-center'}>
+            <Notebook size={26} weight={'duotone'} color={'#608E91'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              50MB
+            </strong>
+            <small className={'text-base px-2'}>
+              storage per graph
+            </small>
+          </span>
+          </div>
+        </div>
+        <div className="sub-desc">
+          <a className={'flex items-center space-x-2 cursor-pointer'}
+             href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
+             target={'_blank'}
+          >
+            <DiscordLogo size={16} weight={'duotone'}/>
+            <span>Discord community</span>
+            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+          </a>
 
-  return (
-    <div className={'account-plan-card pro'}>
-      <div className="hd">
-        <strong>
-          Pro
-        </strong>
-
-        <a className={'relative top-[-10px]'}
-           onClick={() => toast('TODO: refresh plan ...')}>
-          <ArrowsClockwise size={18} weight={'bold'}/>
-        </a>
-      </div>
-
-      <div className="desc pro">
-        <div className={'flex items-center pt-3'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <Queue size={16} weight={'duotone'}/>
+            <span>In-app handbook</span>
+            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+          </a>
+        </div>
+        {/*  pro */}
+        <div className="desc pro">
+          <h2 className={'text-gray-50 py-2 px-1'}>
+            Upgrading to <strong className={'pro-flag'}>PRO</strong> unlocks:
+          </h2>
+          <div className={'flex items-center pt-3'}>
           <span className={'flex items-center'}>
             <Stack size={26} weight={'duotone'} color={'#3cbaf3'}/>
             <strong
               className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
             <small className={'text-base px-2'}>synced graphs</small>
           </span>
-          <span className={'px-4'}>-------</span>
-          <span className={'flex items-center'}>
+            <span className={'px-4'}>-------</span>
+            <span className={'flex items-center'}>
             <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
             <strong
               className={'text-2xl text-gray-200 font-medium pl-2'}>
@@ -239,9 +278,9 @@ function AccountProPlanCard (
               storage per graph
             </small>
           </span>
-        </div>
+          </div>
 
-        <div className={'flex items-center pt-2'}>
+          <div className={'flex items-center pt-2'}>
           <span className={'flex items-center'}>
             <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'}/>
             <strong
@@ -252,26 +291,9 @@ function AccountProPlanCard (
               to upcoming features
             </small>
           </span>
-        </div>
-      </div>
+          </div>
 
-      <div className="sub-desc">
-        <a className={'flex items-center space-x-2 cursor-pointer'}
-           href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
-           target={'_blank'}
-        >
-          <DiscordLogo size={16} weight={'duotone'}/>
-          <span>Discord community</span>
-          <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
-        </a>
-
-        <a className={'flex items-center space-x-2 cursor-pointer'}>
-          <Queue size={16} weight={'duotone'}/>
-          <span>In-app handbook</span>
-          <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
-        </a>
-
-        <span className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
+          <span className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300 px-1 py-1'}>
           <a className={'flex items-center space-x-2 cursor-pointer'}>
             <ChatsCircle size={16} weight={'duotone'}
                          className={'text-pro-400'}/>
@@ -284,12 +306,107 @@ function AccountProPlanCard (
             <span>Exclusive townhalls with team members</span>
           </a>
         </span>
+
+          {/*start pro trial*/}
+          <LemonPaymentButton
+            email={userInfo.attributes?.email}
+            userId={userInfo.attributes?.sub}
+            username={userInfo.username}
+          />
+        </div>
+      </div>
+    </div>)
+}
+
+function AccountProPlanCard (
+  { proState }: { proState: IProState },
+) {
+  const _proStateValue = proState.value
+
+  return (
+    <div className={'account-plan-card pro'}>
+      <div className="inner">
+        <div className="hd">
+          <strong>
+            Pro
+          </strong>
+
+          <a className={'relative top-[-10px]'}
+             onClick={() => toast('TODO: refresh plan ...')}>
+            <ArrowsClockwise size={18} weight={'bold'}/>
+          </a>
+        </div>
+        <div className="desc pro">
+          <div className={'flex items-center pt-3'}>
+          <span className={'flex items-center'}>
+            <Stack size={26} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+            <small className={'text-base px-2'}>synced graphs</small>
+          </span>
+            <span className={'px-4'}>-------</span>
+            <span className={'flex items-center'}>
+            <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              10GB
+            </strong>
+            <small className={'text-base px-2'}>
+              storage per graph
+            </small>
+          </span>
+          </div>
+
+          <div className={'flex items-center pt-2'}>
+          <span className={'flex items-center'}>
+            <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'}/>
+            <strong
+              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              Early access
+            </strong>
+            <small className={'text-base px-2 relative top-[2px]'}>
+              to upcoming features
+            </small>
+          </span>
+          </div>
+        </div>
+        <div className="sub-desc">
+          <a className={'flex items-center space-x-2 cursor-pointer'}
+             href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
+             target={'_blank'}
+          >
+            <DiscordLogo size={16} weight={'duotone'}/>
+            <span>Discord community</span>
+            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+          </a>
+
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <Queue size={16} weight={'duotone'}/>
+            <span>In-app handbook</span>
+            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+          </a>
+
+          <span className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <ChatsCircle size={16} weight={'duotone'}
+                         className={'text-pro-400'}/>
+            <span>Get support</span>
+          </a>
+
+          <a className={'flex items-center space-x-2 cursor-pointer'}>
+            <MicrophoneStage size={16} weight={'duotone'}
+                             className={'text-pro-400'}/>
+            <span>Exclusive townhalls with team members</span>
+          </a>
+        </span>
+        </div>
       </div>
     </div>
   )
 }
 
 export function UserInfoContent (props: {
+  userInfo: IAppUserInfo,
   proState: IProState,
   loadProInfo: () => Promise<void>
 }) {
@@ -302,7 +419,7 @@ export function UserInfoContent (props: {
         <span>Loading plan...</span>
       </b>
     } else {
-      return (typeof proStateValue.info?.ProUser === 'boolean') ?
+      return (proStateValue.info?.ProUser === true) ?
         (<AccountProPlanCard {...props}/>) :
         (<AccountFreePlanCard {...props}/>)
     }
@@ -317,24 +434,16 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
     <>
       <RowOfPaneContent label={'Current plan'}>
         <div className={'px-6'}>
-          {!proStateValue.infoFetching &&
-            (<div className={'flex justify-between items-center'}>
-              <LemonPaymentButton
-                email={userInfo.attributes?.email}
-                userId={userInfo.attributes?.sub}
-                username={userInfo.username}
-              />
-            </div>)}
-
           {proStateValue.e &&
             (<pre className={'bg-red-600/50 p-4 block rounded-lg'}>
-        {proStateValue.e?.message}
+              {proStateValue.e?.message}
               {proStateValue.e?.stack}
-      </pre>)}
+             </pre>)}
 
           {((typeof proState.value.info?.ProUser === 'boolean') ||
               (proStateValue.infoFetching)) &&
             (<UserInfoContent
+              userInfo={userInfo}
               proState={proState}
               loadProInfo={loadProInfo}
             />)
