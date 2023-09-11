@@ -21,7 +21,7 @@ import {
   PlayCircle,
   Queue,
   SignOut,
-  Stack, StackSimple,
+  Stack, StackSimple, XSquare,
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -68,7 +68,7 @@ function LemonPaymentButton ({ userId, email }: Partial<{
     }, 2000)
   }, [])
 
-  if (proState.value.info?.ProUser === true) return
+  // if (proState.value.info?.ProUser === true) return
 
   return (
     <a href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
@@ -113,74 +113,110 @@ export function LemoSubscriptions () {
   const lemonSubscriptions = lemon.getSubscriptions() as any
 
   useEffect(() => {
-    lemon.loadSubscriptions().catch(null)
+    if (lemonSubscriptions == null) {
+      lemon.loadSubscriptions().catch(null)
+    }
   }, [])
 
-  let pane = <></>
+  let activePane = <></>
+  let inactivePane = <></>
 
-  pane = (<ul className={'py-2'}>
-    {Array.isArray(lemonSubscriptions) && lemonSubscriptions.map(it => {
+  const renderList = (subscriptions: any) => {
+    return (<ul className={'py-2'}>
+      {Array.isArray(subscriptions) && subscriptions.map(it => {
 
-      // https://docs.lemonsqueezy.com/api/subscriptions
-      const {
-        status, status_formatted, subtotal_formatted, created_at, user_email,
-        user_name, customer_id, product_name, variant_name, renews_at,
-      } = it.attributes
+        // https://docs.lemonsqueezy.com/api/subscriptions
+        const {
+          status, status_formatted, subtotal_formatted, created_at, user_email,
+          user_name, customer_id, product_name, variant_name, renews_at,
+        } = it.attributes
 
-      const isActive = status === 'active'
-      const isPaused = status === 'paused'
-      const isUnpaid = status === 'unpaid'
-      const isCancelled = status === 'cancelled'
-      const isExpired = status === 'expired'
-      const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro ==
-        it.id
+        const isActive = status === 'active'
+        const isPaused = status === 'paused'
+        const isUnpaid = status === 'unpaid'
+        const isCancelled = status === 'cancelled'
+        const isExpired = status === 'expired'
+        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro ==
+          it.id
 
-      return (
-        <li key={it.id} className={
-          cx('text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
-            isCancelled ? 'bg-red-600/50 opacity-50' :
-              (isBindSubscription ? 'bg-green-800/80' : 'bg-pro-800'),
-          )}>
-          <div className={'w-full'}>
-            <small>#{it.id} {user_name} & {user_email} & ^{customer_id}</small>
-            <br/>
-            <span
-              className={'font-bold text-pro-300 pr-1'}>{product_name} / {variant_name} </span>
-            {subtotal_formatted} / <code>{status_formatted}</code> / {new Date(
-            created_at).toLocaleDateString()}
-            <strong className={'pl-2 font-medium'}>Renew
-              at: {renews_at}</strong>
-          </div>
+        return (
+          <li key={it.id} className={
+            cx('subscription-card text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
+              isCancelled ? 'bg-red-600/50 opacity-50' :
+                (isBindSubscription ? 'bg-logseq-600/80' : 'bg-pro-800'),
+            )}>
 
-          {isActive &&
-            (<Button
-              className={'absolute top-1 right-1 !bg-transparent'}
-              onClick={async () => {
-                try {
-                  proState.cancelingSubscriptions.merge({ [it.id]: true })
-                  await lemon.cancelSubscription(it.id)
-                  await lemon.loadSubscriptions()
+            <div className="inner">
+              <div className="hd">
+                <strong>
+                  {status_formatted}
+                </strong>
 
-                  if (isBindSubscription) {
-                    await loadProInfo()
-                  }
-                } finally {
-                  proState.cancelingSubscriptions.merge({ [it.id]: none })
-                }
-              }}>
+                {isActive &&
+                  (<Button
+                    className={'absolute top-2.5 right-2 !bg-transparent'}
+                    onClick={async () => {
+                      try {
+                        proState.cancelingSubscriptions.merge({ [it.id]: true })
+                        await lemon.cancelSubscription(it.id)
+                        await lemon.loadSubscriptions()
 
-              {proState.cancelingSubscriptions.value?.[it.id] ?
-                <LSSpinner size={10} color={'#ffffff'}/> : 'Cancel'}
-            </Button>)}
-        </li>)
-    })}
-  </ul>)
+                        if (isBindSubscription) {
+                          await loadProInfo()
+                        }
+                      } finally {
+                        proState.cancelingSubscriptions.merge({ [it.id]: none })
+                      }
+                    }}>
+
+                    {proState.cancelingSubscriptions.value?.[it.id] ?
+                      <LSSpinner size={10} color={'#ffffff'}/> :
+                      <span className={'flex items-center space-x-1'}>
+                        <XSquare weight={'bold'}/>
+                        <small className={'text-sm'}>Cancel subscription</small>
+                      </span>}
+                  </Button>)}
+              </div>
+
+              {isActive && (
+                <div className={'active-desc'}>
+                  <div className="l">
+                    <small className={'pb-1.5'}>Subscriber</small>
+                    <strong>{user_name}</strong>
+                    <small className={'opacity-50 relative top-[-2px]'}>{user_email}</small>
+                  </div>
+                  <div className="r">
+                    <small className={'pb-1.5'}>Start date</small>
+                    <strong>{new Date(created_at).toLocaleDateString()}</strong>
+                  </div>
+                </div>
+              )}
+            </div>
+          </li>)
+      })}
+    </ul>)
+  }
+
+  const activeSubs = []
+  const inactiveSubs = []
+
+  lemonSubscriptions?.forEach((it) => {
+    if (it.attributes?.status === 'active') {
+      activeSubs.push(it)
+    } else {
+      inactiveSubs.push(it)
+    }
+  })
+
+  activePane = renderList(activeSubs)
+  inactivePane = renderList(inactiveSubs)
 
   return (
     <>
       <RowOfPaneContent label={'Current active'}>
-        <div className={'w-full'}>
-          <div className={'flex justify-between'}>
+
+        <div className={'relative'}>
+          <div className={'flex justify-between absolute top-4 right-48 z-10'}>
             <Button onClick={() => lemon.loadSubscriptions()} className={
               cx('!bg-transparent',
                 (lemon.subscriptionsFetching && 'animate-spin'))}>
@@ -189,14 +225,12 @@ export function LemoSubscriptions () {
             </Button>
           </div>
 
-          {pane}
+          {activePane}
         </div>
       </RowOfPaneContent>
 
       <RowOfPaneContent label={'Previous subscriptions'}>
-        <h1>
-          Cancelled
-        </h1>
+        {inactivePane}
       </RowOfPaneContent>
     </>
   )
@@ -319,10 +353,10 @@ function AccountFreePlanCard (
 }
 
 function AccountProPlanCard (
-  { proState }: { proState: IProState },
+  { proState, userInfo }: { proState: IProState, userInfo: IAppUserInfo },
 ) {
-  const _proStateValue = proState.value
-
+  const proStateValue = proState.value
+  const fileSyncExpiredAt = proStateValue.info?.FileSyncExpireAt
   return (
     <div className={'account-plan-card pro'}>
       <div className="inner">
@@ -331,10 +365,13 @@ function AccountProPlanCard (
             Pro
           </strong>
 
-          <a className={'relative top-[-10px]'}
-             onClick={() => toast('TODO: refresh plan ...')}>
-            <ArrowsClockwise size={18} weight={'bold'}/>
-          </a>
+          <span className={'flex items-center space-x-5'}>
+            <small className={'opacity-60'}>Expired at: {(new Date(fileSyncExpiredAt)).toLocaleDateString()}</small>
+            <a className={'relative top-0'}
+               onClick={() => toast('TODO: refresh plan ...')}>
+              <ArrowsClockwise size={18} weight={'bold'}/>
+            </a>
+          </span>
         </div>
         <div className="desc pro">
           <div className={'flex items-center pt-3'}>
@@ -400,6 +437,12 @@ function AccountProPlanCard (
           </a>
         </span>
         </div>
+
+        <LemonPaymentButton
+          email={userInfo.attributes?.email}
+          userId={userInfo.attributes?.sub}
+          username={userInfo.username}
+        />
       </div>
     </div>
   )

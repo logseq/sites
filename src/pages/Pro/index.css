@@ -561,3 +561,41 @@
     }
   }
 }
+
+.subscription-card {
+  > .inner {
+    @apply pt-3 pb-2 w-full;
+
+    > .hd {
+      @apply flex justify-between items-center;
+
+      > strong {
+        @apply text-gray-200 font-medium pl-4 relative;
+
+        &:before {
+          @apply w-[8px] h-[8px] absolute overflow-hidden rounded-full bg-green-500;
+
+          top: 9px;
+          left: 0;
+          content: ' ';
+        }
+      }
+
+      > a {
+        @apply opacity-60 hover:opacity-80 active:opacity-100 cursor-pointer;
+      }
+    }
+
+    > .active-desc {
+      @apply flex justify-between pt-3 pb-4 px-6 border-b border-b-logseq-300/40 mx-[-24px];
+
+      > .l, > .r {
+        @apply flex flex-col;
+
+        strong {
+          @apply font-medium text-gray-300;
+        }
+      }
+    }
+  }
+}
