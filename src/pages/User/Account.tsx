@@ -19,7 +19,7 @@ import {
   MicrophoneStage,
   Notebook,
   PlayCircle,
-  Queue,
+  Queue, Repeat,
   SignOut,
   Stack, StackSimple, XSquare,
 } from 'phosphor-react'
@@ -141,10 +141,7 @@ export function LemoSubscriptions () {
 
         return (
           <li key={it.id} className={
-            cx('subscription-card text-lg py-3 flex items-center mb-4 rounded-xl p-6 relative',
-              isCancelled ? 'bg-red-600/50 opacity-50' :
-                (isBindSubscription ? 'bg-logseq-600/80' : 'bg-pro-800'),
-            )}>
+            cx('subscription-card text-lg flex items-center mb-4 rounded-xl relative', `is-${status}`)}>
 
             <div className="inner">
               <div className="hd">
@@ -191,6 +188,23 @@ export function LemoSubscriptions () {
                   </div>
                 </div>
               )}
+
+              <div className="info-desc">
+                <strong className={'text-gray-200'}>
+                  <b className={'text-2xl pr-1'}>Logseq</b>
+                  <span className="pro-flag relative top-[-2px]">PRO</span>
+                </strong>
+
+                <div className={'flex justify-between pt-1 items-center text-[15px] tracking-wide'}>
+                  <b className={'flex items-center space-x-2'}>
+                    <Repeat weight={'bold'} size={18}/>
+                    <span>{variant_name}</span>
+                  </b>
+                  <b><span className={'text-gray-100 pr-1'}>Next renewal: </span>
+                    {new Date(renews_at).toDateString()}
+                  </b>
+                </div>
+              </div>
             </div>
           </li>)
       })}
@@ -214,9 +228,10 @@ export function LemoSubscriptions () {
   return (
     <>
       <RowOfPaneContent label={'Current active'}>
-
         <div className={'relative'}>
-          <div className={'flex justify-between absolute top-4 right-48 z-10'}>
+
+          {/* load subscriptions button*/}
+          <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
             <Button onClick={() => lemon.loadSubscriptions()} className={
               cx('!bg-transparent',
                 (lemon.subscriptionsFetching && 'animate-spin'))}>
@@ -229,9 +244,11 @@ export function LemoSubscriptions () {
         </div>
       </RowOfPaneContent>
 
-      <RowOfPaneContent label={'Previous subscriptions'}>
-        {inactivePane}
-      </RowOfPaneContent>
+      {proState.value.lemonListSubscriptions != null &&
+        (<RowOfPaneContent label={'Previous subscriptions'}>
+          {inactivePane}
+        </RowOfPaneContent>)}
+
     </>
   )
 }
@@ -438,11 +455,12 @@ function AccountProPlanCard (
         </span>
         </div>
 
-        <LemonPaymentButton
-          email={userInfo.attributes?.email}
-          userId={userInfo.attributes?.sub}
-          username={userInfo.username}
-        />
+        {/* Debug */}
+        {/*<LemonPaymentButton*/}
+        {/*  email={userInfo.attributes?.email}*/}
+        {/*  userId={userInfo.attributes?.sub}*/}
+        {/*  username={userInfo.username}*/}
+        {/*/>*/}
       </div>
     </div>
   )

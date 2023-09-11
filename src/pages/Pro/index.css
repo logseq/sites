@@ -563,8 +563,11 @@
 }
 
 .subscription-card {
+  @apply bg-logseq-600/80;
+
   > .inner {
-    @apply pt-3 pb-2 w-full;
+    @apply p-6 w-full bg-gradient-to-t from-green-900/80 to-transparent rounded-xl
+    overflow-hidden to-30%;
 
     > .hd {
       @apply flex justify-between items-center;
@@ -595,6 +598,32 @@
         strong {
           @apply font-medium text-gray-300;
         }
+      }
+    }
+
+    > .info-desc {
+      @apply pt-6 text-green-300 opacity-80;
+
+      b {
+        @apply font-normal;
+      }
+    }
+  }
+
+  &:not(.is-active) {
+    > .inner {
+      @apply from-red-700/60 to-70%;
+
+      > .hd {
+        > strong {
+          &:before {
+            @apply bg-red-400;
+          }
+        }
+      }
+
+      > .info-desc {
+        @apply text-red-400 pt-2;
       }
     }
   }
