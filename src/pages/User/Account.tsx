@@ -161,7 +161,8 @@ export function LemoSubscriptions () {
           user_name, customer_id, product_name, variant_name, renews_at,
         } = it.attributes
 
-        const isActive = status === 'active'
+        const isTrial = status === 'on_trial'
+        const isActive = isTrial || (status === 'active')
         const isPaused = status === 'paused'
         const isUnpaid = status === 'unpaid'
         const isCancelled = status === 'cancelled'
@@ -272,7 +273,7 @@ export function LemoSubscriptions () {
   const inactiveSubs = []
 
   lemonSubscriptions?.forEach((it: any) => {
-    if (it.attributes?.status === 'active') {
+    if (['active', 'on_trial'].includes(it.attributes?.status)) {
       activeSubs.push(it)
     } else {
       inactiveSubs.push(it)

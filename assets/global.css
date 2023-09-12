@@ -210,7 +210,7 @@ body {
 
   &.as-confirm {
     .ui-modal-content {
-      @apply min-h-[180px];
+      @apply min-h-[180px] max-w-[700px];
     }
 
     .ui-modal-inner {

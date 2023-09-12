@@ -610,7 +610,7 @@
     }
   }
 
-  &:not(.is-active) {
+  &:not(.is-active):not(.is-on_trial) {
     > .inner {
       @apply from-red-700/60 to-70%;
 
