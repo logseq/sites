@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import cx from 'classnames'
 
 type MenuDataItem = {
@@ -15,6 +15,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, Partial<{
   [k: string]: any
 }>>((props, ref) => {
   const { className, children, wrapItems, items, ...rest } = props
+  const [active, setActive] = useState(false)
   const wrapSubItems = (children: ReactElement) => (
     (wrapItems === false ? children :
       <div className="sub-items flex flex-col absolute top-5 right-0 w-full pt-6">
@@ -24,8 +25,10 @@ export const Dropdown = React.forwardRef<HTMLDivElement, Partial<{
       </div>))
 
   return (
-    <div className={cx('ui-dropdown', className)}
+    <div className={cx('ui-dropdown', className, active && 'is-active')}
          ref={ref}
+         onMouseEnter={() => setActive(true)}
+         onMouseLeave={() => setActive(false)}
          {...rest}
     >
       <span className="trigger">

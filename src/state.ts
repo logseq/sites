@@ -358,7 +358,7 @@ export const createModalFacade = (ms: typeof modalsState) => {
   return m
 }
 
-export const ModalFace = createModalFacade(modalsState)
+export const modalFacade = createModalFacade(modalsState)
 
 export function useModalsState () {
   const hookModalsState = useHookstate(modalsState)

@@ -1,7 +1,7 @@
 import {
   IAppUserInfo,
-  IProState, ModalFace,
-  useLemonState, useModalsState,
+  IProState, modalFacade,
+  useLemonState,
   useProState,
 } from '../../state'
 import { ReactElement, useEffect } from 'react'
@@ -185,7 +185,7 @@ export function LemoSubscriptions () {
                     className={'absolute top-2.5 right-2 !bg-transparent'}
                     onClick={async () => {
                       // TODO: move to ui components
-                      const m = ModalFace.create((c: any) => (
+                      const m = modalFacade.create((c: any) => (
                         <div className="ui-modal-confirm-content">
                           <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
                             <WarningCircle size={20} weight={'duotone'}/>
@@ -296,7 +296,7 @@ export function LemoSubscriptions () {
 
       {inactiveSubs?.length != 0 &&
         (<RowOfPaneContent label={'Previous subscriptions'}>
-          <div className="px-6 relative">
+          <div className={'px-6 relative'}>
             {inactivePane}
           </div>
         </RowOfPaneContent>)}

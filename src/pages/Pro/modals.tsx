@@ -65,7 +65,7 @@ export function UnlockStudentDiscount (props: any) {
                    close()
                    navigate('/login')
                  }}
-              >Logseq.com/login</a>.
+              >https://logseq.com/login</a>.
             </span>
 
             <blockquote
@@ -179,7 +179,9 @@ export function UnlockStudentDiscount (props: any) {
                   <button className="as-button logseq">
                     <IdentificationBadge size={15} weight={'duotone'}/>
                     <span>Email with university address</span>
-                    <CaretLeft className={'opacity-60'} weight={'bold'}/>
+                    <span className={'icon-caret'}>
+                      <CaretLeft className={'opacity-60'} weight={'bold'}/>
+                    </span>
                   </button>
                 </Dropdown>
               </div>

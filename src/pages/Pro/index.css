@@ -460,6 +460,10 @@
     px-2 py-1.5 text-sm flex space-x-2 items-center text-gray-50
     opacity-90 hover:opacity-100 active:opacity-80 cursor-pointer;
 
+    .icon-caret {
+      @apply transition-transform;
+    }
+
     &.logseq {
       @apply bg-logseq-500;
     }
@@ -487,6 +491,14 @@
 
       .sub-items {
         @apply pt-4;
+      }
+    }
+  }
+
+  .ui-dropdown {
+    &.is-active {
+      .icon-caret {
+        @apply rotate-[-90deg];
       }
     }
   }
