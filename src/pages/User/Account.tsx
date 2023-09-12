@@ -288,7 +288,7 @@ export function LemoSubscriptions () {
       {loadButton}
 
       {activeSubs?.length != 0 && (
-        <RowOfPaneContent label={'Current active'}>
+        <RowOfPaneContent label={'Current subscription'}>
           <div className={'px-6 relative'}>
             {activePane}
           </div>

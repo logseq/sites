@@ -51,6 +51,7 @@
     "react-router-dom": "6.15.0",
     "swiper": "10.1.0",
     "react-spinners": "0.13.8",
-    "camelcase": "8.0.0"
+    "camelcase": "8.0.0",
+    "react-datepicker": "4.17.0"
   }
 }

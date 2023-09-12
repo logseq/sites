@@ -1,4 +1,5 @@
 import {
+  ArrowSquareOut,
   CaretLeft,
   Check, CheckSquareOffset, CopySimple,
   IdentificationBadge,
@@ -11,6 +12,27 @@ import { Dropdown } from '../../components/Dropdown'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useAppState } from '../../state'
+
+export const discountStudentEmailTemplate = {
+  subject: 'Logseq Pro Student Discount Request',
+  body: `
+Instructions from the Logseq Team:
+
+Thank you for wanting to use Logseq Pro! Students and educational professionals can apply for a 50% discount on the monthly or annual Logseq Pro plan. 
+To receive a discount coupon, please follow the steps below and answer the questions:
+Attach a photo/scan of your school ID. Please hide any personal information, but clearly show both your name and the expiry/validity date of the ID.
+
+1. What is your full name?
+2. What is your school's name?
+3. What is your Logseq username?
+4. What is your email address (the one you used to sign up for Logseq Pro)?
+ 
+Please answer all questions and attach a photo/scan of your school ID.
+Talk to you soon!
+
+— The Logseq team
+  `
+}
 
 export function UnlockStudentDiscount (props: any) {
   const { close } = props || {}
@@ -87,10 +109,13 @@ export function UnlockStudentDiscount (props: any) {
                   sure to also mention the username you chose for your Logseq account.</h4>
 
                 <Dropdown>
-                  <button className="as-button">
+                  <button
+                    className="as-button !cursor-pointer"
+                    onClick={() => window.open(`mailto://${supportEmail}?subject=${encodeURIComponent(discountStudentEmailTemplate.subject)}&body=${encodeURIComponent(discountStudentEmailTemplate.body)}`)}
+                  >
                     <Student size={15} weight={'duotone'}/>
                     <span>Email with university address</span>
-                    <CaretLeft className={'opacity-60'} weight={'bold'}/>
+                    <ArrowSquareOut className={'opacity-60'} weight={'bold'}/>
                   </button>
                 </Dropdown>
               </div>
@@ -121,7 +146,7 @@ export function UnlockStudentDiscount (props: any) {
                       </div>
                     ),
                     props: {
-                      href: `mailto://${supportEmail}?subject=Unlock Your Student Discount for Logseq Pro! 🎓`
+                      href: `mailto://${supportEmail}?subject=${encodeURIComponent(discountStudentEmailTemplate.subject)}&body=${encodeURIComponent(discountStudentEmailTemplate.body)}`
                     }
                   },
                     {
