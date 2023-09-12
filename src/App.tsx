@@ -33,6 +33,19 @@ export function App () {
   useDiscordState()
 
   useEffect(() => {
+    const handler = ({ which }: KeyboardEvent) => {
+      // ESC
+      const t = modalsState.topmost()
+      if (which === 27 && t) {
+        modalsState.remove(t.id)
+      }
+    }
+
+    document.body.addEventListener('keyup', handler)
+    return () => document.body.removeEventListener('keyup', handler)
+  }, [])
+
+  useEffect(() => {
     const resizeHandler = () => {
       appState.sm.set(
         checkSmBreakPoint(),

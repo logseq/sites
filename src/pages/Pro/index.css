@@ -446,7 +446,7 @@
       text-lg;
     }
 
-    > p {
+    > section {
       @apply pl-6 w-full;
 
       > h3 {

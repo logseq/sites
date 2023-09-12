@@ -1,6 +1,6 @@
 import {
   CaretLeft,
-  Check, CopySimple,
+  Check, CheckSquareOffset, CopySimple,
   IdentificationBadge,
   Info, PaperPlaneTilt,
   Student,
@@ -10,11 +10,14 @@ import copy from 'copy-to-clipboard'
 import { Dropdown } from '../../components/Dropdown'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useAppState } from '../../state'
 
 export function UnlockStudentDiscount (props: any) {
   const { close } = props || {}
   const navigate = useNavigate()
+  const appState = useAppState()
   const supportEmail = 'support@logseq.com'
+  const isLogged = !!appState.value.userInfo?.username
 
   return (
     <div className={'app-unlock-student-discount text-logseq-50 py-4 px-2'}>
@@ -31,7 +34,7 @@ export function UnlockStudentDiscount (props: any) {
       <ul>
         <li>
           <strong>1</strong>
-          <p>
+          <section>
             <h3>Create a Logseq account</h3>
             <span className={'text-sm'}>
               <span>Start by setting up your Logseq account at </span>
@@ -50,18 +53,32 @@ export function UnlockStudentDiscount (props: any) {
             </blockquote>
 
             <button className={'as-button'}
-                    onClick={close}
-            >
-              <UserCirclePlus size={18} weight={'duotone'}/>
-              <span className={'mx-2'}>Sign up</span>
+                    onClick={() => {
+                      if (!isLogged) navigate('/login?t=create')
+                      if (isLogged) navigate('/account')
+                      close()
+                    }}>
+              {isLogged ?
+                (<>
+                  <CheckSquareOffset size={17} weight={'bold'}/>
+                  <span className={'mx-2'}>Logged as <code>{appState.value.userInfo.attributes?.email}</code></span>
+                </>) :
+                (
+                  <>
+                    <UserCirclePlus size={18} weight={'duotone'}/>
+                    <span className={'mx-2'}>Sign up</span>
+                  </>
+                )
+              }
+
               <code
                 className={'bg-pro-900 text-xs py-1 px-1.5 rounded leading-none opacity-70 font-semibold'}>FREE</code>
             </button>
-          </p>
+          </section>
         </li>
         <li>
           <strong>2</strong>
-          <p>
+          <section>
             <h3>Request your discount</h3>
             <div className={'flex space-x-6 pt-2'}>
               <div className="as-card flex-1">
@@ -154,7 +171,7 @@ export function UnlockStudentDiscount (props: any) {
                 </li>
               </ul>
             </div>
-          </p>
+          </section>
         </li>
         <li>
           <strong><Check size={24} weight={'bold'}/></strong>

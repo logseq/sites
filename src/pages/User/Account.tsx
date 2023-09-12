@@ -188,7 +188,7 @@ export function LemoSubscriptions () {
                         <div className="ui-modal-confirm-content">
                           <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
                             <WarningCircle size={20} weight={'duotone'}/>
-                            <span>Confirm to cancel this subscription?</span>
+                            <span>Are you sure you want to cancel the subscription?</span>
                           </div>
 
                           <p className="flex justify-end pt-6 space-x-6">

@@ -322,25 +322,35 @@ export function useLemonState () {
   }
 }
 
-export const createModalFacade = (modalsState: any) => {
+export const createModalFacade = (ms: typeof modalsState) => {
   const m = ({
-    modals: modalsState.modals,
-    remove: (id: number) => modalsState.modals.set((v) => {
+    modals: ms.modals,
+    topmost: () => {
+      if (!m.modals?.length) return
+      let it: (typeof m.modals.value)[number]
+      // @ts-ignore
+      while (it = m.modals.get({ noproxy: true }).pop()) {
+        if (it.visible) {
+          return it
+        }
+      }
+    },
+    remove: (id: number) => ms.modals.set((v) => {
       const i = v.findIndex((m) => m.id === id)
       if (i != -1) v.splice(i, 1)
       return v
     }),
     create: (contentFn: (destroy: () => void) => ReactElement, props?: any) => {
       const id = Date.now()
-      const idx = modalsState.modals.length
-      modalsState.modals.set((v) => {
+      const idx = ms.modals.length
+      ms.modals.set((v) => {
         v.push({ id, visible: false, content: contentFn(() => m.remove(id)), props })
         return v
       })
 
       return {
-        show: () => modalsState.modals[idx].visible.set(true),
-        hide: () => modalsState.modals[idx].visible.set(false),
+        show: () => ms.modals[idx].visible.set(true),
+        hide: () => ms.modals[idx].visible.set(false),
         destroy: () => m.remove(id)
       }
     }
