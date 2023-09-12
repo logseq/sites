@@ -283,25 +283,28 @@ export function LemoSubscriptions () {
   inactivePane = renderList(inactiveSubs)
 
   return (
-    <>
+    <div className={'relative'}>
+      {loadButton}
+
       {activeSubs?.length != 0 && (
         <RowOfPaneContent label={'Current active'}>
           <div className={'px-6 relative'}>
-            {loadButton}
             {activePane}
           </div>
         </RowOfPaneContent>)}
 
       {inactiveSubs?.length != 0 &&
         (<RowOfPaneContent label={'Previous subscriptions'}>
-          {inactivePane}
+          <div className="px-6 relative">
+            {inactivePane}
+          </div>
         </RowOfPaneContent>)}
-    </>
+    </div>
   )
 }
 
 function AccountFreePlanCard (
-  { proState, userInfo }: { proState: IProState, userInfo: IAppUserInfo },
+  { proState, userInfo, loadProInfo }: { proState: IProState, userInfo: IAppUserInfo, loadProInfo: () => Promise<any> },
 ) {
   return (
     <div className={'account-plan-card free'}>
@@ -311,8 +314,12 @@ function AccountFreePlanCard (
             Free
           </strong>
 
-          <a className={'relative top-[-10px]'}
-             onClick={() => toast('TODO: refresh plan ...')}>
+          <a className={cx('relative top-[-10px]',
+            proState.value.infoFetching && 'animate-spin')}
+             onClick={() => {
+               if (proState.value.infoFetching) return
+               loadProInfo().catch(null)
+             }}>
             <ArrowsClockwise size={18} weight={'bold'}/>
           </a>
         </div>
@@ -432,7 +439,8 @@ function AccountProPlanCard (
           <span className={'flex items-center space-x-5'}>
             <small className={'opacity-60'}>Expired at: {(new Date(fileSyncExpiredAt)).toLocaleDateString()}</small>
             <a
-              className={cx('relative top-0 cursor-pointer active:opacity-50 select-none', proStateValue.infoFetching && 'animate-spin')}
+              className={cx('relative top-0 cursor-pointer active:opacity-50 select-none',
+                proStateValue.infoFetching && 'animate-spin')}
               onClick={() => {
                 if (proStateValue.infoFetching) return
                 loadProInfo().catch(null)
