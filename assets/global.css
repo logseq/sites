@@ -207,6 +207,16 @@ body {
     @apply absolute top-6 right-6 opacity-60 hover:opacity-80
     cursor-pointer active:opacity-50 select-none;
   }
+
+  &.as-confirm {
+    .ui-modal-content {
+      @apply min-h-[180px];
+    }
+
+    .ui-modal-inner {
+      @apply top-[-50px] animate-in zoom-in duration-300;
+    }
+  }
 }
 
 .ui-dropdown {

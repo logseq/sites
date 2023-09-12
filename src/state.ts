@@ -322,33 +322,37 @@ export function useLemonState () {
   }
 }
 
-export function useModalsState () {
-  const hookModalsState = useHookstate(modalsState)
-
-  const ret = {
-    modals: hookModalsState.modals,
-    remove: (id: number) => hookModalsState.modals.set((v) => {
+export const createModalFacade = (modalsState: any) => {
+  const m = ({
+    modals: modalsState.modals,
+    remove: (id: number) => modalsState.modals.set((v) => {
       const i = v.findIndex((m) => m.id === id)
       if (i != -1) v.splice(i, 1)
       return v
     }),
     create: (contentFn: (destroy: () => void) => ReactElement, props?: any) => {
       const id = Date.now()
-      const idx = hookModalsState.modals.length
-      hookModalsState.modals.set((v) => {
-        v.push({ id, visible: false, content: contentFn(() => ret.remove(id)), props })
+      const idx = modalsState.modals.length
+      modalsState.modals.set((v) => {
+        v.push({ id, visible: false, content: contentFn(() => m.remove(id)), props })
         return v
       })
 
       return {
-        show: () => hookModalsState.modals[idx].visible.set(true),
-        hide: () => hookModalsState.modals[idx].visible.set(false),
-        destroy: () => ret.remove(id)
+        show: () => modalsState.modals[idx].visible.set(true),
+        hide: () => modalsState.modals[idx].visible.set(false),
+        destroy: () => m.remove(id)
       }
     }
-  }
+  })
+  return m
+}
 
-  return ret
+export const ModalFace = createModalFacade(modalsState)
+
+export function useModalsState () {
+  const hookModalsState = useHookstate(modalsState)
+  return createModalFacade(hookModalsState)
 }
 
 // @ts-ignore

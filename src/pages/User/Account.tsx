@@ -1,7 +1,7 @@
 import {
   IAppUserInfo,
-  IProState,
-  useLemonState,
+  IProState, ModalFace,
+  useLemonState, useModalsState,
   useProState,
 } from '../../state'
 import { ReactElement, useEffect } from 'react'
@@ -10,7 +10,6 @@ import {
   ArrowRight,
   ArrowsClockwise,
   Cardholder,
-  Chat,
   ChatsCircle, Diamond,
   DiscordLogo,
   IdentificationCard,
@@ -18,10 +17,9 @@ import {
   LockOpen,
   MicrophoneStage, NoteBlank,
   Notebook,
-  PlayCircle,
   Queue, Repeat,
   SignOut,
-  Stack, StackSimple, XSquare,
+  Stack, StackSimple, WarningCircle, XSquare,
 } from 'phosphor-react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -30,7 +28,6 @@ import cx from 'classnames'
 import { LSSpinner } from '../../components/Icons'
 import { none } from '@hookstate/core'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { func } from 'prop-types'
 
 function LemonPaymentButton ({ userId, email }: Partial<{
   userId: string,
@@ -186,16 +183,43 @@ export function LemoSubscriptions () {
                   (<Button
                     className={'absolute top-2.5 right-2 !bg-transparent'}
                     onClick={async () => {
-                      try {
-                        proState.cancelingSubscriptions.merge({ [it.id]: true })
-                        await lemon.cancelSubscription(it.id)
-                        await lemon.loadSubscriptions()
+                      // TODO: move to ui components
+                      const m = ModalFace.create((c: any) => (
+                        <div className="ui-modal-confirm-content">
+                          <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
+                            <WarningCircle size={20} weight={'duotone'}/>
+                            <span>Confirm to cancel this subscription?</span>
+                          </div>
 
-                        if (isBindSubscription) {
-                          await loadProInfo()
+                          <p className="flex justify-end pt-6 space-x-6">
+                            <Button onClick={c} className={'!bg-transparent opacity-50'}>No</Button>
+                            <Button className={'!bg-red-600'}
+                                    onClick={() => {
+                                      c()
+                                      doCancel()
+                                    }}
+                            >Yes</Button>
+                          </p>
+                        </div>
+                      ), {
+                        className: 'as-confirm',
+                        hasClose: false
+                      })
+
+                      m.show()
+
+                      async function doCancel () {
+                        try {
+                          proState.cancelingSubscriptions.merge({ [it.id]: true })
+                          await lemon.cancelSubscription(it.id)
+                          await lemon.loadSubscriptions()
+
+                          if (isBindSubscription) {
+                            await loadProInfo()
+                          }
+                        } finally {
+                          proState.cancelingSubscriptions.merge({ [it.id]: none })
                         }
-                      } finally {
-                        proState.cancelingSubscriptions.merge({ [it.id]: none })
                       }
                     }}>
 
@@ -260,12 +284,13 @@ export function LemoSubscriptions () {
 
   return (
     <>
-      <RowOfPaneContent label={'Current active'}>
-        <div className={'px-6 relative'}>
-          {loadButton}
-          {activePane}
-        </div>
-      </RowOfPaneContent>
+      {activeSubs?.length != 0 && (
+        <RowOfPaneContent label={'Current active'}>
+          <div className={'px-6 relative'}>
+            {loadButton}
+            {activePane}
+          </div>
+        </RowOfPaneContent>)}
 
       {inactiveSubs?.length != 0 &&
         (<RowOfPaneContent label={'Previous subscriptions'}>
@@ -482,11 +507,11 @@ function AccountProPlanCard (
         </div>
 
         {/* Debug */}
-        {/*<LemonPaymentButton*/}
-        {/*  email={userInfo.attributes?.email}*/}
-        {/*  userId={userInfo.attributes?.sub}*/}
-        {/*  username={userInfo.username}*/}
-        {/*/>*/}
+        <LemonPaymentButton
+          email={userInfo.attributes?.email}
+          userId={userInfo.attributes?.sub}
+          username={userInfo.username}
+        />
       </div>
     </div>
   )
