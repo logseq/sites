@@ -647,6 +647,10 @@
       @apply opacity-60 hover:opacity-100 active:!opacity-70;
     }
 
+    .sub-items-inner {
+      @apply bg-[#002b36];
+    }
+
     &.is-active {
       .trigger {
         @apply opacity-100;
