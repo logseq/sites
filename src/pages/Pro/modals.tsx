@@ -6,7 +6,7 @@ import {
   Info, PaperPlaneTilt,
   Student,
   UserCirclePlus
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import copy from 'copy-to-clipboard'
 import { Dropdown } from '../../components/Dropdown'
 import toast from 'react-hot-toast'

@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
-import { ArrowSquareOut, List, X } from 'phosphor-react'
+import { ArrowSquareOut, List, X } from '@phosphor-icons/react'
 import { ReactElement, useEffect, useState } from 'react'
 import { WrapGlobalDownloadButton } from '../pages/Downloads'
 import cx from 'classnames'

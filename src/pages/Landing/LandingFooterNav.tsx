@@ -2,7 +2,7 @@ import {
   ArrowSquareOut, CloudCheck, DeviceMobile, FileText,
   GithubLogo, Globe, HandWaving, Keyhole, Play,
   PuzzlePiece, ScribbleLoop, Swatches, TwitterLogo, UserCirclePlus
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './common'
 import { WrapGlobalDownloadButton } from '../Downloads'

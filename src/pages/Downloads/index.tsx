@@ -2,7 +2,7 @@ import './index.css'
 import {
   AppleLogo, AppStoreLogo, CaretDown, DownloadSimple, GooglePlayLogo,
   LinuxLogo, QrCode, WindowsLogo,
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
 import { Button } from '../../components/Buttons'

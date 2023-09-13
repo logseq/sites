@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { XCircle } from 'phosphor-react'
+import { XCircle } from '@phosphor-icons/react'
 import { useRef } from 'react'
 
 export function Modal (props: any) {

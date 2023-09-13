@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import cx from 'classnames'
-import { ArrowSquareOut, CaretDown, DiscordLogo, TwitterLogo } from 'phosphor-react'
+import { ArrowSquareOut, CaretDown, DiscordLogo, TwitterLogo } from '@phosphor-icons/react'
 import { AnimateInTurnStage } from '../../components/Animations'
 import { useAppState } from '../../state'
 import { slugify, navigateTabs } from '../../components/utils'

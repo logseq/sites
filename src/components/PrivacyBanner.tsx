@@ -1,5 +1,5 @@
 import { Button } from './Buttons'
-import { XCircle } from 'phosphor-react'
+import { XCircle } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import Cookie from 'js-cookie'
 

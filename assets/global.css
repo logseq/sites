@@ -225,7 +225,6 @@ body {
   .sub-items {
     display: none;
     min-width: 270px;
-    z-index: 99;
 
     &-inner {
       @apply border bg-logseq-600 rounded-md overflow-hidden
@@ -238,7 +237,7 @@ body {
     }
   }
 
-  &:hover {
+  &.is-active {
     .sub-items {
       display: flex !important;
     }

@@ -4,7 +4,7 @@ import {
   ArrowCircleRight, ChatsCircle, DiscordLogo,
   FrameCorners, MonitorPlay, Notebook, SignOut,
   StarFour, SignIn
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { AnimateInTurnStage } from '../../components/Animations'
 import cx from 'classnames'

@@ -639,4 +639,22 @@
       }
     }
   }
+
+  .ui-dropdown.card-actions {
+    @apply relative top-[-6px];
+
+    .trigger {
+      @apply opacity-60 hover:opacity-100 active:!opacity-70;
+    }
+
+    &.is-active {
+      .trigger {
+        @apply opacity-100;
+      }
+    }
+
+    .ui-menu-item {
+      @apply p-0;
+    }
+  }
 }

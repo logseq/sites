@@ -11,7 +11,7 @@ import {
   ShieldStar, SignIn,
   Stack,
   Student, Tag, TwitterLogo, UserCirclePlus, Wallet
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useMemo, useState } from 'react'

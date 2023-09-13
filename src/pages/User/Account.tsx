@@ -10,17 +10,17 @@ import {
   ArrowRight,
   ArrowsClockwise,
   Cardholder,
-  ChatsCircle, Diamond,
-  DiscordLogo,
+  ChatsCircle,
+  DiscordLogo, DotsThreeOutline,
   IdentificationCard,
   LockKeyOpen,
   LockOpen,
   MicrophoneStage, NoteBlank,
   Notebook,
-  Queue, Repeat,
-  SignOut,
+  Queue, Receipt, ReceiptX, Repeat,
+  SignOut, Square,
   Stack, StackSimple, WarningCircle, XSquare,
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
 import Avatar from 'react-avatar'
@@ -28,6 +28,7 @@ import cx from 'classnames'
 import { LSSpinner } from '../../components/Icons'
 import { none } from '@hookstate/core'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Dropdown } from '../../components/Dropdown'
 
 function LemonPaymentButton ({ userId, email }: Partial<{
   userId: string,
@@ -170,6 +171,83 @@ export function LemoSubscriptions () {
         const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro ==
           it.id
 
+        const actionItems = []
+
+        if (isActive) {
+          actionItems.push(
+            {
+              text: (
+                <Button
+                  className={'!bg-transparent !px-2 !py-2 !w-full'}
+                  onClick={async () => {
+                    // TODO: move to ui components
+                    const m = modalFacade.create((c: any) => (
+                      <div className="ui-modal-confirm-content">
+                        <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
+                          <WarningCircle size={20} weight={'duotone'}/>
+                          <span>Are you sure you want to cancel the subscription?</span>
+                        </div>
+
+                        <p className="flex justify-end pt-6 space-x-6">
+                          <Button onClick={c} className={'!bg-transparent opacity-50'}>No</Button>
+                          <Button className={'!bg-red-600'}
+                                  onClick={() => {
+                                    c()
+                                    doCancel()
+                                  }}
+                          >Yes</Button>
+                        </p>
+                      </div>
+                    ), {
+                      className: 'as-confirm',
+                      hasClose: false
+                    })
+
+                    m.show()
+
+                    async function doCancel () {
+                      try {
+                        proState.cancelingSubscriptions.merge({ [it.id]: true })
+                        await lemon.cancelSubscription(it.id)
+                        await lemon.loadSubscriptions()
+
+                        if (isBindSubscription) {
+                          await loadProInfo()
+                        }
+                      } finally {
+                        proState.cancelingSubscriptions.merge({ [it.id]: none })
+                      }
+                    }
+                  }}>
+
+                  {proState.cancelingSubscriptions.value?.[it.id] ?
+                    <LSSpinner size={10} color={'#ffffff'}/> :
+                    <span className={'flex items-center space-x-1'}>
+                        <ReceiptX weight={'duotone'} size={18}/>
+                        <small className={'text-sm'}>Cancel subscription</small>
+                      </span>}
+                </Button>)
+            }
+          )
+
+          // pause
+          actionItems.push(
+            {
+              text: (
+                <Button className={'!bg-transparent !px-2 !py-2 !w-full'}
+                        onClick={() => toast('TODO: // cancel action',
+                          { position: 'top-center' })}
+                >
+                  <span className={'flex items-center space-x-1'}>
+                    <Receipt weight={'duotone'} size={18}/>
+                    <small className={'text-sm'}>Pause subscription</small>
+                  </span>
+                </Button>
+              )
+            }
+          )
+        }
+
         return (
           <li key={it.id} className={
             cx('subscription-card text-lg flex items-center mb-4 rounded-xl relative', `is-${status}`)}>
@@ -180,57 +258,17 @@ export function LemoSubscriptions () {
                   {status_formatted}
                 </strong>
 
-                {isActive &&
-                  (<Button
-                    className={'absolute top-2.5 right-2 !bg-transparent'}
-                    onClick={async () => {
-                      // TODO: move to ui components
-                      const m = modalFacade.create((c: any) => (
-                        <div className="ui-modal-confirm-content">
-                          <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
-                            <WarningCircle size={20} weight={'duotone'}/>
-                            <span>Are you sure you want to cancel the subscription?</span>
-                          </div>
-
-                          <p className="flex justify-end pt-6 space-x-6">
-                            <Button onClick={c} className={'!bg-transparent opacity-50'}>No</Button>
-                            <Button className={'!bg-red-600'}
-                                    onClick={() => {
-                                      c()
-                                      doCancel()
-                                    }}
-                            >Yes</Button>
-                          </p>
-                        </div>
-                      ), {
-                        className: 'as-confirm',
-                        hasClose: false
-                      })
-
-                      m.show()
-
-                      async function doCancel () {
-                        try {
-                          proState.cancelingSubscriptions.merge({ [it.id]: true })
-                          await lemon.cancelSubscription(it.id)
-                          await lemon.loadSubscriptions()
-
-                          if (isBindSubscription) {
-                            await loadProInfo()
-                          }
-                        } finally {
-                          proState.cancelingSubscriptions.merge({ [it.id]: none })
-                        }
-                      }
-                    }}>
-
-                    {proState.cancelingSubscriptions.value?.[it.id] ?
-                      <LSSpinner size={10} color={'#ffffff'}/> :
-                      <span className={'flex items-center space-x-1'}>
-                        <XSquare weight={'bold'}/>
-                        <small className={'text-sm'}>Cancel subscription</small>
-                      </span>}
-                  </Button>)}
+                {!!actionItems.length &&
+                  (<Dropdown
+                    items={actionItems}
+                    subItemClassName={'!top-1'}
+                    className={'card-actions'}
+                    triggerType={'click'}
+                  >
+                    <button className={'as-button'}>
+                      <DotsThreeOutline/>
+                    </button>
+                  </Dropdown>)}
               </div>
 
               {isActive && (
@@ -567,14 +605,6 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
               loadProInfo={loadProInfo}
             />)
           }
-        </div>
-      </RowOfPaneContent>
-
-      <RowOfPaneContent label={'Profile'}>
-        <div className="px-6 min-h-[60px]">
-          <h1>
-            {userInfo?.attributes?.email}
-          </h1>
         </div>
       </RowOfPaneContent>
 
