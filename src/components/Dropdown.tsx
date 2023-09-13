@@ -20,8 +20,9 @@ export const Dropdown = React.forwardRef<HTMLDivElement, Partial<{
 
   ref = ref || useRef<HTMLDivElement>(null)
 
-  if (triggerType === 'click') {
-    triggerProps.clickable = true
+  const triggerClickable = triggerType === 'click'
+
+  if (triggerClickable) {
     triggerProps.onClick = () => setActive(!active)
 
     const _onClick = dropdownProps.onClick
@@ -47,20 +48,20 @@ export const Dropdown = React.forwardRef<HTMLDivElement, Partial<{
       setActive(false)
     }
 
-    if (triggerProps.clickable) {
+    if (triggerClickable) {
       host.addEventListener('mouseup', handler, false)
     } else {
       host.removeEventListener('mouseup', handler)
     }
 
     return () => host.removeEventListener('mouseup', handler)
-  }, [triggerProps.clickable])
+  }, [triggerClickable])
 
   const wrapSubItems = (children: ReactElement) => (
     (wrapItems === false ? children :
       <div
         className={cx('sub-items flex flex-col absolute top-5 right-0 w-full',
-          (triggerProps.clickable ? 'mt-6' : 'pt-6'), subItemClassName)}>
+          (triggerClickable ? 'mt-6' : 'pt-6'), subItemClassName)}>
         <div className="sub-items-inner">
           {children}
         </div>

@@ -27,6 +27,11 @@ export const isObject = (value: any): value is Dict => {
 
 export const isNull = (value: any): value is null => value == null
 
+export function isDateValid (value: number | string | Date) {
+  // @ts-ignore
+  return !isNaN(new Date(value))
+}
+
 export function callAll (...fns: any[]) {
   return function mergedFn (...args: any[]) {
     fns.forEach((fn) => {
@@ -67,24 +72,24 @@ export const openLiveDemo = () => {
   setTimeout(() => window.location.reload(), 500)
 }
 
-export function slugify(input: string | undefined) {
-  return input?.replace(/\W/g,'_')
+export function slugify (input: string | undefined) {
+  return input?.replace(/\W/g, '_')
 }
 
-export function navigateTabs(event: React.KeyboardEvent) {
+export function navigateTabs (event: React.KeyboardEvent) {
   const target = event.target as HTMLElement
   const key = event.key
-  const tabs =  Array.prototype.slice.call(target?.closest('[role="tablist"]')?.querySelectorAll('[role="tab"]'))
+  const tabs = Array.prototype.slice.call(target?.closest('[role="tablist"]')?.querySelectorAll('[role="tab"]'))
   let index = tabs.indexOf(target)
 
   if (key.includes('Arrow')) {
-    switch(key) {
-      case "ArrowLeft":
-      case "ArrowUp":
+    switch (key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
         index = index > 0 ? index - 1 : tabs.length - 1
         break
-      case "ArrowRight":
-      case "ArrowDown":
+      case 'ArrowRight':
+      case 'ArrowDown':
         index = index < tabs.length - 1 ? index + 1 : 0
         break
     }

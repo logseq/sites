@@ -481,7 +481,7 @@
     }
 
     .as-button {
-      @apply w-full my-1 py-[7px];
+      @apply w-full my-1 py-[6px];
     }
 
     .ui-dropdown {
@@ -614,7 +614,7 @@
     }
 
     > .info-desc {
-      @apply pt-6 text-green-300 opacity-80;
+      @apply pt-5 text-green-300 opacity-80;
 
       b {
         @apply font-normal;
@@ -622,7 +622,25 @@
     }
   }
 
-  &:not(.is-active):not(.is-on_trial) {
+  &.is-paused {
+    > .inner {
+      @apply from-yellow-700/60 to-20%;
+
+      > .hd {
+        > strong {
+          &:before {
+            @apply bg-yellow-500;
+          }
+        }
+      }
+
+      > .info-desc {
+        @apply text-yellow-500;
+      }
+    }
+  }
+
+  &:not(.is-active):not(.is-on_trial):not(.is-paused) {
     > .inner {
       @apply from-red-700/60 to-70%;
 
@@ -647,6 +665,11 @@
       @apply opacity-60 hover:opacity-100 active:!opacity-70;
     }
 
+    .sub-items {
+      transition: 0.25s ease-in-out;
+      opacity: 0;
+    }
+
     .sub-items-inner {
       @apply bg-[#002b36];
     }
@@ -654,6 +677,10 @@
     &.is-active {
       .trigger {
         @apply opacity-100;
+      }
+
+      .sub-items {
+        opacity: 1;
       }
     }
 

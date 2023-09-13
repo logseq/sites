@@ -9,6 +9,7 @@ import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
 import { Location, NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
 import camelcase from 'camelcase'
+import { isDateValid } from './components/utils'
 
 export const isDev = process.env.NODE_ENV !== 'production'
 export const authConfig = isDev ?
@@ -78,7 +79,7 @@ const proState =
     orders: {},
     lastSubscription: {},
     subscriptionsFetching: boolean,
-    cancelingSubscriptions: {},
+    actionPendingSubscriptions: {},
     lemonListSubscriptions: {},
     e: Error
   }>>({})
@@ -318,6 +319,26 @@ export function useLemonState () {
       await loadAPI(
         'lemon_cancel_subscription', false,
         { body: JSON.stringify({ 'subscription-id': subId }) })
+    },
+    pauseSubscription: async (subId: string, resumesAt?: string) => {
+      const body = { 'subscription-id': parseInt(subId), 'mode': 'free' }
+      if (resumesAt) {
+        if (!isDateValid(resumesAt))
+          throw new Error(`Invalid resumes at date input! #${resumesAt}`)
+
+        body['resumes-at'] = new Date(resumesAt).toISOString()
+      }
+      await loadAPI(
+        'lemon_pause_subscription', false,
+        { body: JSON.stringify(body) }
+      )
+    },
+    unpauseSubscription: async (subId: string) => {
+      const body = { 'subscription-id': parseInt(subId) }
+      await loadAPI(
+        'lemon_unpause_subscription', false,
+        { body: JSON.stringify(body) }
+      )
     }
   }
 }

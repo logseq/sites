@@ -30,10 +30,11 @@ import { none } from '@hookstate/core'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown } from '../../components/Dropdown'
 
-function LemonPaymentButton ({ userId, email }: Partial<{
+function LemonPaymentButton ({ userId, email, opts }: Partial<{
   userId: string,
   username: string,
-  email: string
+  email: string,
+  opts?: any
 }>) {
   const { proState, loadProInfo } = useProState()
   const lemon = useLemonState()
@@ -76,8 +77,11 @@ function LemonPaymentButton ({ userId, email }: Partial<{
       <strong className={'flex items-center font-normal'}>
         <ArrowFatLinesUp size={24} weight={'duotone'}/>
         <span className={'flex flex-col mx-3'}>
+          {opts?.text ||
+            (<>
               <b className={'font-semibold text-lg text-gray-100'}>Start free trial</b>
               <small>Try <span className={'text-gray-100'}>Logseq Pro</span> for 2 weeks</small>
+            </>)}
         </span>
       </strong>
 
@@ -159,21 +163,22 @@ export function LemoSubscriptions () {
         // https://docs.lemonsqueezy.com/api/subscriptions
         const {
           status, status_formatted, subtotal_formatted, created_at, user_email,
-          user_name, customer_id, product_name, variant_name, renews_at,
+          user_name, customer_id, product_name, variant_name, renews_at, pause,
+          updated_at
         } = it.attributes
 
         const isTrial = status === 'on_trial'
-        const isActive = isTrial || (status === 'active')
+        const isActive = status === 'active'
         const isPaused = status === 'paused'
         const isUnpaid = status === 'unpaid'
         const isCancelled = status === 'cancelled'
         const isExpired = status === 'expired'
-        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro ==
-          it.id
+        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
 
+        const isCurrent = isActive || isTrial || isPaused
         const actionItems = []
 
-        if (isActive) {
+        if (isCurrent) {
           actionItems.push(
             {
               text: (
@@ -207,7 +212,7 @@ export function LemoSubscriptions () {
 
                     async function doCancel () {
                       try {
-                        proState.cancelingSubscriptions.merge({ [it.id]: true })
+                        proState.actionPendingSubscriptions.merge({ [it.id]: true })
                         await lemon.cancelSubscription(it.id)
                         await lemon.loadSubscriptions()
 
@@ -215,32 +220,48 @@ export function LemoSubscriptions () {
                           await loadProInfo()
                         }
                       } finally {
-                        proState.cancelingSubscriptions.merge({ [it.id]: none })
+                        proState.actionPendingSubscriptions.merge({ [it.id]: none })
                       }
                     }
                   }}>
-
-                  {proState.cancelingSubscriptions.value?.[it.id] ?
-                    <LSSpinner size={10} color={'#ffffff'}/> :
-                    <span className={'flex items-center space-x-1'}>
-                        <ReceiptX weight={'duotone'} size={18}/>
-                        <small className={'text-sm'}>Cancel subscription</small>
-                      </span>}
+                  <span className={'flex items-center space-x-1'}>
+                    <ReceiptX weight={'duotone'} size={18}/>
+                    <small className={'text-sm'}>Cancel subscription</small>
+                  </span>
                 </Button>)
             }
           )
 
-          // pause
+          // pause Or unpause
           actionItems.push(
             {
               text: (
                 <Button className={'!bg-transparent !px-2 !py-2 !w-full'}
-                        onClick={() => toast('TODO: // cancel action',
-                          { position: 'top-center' })}
+                        onClick={() => {
+                          async function doPause () {
+                            try {
+                              proState.actionPendingSubscriptions.merge({ [it.id]: true })
+
+                              if (!isPaused) {
+                                await lemon.pauseSubscription(it.id)
+                              } else {
+                                await lemon.unpauseSubscription(it.id)
+                              }
+
+                              lemon.loadSubscriptions().then(() => {
+                                if (isBindSubscription) loadProInfo()
+                              })
+                            } finally {
+                              proState.actionPendingSubscriptions.merge({ [it.id]: none })
+                            }
+                          }
+
+                          doPause().catch(null)
+                        }}
                 >
                   <span className={'flex items-center space-x-1'}>
                     <Receipt weight={'duotone'} size={18}/>
-                    <small className={'text-sm'}>Pause subscription</small>
+                    <small className={'text-sm'}>{isPaused ? 'Unpause' : 'Pause'} subscription</small>
                   </span>
                 </Button>
               )
@@ -266,12 +287,14 @@ export function LemoSubscriptions () {
                     triggerType={'click'}
                   >
                     <button className={'as-button'}>
-                      <DotsThreeOutline/>
+                      {proState.actionPendingSubscriptions.value?.[it.id] ?
+                        <LSSpinner size={8} color={'#ffffff'}/> : <DotsThreeOutline/>
+                      }
                     </button>
                   </Dropdown>)}
               </div>
 
-              {isActive && (
+              {isCurrent && (
                 <div className={'active-desc'}>
                   <div className="l">
                     <small className={'pb-1.5'}>Subscriber</small>
@@ -296,8 +319,12 @@ export function LemoSubscriptions () {
                     <Repeat weight={'bold'} size={18}/>
                     <span>{variant_name}</span>
                   </b>
-                  <b><span className={'text-gray-100 pr-1'}>Next renewal: </span>
-                    {new Date(renews_at).toDateString()}
+                  <b>
+                    <span className={'opacity-70 pr-1'}>
+                      {(isActive || isTrial) ? `Next renewal: ${new Date(renews_at).toDateString()}` :
+                        ((isPaused && pause?.resumes_at) ? `Resumes at: ${(new Date(pause?.resumes_at).toDateString())}` :
+                          `Updated at: ${(new Date(updated_at)).toDateString()}`)}
+                    </span>
                   </b>
                 </div>
               </div>
@@ -311,7 +338,7 @@ export function LemoSubscriptions () {
   const inactiveSubs = []
 
   lemonSubscriptions?.forEach((it: any) => {
-    if (['active', 'on_trial'].includes(it.attributes?.status)) {
+    if (['active', 'on_trial', 'paused'].includes(it.attributes?.status)) {
       activeSubs.push(it)
     } else {
       inactiveSubs.push(it)
@@ -558,6 +585,12 @@ function AccountProPlanCard (
           email={userInfo.attributes?.email}
           userId={userInfo.attributes?.sub}
           username={userInfo.username}
+          opts={{
+            text: (<>
+              <b className={'font-semibold text-lg text-gray-100'}>Subscribe Logseq Pro (Debug button)</b>
+              <small>Get <span className={'text-gray-100'}>more features</span> to speed your works!</small>
+            </>)
+          }}
         />
       </div>
     </div>

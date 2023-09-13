@@ -223,8 +223,10 @@ body {
   @apply relative;
 
   .sub-items {
-    display: none;
+    transform-origin: top;
+    transform: scaleY(0);
     min-width: 270px;
+    display: flex;
 
     &-inner {
       @apply border bg-logseq-600 rounded-md overflow-hidden
@@ -239,7 +241,7 @@ body {
 
   &.is-active {
     .sub-items {
-      display: flex !important;
+      transform: scaleY(1);
     }
   }
 }
