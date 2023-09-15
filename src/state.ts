@@ -247,6 +247,11 @@ export function useProState () {
   const appState = useAppState()
   const userInfo = appState.userInfo.get()
   const hookProState = useHookstate(proState)
+  const proStateValue = hookProState.get({ noproxy: true })
+  const proFreeTrialEndsAt = proStateValue?.info?.FreeTrialEndsAt?.LogseqPro
+  const inTrial = proFreeTrialEndsAt &&
+    (new Date(proFreeTrialEndsAt).getTime()) > Date.now() &&
+    (proStateValue.info?.LemonStatus?.LogseqPro !== 'active')
 
   // @ts-ignore
   const idToken = userInfo.signInUserSession?.idToken?.jwtToken
@@ -274,7 +279,7 @@ export function useProState () {
 
   return {
     proState: hookProState,
-    proStateValue: hookProState.get({ noproxy: true }),
+    proStateValue, inTrial,
     loadProInfo
   }
 }
@@ -338,6 +343,16 @@ export function useLemonState () {
       await loadAPI(
         'lemon_unpause_subscription', false,
         { body: JSON.stringify(body) }
+      )
+    },
+    startFreeTrial: async () => {
+      if (proState.value?.info?.ProUser) {
+        return
+      }
+
+      await loadAPI(
+        'start_free_trial', false,
+        { body: JSON.stringify({ project: 'LogseqPro' }) }
       )
     }
   }

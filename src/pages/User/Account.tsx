@@ -1,10 +1,10 @@
 import {
   IAppUserInfo,
-  IProState, modalFacade,
+  modalFacade,
   useLemonState,
   useProState,
 } from '../../state'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import {
   ArrowFatLinesUp,
   ArrowRight,
@@ -79,8 +79,8 @@ function LemonPaymentButton ({ userId, email, opts }: Partial<{
         <span className={'flex flex-col mx-3'}>
           {opts?.text ||
             (<>
-              <b className={'font-semibold text-lg text-gray-100'}>Start free trial</b>
-              <small>Try <span className={'text-gray-100'}>Logseq Pro</span> for 2 weeks</small>
+              <b className={'font-semibold text-lg text-gray-100'}>Subscribe Logseq Pro</b>
+              <small>Get <span className={'text-gray-100'}>more features</span> to speed up your works!</small>
             </>)}
         </span>
       </strong>
@@ -89,6 +89,43 @@ function LemonPaymentButton ({ userId, email, opts }: Partial<{
         <ArrowRight size={20}/>
       </strong>
     </a>)
+}
+
+function StartTrialButton () {
+  const [pending, setPending] = useState(false)
+  const lemonState = useLemonState()
+  const { loadProInfo } = useProState()
+
+  return (
+    <button
+      onClick={async () => {
+
+        try {
+          setPending(true)
+          await lemonState.startFreeTrial()
+          loadProInfo().catch(null)
+        } catch (e: any) {
+          toast.error(e)
+        } finally {
+          setPending(false)
+        }
+      }}
+      disabled={pending}
+      className={'flex justify-between mt-4 bg-pro-700 py-3 px-6 rounded-lg items-center hover:opacity-80 active:opacity-100 select-none cursor-pointer w-full disabled:cursor-wait'}>
+      <strong className={'flex items-center font-normal'}>
+        <ArrowFatLinesUp size={24} weight={'duotone'}/>
+        <span className={'flex flex-col mx-3'}>
+          <b className={'font-semibold text-lg text-gray-100 text-left'}>Start free trial</b>
+          <small>Try <span className={'text-gray-100'}>Logseq Pro</span> for 1 month</small>
+        </span>
+      </strong>
+
+      <strong>
+        {pending ? (
+          <LSSpinner className={'relative top-0.5'} size={8}/>
+        ) : <ArrowRight size={20}/>}
+      </strong>
+    </button>)
 }
 
 export function NothingContent ({ text }: { text: string }) {
@@ -370,8 +407,11 @@ export function LemoSubscriptions () {
 }
 
 function AccountFreePlanCard (
-  { proState, userInfo, loadProInfo }: { proState: IProState, userInfo: IAppUserInfo, loadProInfo: () => Promise<any> },
+  { userInfo }: { userInfo: IAppUserInfo },
 ) {
+  const { proState, loadProInfo } = useProState()
+  const proStateInfoValue = proState.value.info
+
   return (
     <div className={'account-plan-card free'}>
       <div className="inner">
@@ -479,27 +519,30 @@ function AccountFreePlanCard (
         </span>
 
           {/*start pro trial*/}
-          <LemonPaymentButton
-            email={userInfo.attributes?.email}
-            userId={userInfo.attributes?.sub}
-            username={userInfo.username}
-          />
+          {(!proStateInfoValue?.ProUser &&
+            proStateInfoValue?.FreeTrialEndsAt?.LogseqPro == null) ?
+            <StartTrialButton/> :
+            <LemonPaymentButton
+              email={userInfo.attributes?.email}
+              userId={userInfo.attributes?.sub}
+              username={userInfo.username}
+            />}
         </div>
       </div>
     </div>)
 }
 
 function AccountProPlanCard (
-  { proState, userInfo, loadProInfo }: { loadProInfo: () => Promise<any>, proState: IProState, userInfo: IAppUserInfo },
+  { userInfo }: { userInfo: IAppUserInfo },
 ) {
-  const proStateValue = proState.value
+  const { proStateValue, loadProInfo, inTrial } = useProState()
   const fileSyncExpiredAt = proStateValue.info?.FileSyncExpireAt
   return (
     <div className={'account-plan-card pro'}>
       <div className="inner">
         <div className="hd">
           <strong>
-            Pro
+            Pro {inTrial ? ' / On trial' : ''}
           </strong>
 
           <span className={'flex items-center space-x-5'}>
@@ -585,7 +628,7 @@ function AccountProPlanCard (
           email={userInfo.attributes?.email}
           userId={userInfo.attributes?.sub}
           username={userInfo.username}
-          opts={{
+          opts={inTrial ? {} : {
             text: (<>
               <b className={'font-semibold text-lg text-gray-100'}>Subscribe Logseq Pro (Debug button)</b>
               <small>Get <span className={'text-gray-100'}>more features</span> to speed your works!</small>
@@ -597,12 +640,8 @@ function AccountProPlanCard (
   )
 }
 
-export function UserInfoContent (props: {
-  userInfo: IAppUserInfo,
-  proState: IProState,
-  loadProInfo: () => Promise<void>
-}) {
-  const proStateValue = props.proState.get()
+export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
+  const { proStateValue } = useProState()
 
   if (!proStateValue.info && proStateValue.infoFetching) {
     return <b className={'flex space-x-6 items-center'}>
@@ -617,7 +656,7 @@ export function UserInfoContent (props: {
 }
 
 export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
-  const { proState, loadProInfo } = useProState()
+  const { proState } = useProState()
   const proStateValue = proState.value
 
   return (
@@ -632,11 +671,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
 
           {((typeof proState.value.info?.ProUser === 'boolean') ||
               (proStateValue.infoFetching)) &&
-            (<UserInfoContent
-              userInfo={userInfo}
-              proState={proState}
-              loadProInfo={loadProInfo}
-            />)
+            (<UserInfoContent userInfo={userInfo}/>)
           }
         </div>
       </RowOfPaneContent>

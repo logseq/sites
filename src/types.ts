@@ -5,6 +5,7 @@ export type IProInfo = {
   ProUser: boolean
   UserGroups: 'alpha-tester' | string
 
+  FreeTrialEndsAt: { ['LogseqPro']: string }
   LemonSubscriptionID: { ['LogseqPro']: string }
   LemonCustomerID: { ['LogseqPro']: string }
   LemonEndsAt: { ['LogseqPro']: string }
