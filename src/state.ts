@@ -108,6 +108,12 @@ export function applyLoginUser (
     inComponent?: boolean
   }
 ) {
+  // for logout
+  if (!user && t.routeLocation.pathname.startsWith('/account') && t.routeLocation.pathname !== '/login') {
+    t.navigate('/login')
+    return
+  }
+
   if (user?.username && user?.pool && user?.signInUserSession) {
     appState.userInfo.set({
       signOut: async () => {
@@ -136,7 +142,6 @@ export function applyLoginUser (
       t.navigate('/account')
     }
   }
-
 }
 
 export function useAuthUserInfoState () {
