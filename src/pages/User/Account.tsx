@@ -1,10 +1,10 @@
 import {
   IAppUserInfo,
-  modalFacade,
+  modalFacade, useAppState, useAuthUserInfoState,
   useLemonState,
   useProState,
 } from '../../state'
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import {
   ArrowFatLinesUp,
   ArrowRight,
@@ -19,7 +19,7 @@ import {
   Notebook,
   Queue, Receipt, ReceiptX, Repeat,
   SignOut, Square,
-  Stack, StackSimple, WarningCircle
+  Stack, StackSimple, Warning, WarningCircle
 } from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -31,6 +31,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown } from '../../components/Dropdown'
 import { AccountSettings } from '@aws-amplify/ui-react'
 import { ValidationMode } from '@aws-amplify/ui'
+import { Auth } from 'aws-amplify'
 
 function LemonPaymentButton ({ userId, email, opts }: Partial<{
   userId: string,
@@ -740,6 +741,59 @@ export function AccountChangePasswordPane ({ close }: { close: () => void }) {
   )
 }
 
+export function AccountDeleteUserPane ({ close, userInfo }: { close: () => void, userInfo: IAppUserInfo }) {
+  const [pending, setPending] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleSuccess = async () => {
+    await userInfo.signOut()
+    close()
+  }
+
+  const handleError = (e: any) => {
+    toast.error(`Delete failed: ${e}`, {
+      position: 'top-center'
+    })
+    setPending(false)
+  }
+
+  const handleDelete = async () => {
+    if (pending) return
+    setPending(true)
+
+    if (inputRef.current?.value?.trim() !== userInfo.username) {
+      inputRef.current.select()
+      throw new Error('Incorrect username!')
+    }
+
+    await Auth.deleteUser()
+  }
+
+  return (
+    <div className="account-delete-user-pane">
+      <h1 className={'text-xl font-semibold mt-2'}>Confirm delete account</h1>
+      <div className="flex flex-col pt-2">
+        <p className={'flex flex-col space-y-2 pb-4'}>
+          <label htmlFor="{'delete-user-input-username'}" className={'select-none'}>
+            Please input your username <i>({userInfo.username})</i>
+          </label>
+          <input id={'delete-user-input-username'}
+                 autoFocus={true}
+                 ref={inputRef}
+                 className={'p-2 bg-transparent border border-logseq-50 rounded outline-0'}/>
+        </p>
+        {pending ?
+          <p className={'flex justify-center'}><LSSpinner size={8}/></p> :
+          <AccountSettings.DeleteUser
+            onSuccess={handleSuccess}
+            handleDelete={handleDelete}
+            onError={handleError}
+          />}
+      </div>
+    </div>
+  )
+}
+
 export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
   const { proState } = useProState()
   const proStateValue = proState.value
@@ -776,8 +830,15 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
 
           <Button
             className={'!py-2 !bg-red-900 !px-6'}
-            onClick={() => toast('❌ TODO: Are you sure?',
-              { position: 'top-center' })}
+            onClick={() => {
+              const m = modalFacade.create((c) => {
+                return (<AccountDeleteUserPane close={c} userInfo={userInfo}/>)
+              }, {
+                ['data-account-delete-user']: true
+              })
+
+              m.show()
+            }}
           >
             Delete account
           </Button>

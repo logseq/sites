@@ -510,7 +510,7 @@
   }
 }
 
-.ui-modal[data-account-change-pw] {
+.ui-modal[data-account-change-pw], .ui-modal[data-account-delete-user] {
   --amplify-components-field-label-color: var(--amplify-colors-brand-primary-10);
 
   .amplify-input:focus {

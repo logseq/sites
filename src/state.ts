@@ -52,7 +52,7 @@ const defaultAppState = {
     username: null,
     signInUserSession: null,
     attributes: null,
-    signOut: () => {}
+    signOut: () => Promise.resolve()
   },
   releases: {
     fetching: false,

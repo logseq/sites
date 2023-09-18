@@ -76,7 +76,7 @@ export function App () {
           <Route path={'/pro'} element={<ProPage/>}></Route>
           <Route path={'/login'} element={<UserEntryPage/>}></Route>
           <Route path={'/account'} element={<UserEntryPage/>}>
-            <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.value}/>}/>
+            <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>
             <Route path={'subscriptions'} element={<LemoSubscriptions/>}/>
           </Route>
         </Routes>
