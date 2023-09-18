@@ -510,6 +510,31 @@
   }
 }
 
+.ui-modal[data-account-change-pw] {
+  --amplify-components-field-label-color: var(--amplify-colors-brand-primary-10);
+
+  .amplify-input:focus {
+    --amplify-components-fieldcontrol-focus-border-color: #07708a;
+    box-shadow: 0 0 3px #007d9c;
+  }
+
+  .amplify-button {
+    --amplify-components-button-color: #dddddd;
+  }
+
+  .amplify-text--error {
+    --amplify-components-text-error-color: #ec2323;
+  }
+
+  .ui-modal-content {
+    @apply max-w-[510px] min-h-[200px] pt-5 pb-10 px-8 text-gray-100;
+  }
+
+  .ui-modal-inner {
+    @apply animate-in slide-in-from-top duration-300;
+  }
+}
+
 .account-plan-card {
   @apply bg-logseq-600 rounded-xl px-6 py-6 relative mb-6;
 

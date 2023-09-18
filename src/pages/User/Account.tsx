@@ -19,7 +19,7 @@ import {
   Notebook,
   Queue, Receipt, ReceiptX, Repeat,
   SignOut, Square,
-  Stack, StackSimple, WarningCircle, XSquare,
+  Stack, StackSimple, WarningCircle
 } from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -29,6 +29,8 @@ import { LSSpinner } from '../../components/Icons'
 import { none } from '@hookstate/core'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown } from '../../components/Dropdown'
+import { AccountSettings } from '@aws-amplify/ui-react'
+import { ValidationMode } from '@aws-amplify/ui'
 
 function LemonPaymentButton ({ userId, email, opts }: Partial<{
   userId: string,
@@ -655,6 +657,47 @@ export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
   }
 }
 
+export function AccountChangePasswordPane ({ close }: { close: () => void }) {
+  const minLength = {
+    validationMode: 'onChange' as ValidationMode,
+    validator: (password: string) => password.length >= 4,
+    message: 'Password must have length 4 or greater',
+  }
+
+  const maxLength = {
+    validationMode: 'onChange' as ValidationMode,
+    validator: (password: string) => password.length <= 12,
+    message: 'Password must have length 12 or less',
+  }
+
+  const handleSuccess = () => {
+    toast.success('password is successfully changed!', {
+      position: 'top-center'
+    })
+    close()
+  }
+
+  const handleError = (e) => {
+    toast.error('change password error!', {
+      position: 'top-center'
+    })
+    console.error(e)
+  }
+
+  return (
+    <div className={'account-change-password-pane'}>
+      <h1 className={'text-3xl mx-[-5px] pb-6'}>
+        Change password
+      </h1>
+      <AccountSettings.ChangePassword
+        onSuccess={handleSuccess}
+        onError={handleError}
+        validators={[minLength, maxLength]}
+      />
+    </div>
+  )
+}
+
 export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
   const { proState } = useProState()
   const proStateValue = proState.value
@@ -680,8 +723,11 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
         <div className="px-6 flex items-center space-x-5">
           <Button
             className={'!py-2 !bg-logseq-700 !px-6'} leftIcon={<LockOpen/>}
-            onClick={() => toast('😀 TODO: You clicked me :)',
-              { position: 'top-center' })}
+            onClick={() => {
+              const m = modalFacade.create((x) => <AccountChangePasswordPane close={x}/>,
+                { ['data-account-change-pw']: true })
+              m.show()
+            }}
           >
             Change password
           </Button>
