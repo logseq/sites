@@ -658,6 +658,7 @@ export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
 }
 
 export function AccountChangePasswordPane ({ close }: { close: () => void }) {
+  const [pending, setPending] = useState(false)
   const minLength = {
     validationMode: 'onChange' as ValidationMode,
     validator: (password: string) => password.length >= 4,
@@ -670,18 +671,41 @@ export function AccountChangePasswordPane ({ close }: { close: () => void }) {
     message: 'Password must have length 12 or less',
   }
 
+  const changePasswordComponents = {
+    SubmitButton: ({ isDisabled }: any) => {
+      return (
+        <button
+          className={'py-2.5 border-gray-400/80 mt-3 bg-transparent border rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50'}
+          disabled={isDisabled}
+          onClick={(e: any) => {
+            const form: HTMLFormElement = e.target?.closest('form.amplify-accountsettings-changepassword')
+            if (!form) return
+            form.requestSubmit()
+            setPending(true)
+            return false
+          }}
+          type={'submit'}
+        >
+          {pending ? <LSSpinner size={8}/> : 'Update password'}
+        </button>
+      )
+    }
+  }
+
   const handleSuccess = () => {
     toast.success('password is successfully changed!', {
       position: 'top-center'
     })
     close()
+    setPending(false)
   }
 
   const handleError = (e) => {
-    toast.error('change password error!', {
+    toast.error('change password failed!', {
       position: 'top-center'
     })
     console.error(e)
+    setPending(false)
   }
 
   return (
@@ -693,6 +717,7 @@ export function AccountChangePasswordPane ({ close }: { close: () => void }) {
         onSuccess={handleSuccess}
         onError={handleError}
         validators={[minLength, maxLength]}
+        components={changePasswordComponents}
       />
     </div>
   )

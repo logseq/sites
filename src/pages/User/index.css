@@ -40,6 +40,11 @@
 
 [data-amplify-authenticator] {
   @apply relative top-[-55px];
+
+  .amplify-input:focus {
+    --amplify-components-fieldcontrol-focus-border-color: #07708a;
+    box-shadow: 0 0 3px #007d9c;
+  }
 }
 
 .amplify-tabs[data-indicator-position="top"] {
