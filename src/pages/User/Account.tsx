@@ -657,12 +657,29 @@ export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
   }
 }
 
+/**
+ * You can specify the following requirements in the Password policy in the AWS
+ * Management Console under the Sign-in experience tab.
+ * A Password minimum length of at least six characters and at most 99 characters.
+ * This is the shortest password you want your users to be able to set.
+ * Amazon Cognito passwords can be up to 256 characters in length.
+ *
+ * Your users must create a password that Contains at least 1 of the following types of characters.
+ * 1. Number
+ * 2. Special character from the following set. A non-leading, non-trailing space character is also treated as a special character.
+ *   ^ $ * . [ ] { } ( ) ? " ! @ # % & / \ , > < ' : ; | _ ~ ` = + -
+ * 3. Uppercase Basic Latin letter
+ * 4. Lowercase Basic Latin letter
+ *
+ * @param close
+ * @constructor
+ */
 export function AccountChangePasswordPane ({ close }: { close: () => void }) {
   const [pending, setPending] = useState(false)
   const minLength = {
     validationMode: 'onChange' as ValidationMode,
-    validator: (password: string) => password.length >= 4,
-    message: 'Password must have length 4 or greater',
+    validator: (password: string) => password.length >= 6,
+    message: 'Password must have length 6 or greater',
   }
 
   const maxLength = {
