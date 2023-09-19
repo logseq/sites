@@ -111,6 +111,8 @@ const logseqEndpoint = isDev
   ? 'https://api-dev.logseq.com/logseq'
   : 'https://api-dev.logseq.com/logseq'
 
+let appliedLogin = false
+
 export function applyLoginUser (
   user: any, t: {
     navigate: NavigateFunction,
@@ -119,7 +121,7 @@ export function applyLoginUser (
   },
 ) {
   // for logout
-  if (!user && t.routeLocation.pathname.startsWith('/account') &&
+  if (appliedLogin && !user && t.routeLocation.pathname.startsWith('/account') &&
     t.routeLocation.pathname !== '/login') {
     t.navigate('/login')
     return
@@ -153,6 +155,8 @@ export function applyLoginUser (
       t.navigate('/account', { replace: true })
     }
   }
+
+  appliedLogin = true
 }
 
 export function useAuthUserInfoState () {
