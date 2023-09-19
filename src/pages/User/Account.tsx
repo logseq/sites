@@ -8,7 +8,7 @@ import { ReactElement, useEffect, useRef, useState } from 'react'
 import {
   ArrowFatLinesUp,
   ArrowRight,
-  ArrowsClockwise,
+  ArrowsClockwise, ArrowSquareOut,
   Cardholder,
   ChatsCircle,
   DiscordLogo, DotsThreeOutline,
@@ -835,6 +835,14 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
 
       <RowOfPaneContent label={'Authentication'}>
         <div className="px-6 flex items-center space-x-5">
+          <Button
+            className={'!py-2 !bg-logseq-600 !px-6'}
+            leftIcon={<ArrowSquareOut/>}
+            href={`logseq://x-callback-url/auth?t=${encodeURIComponent(JSON.stringify(userInfo.signInUserSession))}`}
+          >
+            Open in Desktop
+          </Button>
+
           <Button
             className={'!py-2 !bg-logseq-700 !px-6'} leftIcon={<LockOpen/>}
             onClick={() => {
