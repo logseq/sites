@@ -372,6 +372,9 @@ export function useLemonState () {
         { body: JSON.stringify({ project: 'LogseqPro' }) },
       )
     },
+    getSubscriptionRelatedInfo: async (subId: string) => {
+
+    }
   }
 }
 
