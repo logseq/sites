@@ -7,7 +7,12 @@ import { ReactElement, useEffect } from 'react'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 import { Auth } from 'aws-amplify'
 import toast from 'react-hot-toast'
-import { Location, NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
+import {
+  Location,
+  NavigateFunction,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom'
 import camelcase from 'camelcase'
 import { isDateValid } from './components/utils'
 
@@ -17,7 +22,7 @@ export const authConfig = isDev ?
     region: 'us-east-2',
     userPoolId: 'us-east-2_kAqZcxIeM',
     userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
-    oauthProviders: []
+    oauthProviders: [],
   } : {
     // TODO: production
     // region: 'us-east-1',
@@ -27,15 +32,17 @@ export const authConfig = isDev ?
     region: 'us-east-2',
     userPoolId: 'us-east-2_kAqZcxIeM',
     userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
-    oauthProviders: []
+    oauthProviders: [],
   }
 
 function getAuthValueFromStorage (key: string) {
   const prefix = `CognitoIdentityServiceProvider.${authConfig.userPoolWebClientId}`
-  const authUser = localStorage.getItem(`${prefix}.${authConfig.userPoolWebClientId}.LastAuthUser`)
+  const authUser = localStorage.getItem(
+    `${prefix}.${authConfig.userPoolWebClientId}.LastAuthUser`)
   if (!authUser) return
 
-  return localStorage.getItem(`${prefix}.${authConfig.userPoolWebClientId}.${authUser}.${key?.trim()}`)
+  return localStorage.getItem(
+    `${prefix}.${authConfig.userPoolWebClientId}.${authUser}.${key?.trim()}`)
 }
 
 export const checkSmBreakPoint = () => {
@@ -52,7 +59,7 @@ const defaultAppState = {
     username: null,
     signInUserSession: null,
     attributes: null,
-    signOut: () => Promise.resolve()
+    signOut: () => Promise.resolve(),
   },
   releases: {
     fetching: false,
@@ -99,17 +106,20 @@ const modalsState =
 const releasesEndpoint = 'https://api.github.com/repos/logseq/logseq/releases'
 const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_counts=true&with_expiration=true'
 const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
-const logseqEndpoint = isDev ? 'https://api-dev.logseq.com/logseq' : 'https://api-dev.logseq.com/logseq'
+const logseqEndpoint = isDev
+  ? 'https://api-dev.logseq.com/logseq'
+  : 'https://api-dev.logseq.com/logseq'
 
 export function applyLoginUser (
   user: any, t: {
     navigate: NavigateFunction,
     routeLocation: Location,
     inComponent?: boolean
-  }
+  },
 ) {
   // for logout
-  if (!user && t.routeLocation.pathname.startsWith('/account') && t.routeLocation.pathname !== '/login') {
+  if (!user && t.routeLocation.pathname.startsWith('/account') &&
+    t.routeLocation.pathname !== '/login') {
     t.navigate('/login')
     return
   }
@@ -127,19 +137,19 @@ export function applyLoginUser (
       }, username: user.username,
       signInUserSession: user.signInUserSession,
       attributes: user.attributes,
-      pending: false
+      pending: false,
     })
 
     // TODO: debug
     if (!t.inComponent) {
       toast.success(
         `Hi, ${user.username} !`, {
-          position: 'top-center'
+          position: 'top-center',
         })
     }
 
     if (t.routeLocation.pathname === '/login') {
-      t.navigate('/account')
+      t.navigate('/account', { replace: true })
     }
   }
 }
@@ -285,7 +295,7 @@ export function useProState () {
   return {
     proState: hookProState,
     proStateValue, inTrial,
-    loadProInfo
+    loadProInfo,
   }
 }
 
@@ -303,7 +313,9 @@ export function useLemonState () {
       const res = await fetch(`${logseqEndpoint}/${type}`,
         Object.assign(init || {}, {
           method: 'POST',
-          headers: { Authorization: `Bearer ${idToken}`, ...(init?.headers || {}) }
+          headers: {
+            Authorization: `Bearer ${idToken}`, ...(init?.headers || {}),
+          },
         }))
 
       if (setState) {
@@ -317,13 +329,13 @@ export function useLemonState () {
   }
 
   return {
-    getSubscriptions: () => proState.lemonListSubscriptions.get({ noproxy: true }),
+    getSubscriptions: () => proState.lemonListSubscriptions.get(
+      { noproxy: true }),
     subscriptionsFetching: proState.subscriptionsFetching.get(),
     loadSubscriptions: () => {
       proState.subscriptionsFetching.set(true)
-      return loadAPI('lemon_list_subscriptions', true)
-        .finally(() =>
-          proState.subscriptionsFetching.set(false))
+      return loadAPI('lemon_list_subscriptions', true).finally(() =>
+        proState.subscriptionsFetching.set(false))
     },
     cancelSubscription: async (subId: string) => {
       await loadAPI(
@@ -340,14 +352,14 @@ export function useLemonState () {
       }
       await loadAPI(
         'lemon_pause_subscription', false,
-        { body: JSON.stringify(body) }
+        { body: JSON.stringify(body) },
       )
     },
     unpauseSubscription: async (subId: string) => {
       const body = { 'subscription-id': parseInt(subId) }
       await loadAPI(
         'lemon_unpause_subscription', false,
-        { body: JSON.stringify(body) }
+        { body: JSON.stringify(body) },
       )
     },
     startFreeTrial: async () => {
@@ -357,9 +369,9 @@ export function useLemonState () {
 
       await loadAPI(
         'start_free_trial', false,
-        { body: JSON.stringify({ project: 'LogseqPro' }) }
+        { body: JSON.stringify({ project: 'LogseqPro' }) },
       )
-    }
+    },
   }
 }
 
@@ -385,16 +397,17 @@ export const createModalFacade = (ms: typeof modalsState) => {
       const id = Date.now()
       const idx = ms.modals.length
       ms.modals.set((v) => {
-        v.push({ id, visible: false, content: contentFn(() => m.remove(id)), props })
+        v.push(
+          { id, visible: false, content: contentFn(() => m.remove(id)), props })
         return v
       })
 
       return {
         show: () => ms.modals[idx].visible.set(true),
         hide: () => ms.modals[idx].visible.set(false),
-        destroy: () => m.remove(id)
+        destroy: () => m.remove(id),
       }
-    }
+    },
   })
   return m
 }

@@ -447,7 +447,7 @@
     }
 
     > section {
-      @apply pl-6 w-full;
+      @apply pl-6 flex-1;
 
       > h3 {
         @apply font-medium text-gray-50 text-xl pt-2.5 pb-1.5;

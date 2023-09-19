@@ -202,7 +202,7 @@ export function UnlockStudentDiscount (props: any) {
         </li>
         <li>
           <strong><Check size={24} weight={'bold'}/></strong>
-          <p className={'leading-5 tracking-wide pt-1'}>
+          <p className={'leading-5 tracking-wide pt-1 pl-5'}>
             <strong className={'text-sm font-semibold text-gray-200'}>
               Once your status is verified, we’ll provide you with a unique discount code.
             </strong> <br/>
