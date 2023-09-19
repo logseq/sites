@@ -240,6 +240,13 @@ export function LemoSubscriptions () {
             const isCurrent = isActive || isTrial || isPaused
             const actionItems = []
 
+            const isWithInvoice = isCurrent
+
+            const pickInvoiceUrl = (info: any) => info?.['subscription-invoices']?.body?.data[0]?.attributes?.urls?.invoice_url
+            const relatedInfoState = proState.value.subscriptionRelatedInfo?.[it.id]
+            const invoiceUrl = relatedInfoState &&
+              pickInvoiceUrl(relatedInfoState)
+
             if (isCurrent) {
               actionItems.push(
                 {
@@ -391,11 +398,30 @@ export function LemoSubscriptions () {
                           className="pro-flag relative top-[-2px]">PRO</span>
                       </strong>
 
-                      <span className={'text-sm'}>
-                        <a className={'underline cursor-pointer'}
-                           onClick={() => toast('sid:' + it.id)}
-                        >Get invoice</a>
-                      </span>
+                      {isWithInvoice &&
+                        <span className={'text-sm select-none pr-1'}>
+                        {relatedInfoState?.pending ?
+                          <LSSpinner size={6}/> :
+                          <a
+                            className={'opacity-60 hover:opacity-80 active:opacity-100 cursor-pointer flex items-center space-x-1'}
+                            onClick={() => {
+                              if (invoiceUrl) {
+                                return open(invoiceUrl, '_blank')
+                              }
+
+                              lemon.getSubscriptionRelatedInfo(it.id).
+                                then(info => {
+                                  const url = pickInvoiceUrl(info)
+                                  url && open(url, '_blank')
+                                }).
+                                catch(null)
+                            }}
+                          >
+                            <ArrowSquareOut weight={'bold'}/>
+                            <b>Get invoice</b>
+                          </a>}
+                      </span>}
+
                     </div>
 
                     <div

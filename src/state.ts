@@ -1,4 +1,4 @@
-import { hookstate, useHookstate } from '@hookstate/core'
+import { hookstate, none, useHookstate } from '@hookstate/core'
 import { IProInfo } from './types'
 
 // @ts-ignore
@@ -88,6 +88,7 @@ const proState =
     subscriptionsFetching: boolean,
     actionPendingSubscriptions: {},
     lemonListSubscriptions: {},
+    subscriptionRelatedInfo: {}
     e: Error
   }>>({})
 
@@ -318,11 +319,13 @@ export function useLemonState () {
           },
         }))
 
-      if (setState) {
-        const json = await res.json()
+      const json = await res.json()
 
+      if (setState) {
         proState[camelcase(type)].set(json)
       }
+
+      return json
     } catch (e: any) {
       toast.error(e.message)
     }
@@ -332,7 +335,7 @@ export function useLemonState () {
     getSubscriptions: () => proState.lemonListSubscriptions.get(
       { noproxy: true }),
     subscriptionsFetching: proState.subscriptionsFetching.get(),
-    loadSubscriptions: () => {
+    loadSubscriptions: async () => {
       proState.subscriptionsFetching.set(true)
       return loadAPI('lemon_list_subscriptions', true).finally(() =>
         proState.subscriptionsFetching.set(false))
@@ -372,9 +375,42 @@ export function useLemonState () {
         { body: JSON.stringify({ project: 'LogseqPro' }) },
       )
     },
-    getSubscriptionRelatedInfo: async (subId: string) => {
+    getSubscriptionRelatedInfo: async (
+      subId: string,
+      resources: Array<'order' | 'subscription-invoices'> = ['subscription-invoices'],
+    ) => {
+      const body = {
+        'subscription-id': parseInt(subId),
+        'related-resources': resources,
+      }
 
-    }
+      try {
+        proState.subscriptionRelatedInfo.merge({ [subId]: { pending: true } })
+
+        await new Promise(resolve => setTimeout(resolve, 5000))
+
+        const ret = await loadAPI(
+          'lemon_get_subscription_related_resources', false,
+          { body: JSON.stringify(body) },
+        )
+
+        for (let k in ret) {
+          if (typeof ret[k]?.body === 'string') {
+            try {
+              ret[k].body = JSON.parse(ret[k].body)
+            } catch (e) {
+              console.error(e)
+            }
+          }
+        }
+        proState.subscriptionRelatedInfo.merge({ [subId]: ret })
+
+        return ret
+      } catch (e: any) {
+        console.error(e)
+        proState.subscriptionRelatedInfo.merge({ [subId]: none })
+      }
+    },
   }
 }
 
