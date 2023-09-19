@@ -513,8 +513,10 @@
 .ui-modal[data-account-change-pw], .ui-modal[data-account-delete-user] {
   --amplify-components-field-label-color: var(--amplify-colors-brand-primary-10);
 
-  .amplify-input:focus {
+  .amplify-input:focus, #delete-user-input-username:focus {
     --amplify-components-fieldcontrol-focus-border-color: #07708a;
+
+    border: 1px solid var(--amplify-components-fieldcontrol-focus-border-color);
     box-shadow: 0 0 3px #007d9c;
   }
 

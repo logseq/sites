@@ -18,8 +18,7 @@ import {
   MicrophoneStage, NoteBlank,
   Notebook,
   Queue, Receipt, ReceiptX, Repeat,
-  SignOut, Square,
-  Stack, StackSimple, Warning, WarningCircle
+  SignOut, Stack, StackSimple, WarningCircle
 } from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -166,6 +165,8 @@ export function LemoSubscriptions () {
   const lemon = useLemonState()
   const { proState, loadProInfo } = useProState()
   const lemonSubscriptions = lemon.getSubscriptions() as any
+  const [previousMore, setPreviousMore] = useState(false)
+  const DEFAULT_LEN = 3
 
   useEffect(() => {
     if (lemonSubscriptions == null) {
@@ -175,7 +176,10 @@ export function LemoSubscriptions () {
 
   const loadButton = (
     <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
-      <Button onClick={() => lemon.loadSubscriptions()} className={
+      <Button onClick={() => {
+        lemon.loadSubscriptions().catch(null)
+        setPreviousMore(false)
+      }} className={
         cx('!bg-transparent',
           (lemon.subscriptionsFetching && 'animate-spin'))}>
         <ArrowsClockwise weight={'duotone'} size={24}
@@ -196,182 +200,195 @@ export function LemoSubscriptions () {
   let activePane = <></>
   let inactivePane = <></>
 
-  const renderList = (subscriptions: any) => {
-    return (<ul>
-      {Array.isArray(subscriptions) && subscriptions.map(it => {
+  const renderList = (subscriptions: any, previous = false) => {
+    const len = subscriptions?.length || 0
 
-        // https://docs.lemonsqueezy.com/api/subscriptions
-        const {
-          status, status_formatted, subtotal_formatted, created_at, user_email,
-          user_name, customer_id, product_name, variant_name, renews_at, pause,
-          updated_at
-        } = it.attributes
+    return (
+      <div>
+        <ul>
+          {Array.isArray(subscriptions) && subscriptions.map((it, idx) => {
+            if (previous && !previousMore && (idx + 1) > DEFAULT_LEN) return
 
-        const isTrial = status === 'on_trial'
-        const isActive = status === 'active'
-        const isPaused = status === 'paused'
-        const isUnpaid = status === 'unpaid'
-        const isCancelled = status === 'cancelled'
-        const isExpired = status === 'expired'
-        const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
+            // https://docs.lemonsqueezy.com/api/subscriptions
+            const {
+              status, status_formatted, subtotal_formatted, created_at, user_email,
+              user_name, customer_id, product_name, variant_name, renews_at, pause,
+              updated_at
+            } = it.attributes
 
-        const isCurrent = isActive || isTrial || isPaused
-        const actionItems = []
+            const isTrial = status === 'on_trial'
+            const isActive = status === 'active'
+            const isPaused = status === 'paused'
+            const isUnpaid = status === 'unpaid'
+            const isCancelled = status === 'cancelled'
+            const isExpired = status === 'expired'
+            const isBindSubscription = proState.value.info?.LemonSubscriptionID?.LogseqPro == it.id
 
-        if (isCurrent) {
-          actionItems.push(
-            {
-              text: (
-                <Button
-                  className={'!bg-transparent !px-2 !py-2 !w-full'}
-                  onClick={async () => {
-                    // TODO: move to ui components
-                    const m = modalFacade.create((c: any) => (
-                      <div className="ui-modal-confirm-content">
-                        <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
-                          <WarningCircle size={20} weight={'duotone'}/>
-                          <span>Are you sure you want to cancel the subscription?</span>
-                        </div>
+            const isCurrent = isActive || isTrial || isPaused
+            const actionItems = []
 
-                        <p className="flex justify-end pt-6 space-x-6">
-                          <Button onClick={c} className={'!bg-transparent opacity-50'}>No</Button>
-                          <Button className={'!bg-red-600'}
-                                  onClick={() => {
-                                    c()
-                                    doCancel()
-                                  }}
-                          >Yes</Button>
-                        </p>
-                      </div>
-                    ), {
-                      className: 'as-confirm',
-                      hasClose: false
-                    })
+            if (isCurrent) {
+              actionItems.push(
+                {
+                  text: (
+                    <Button
+                      className={'!bg-transparent !px-2 !py-2 !w-full'}
+                      onClick={async () => {
+                        // TODO: move to ui components
+                        const m = modalFacade.create((c: any) => (
+                          <div className="ui-modal-confirm-content">
+                            <div className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
+                              <WarningCircle size={20} weight={'duotone'}/>
+                              <span>Are you sure you want to cancel the subscription?</span>
+                            </div>
 
-                    m.show()
+                            <p className="flex justify-end pt-6 space-x-6">
+                              <Button onClick={c} className={'!bg-transparent opacity-50'}>No</Button>
+                              <Button className={'!bg-red-600'}
+                                      onClick={() => {
+                                        c()
+                                        doCancel()
+                                      }}
+                              >Yes</Button>
+                            </p>
+                          </div>
+                        ), {
+                          className: 'as-confirm',
+                          hasClose: false
+                        })
 
-                    async function doCancel () {
-                      try {
-                        proState.actionPendingSubscriptions.merge({ [it.id]: true })
-                        await lemon.cancelSubscription(it.id)
-                        await lemon.loadSubscriptions()
+                        m.show()
 
-                        if (isBindSubscription) {
-                          await loadProInfo()
+                        async function doCancel () {
+                          try {
+                            proState.actionPendingSubscriptions.merge({ [it.id]: true })
+                            await lemon.cancelSubscription(it.id)
+                            await lemon.loadSubscriptions()
+
+                            if (isBindSubscription) {
+                              await loadProInfo()
+                            }
+                          } finally {
+                            proState.actionPendingSubscriptions.merge({ [it.id]: none })
+                          }
                         }
-                      } finally {
-                        proState.actionPendingSubscriptions.merge({ [it.id]: none })
-                      }
-                    }
-                  }}>
+                      }}>
                   <span className={'flex items-center space-x-1'}>
                     <ReceiptX weight={'duotone'} size={18}/>
                     <small className={'text-sm'}>Cancel subscription</small>
                   </span>
-                </Button>)
-            }
-          )
+                    </Button>)
+                }
+              )
 
-          // pause Or unpause
-          actionItems.push(
-            {
-              text: (
-                <Button className={'!bg-transparent !px-2 !py-2 !w-full'}
-                        onClick={() => {
-                          async function doPause () {
-                            try {
-                              proState.actionPendingSubscriptions.merge({ [it.id]: true })
+              // pause Or unpause
+              actionItems.push(
+                {
+                  text: (
+                    <Button className={'!bg-transparent !px-2 !py-2 !w-full'}
+                            onClick={() => {
+                              async function doPause () {
+                                try {
+                                  proState.actionPendingSubscriptions.merge({ [it.id]: true })
 
-                              if (!isPaused) {
-                                await lemon.pauseSubscription(it.id)
-                              } else {
-                                await lemon.unpauseSubscription(it.id)
+                                  if (!isPaused) {
+                                    await lemon.pauseSubscription(it.id)
+                                  } else {
+                                    await lemon.unpauseSubscription(it.id)
+                                  }
+
+                                  lemon.loadSubscriptions().then(() => {
+                                    if (isBindSubscription) loadProInfo()
+                                  })
+                                } finally {
+                                  proState.actionPendingSubscriptions.merge({ [it.id]: none })
+                                }
                               }
 
-                              lemon.loadSubscriptions().then(() => {
-                                if (isBindSubscription) loadProInfo()
-                              })
-                            } finally {
-                              proState.actionPendingSubscriptions.merge({ [it.id]: none })
-                            }
-                          }
-
-                          doPause().catch(null)
-                        }}
-                >
+                              doPause().catch(null)
+                            }}
+                    >
                   <span className={'flex items-center space-x-1'}>
                     <Receipt weight={'duotone'} size={18}/>
                     <small className={'text-sm'}>{isPaused ? 'Unpause' : 'Pause'} subscription</small>
                   </span>
-                </Button>
+                    </Button>
+                  )
+                }
               )
             }
-          )
-        }
 
-        return (
-          <li key={it.id} className={
-            cx('subscription-card text-lg flex items-center mb-4 rounded-xl relative', `is-${status}`)}>
+            return (
+              <li key={it.id} className={
+                cx('subscription-card text-lg flex items-center mb-4 rounded-xl relative', `is-${status}`)}>
 
-            <div className="inner">
-              <div className="hd">
-                <strong>
-                  {status_formatted}
-                </strong>
+                <div className="inner">
+                  <div className="hd">
+                    <strong>
+                      {status_formatted}
+                    </strong>
 
-                {!!actionItems.length &&
-                  (<Dropdown
-                    items={actionItems}
-                    subItemClassName={'!top-1'}
-                    className={'card-actions'}
-                    triggerType={'click'}
-                  >
-                    <button className={'as-button'}>
-                      {proState.actionPendingSubscriptions.value?.[it.id] ?
-                        <LSSpinner size={8} color={'#ffffff'}/> : <DotsThreeOutline/>
-                      }
-                    </button>
-                  </Dropdown>)}
-              </div>
-
-              {isCurrent && (
-                <div className={'active-desc'}>
-                  <div className="l">
-                    <small className={'pb-1.5'}>Subscriber</small>
-                    <strong>{user_name}</strong>
-                    <small className={'opacity-50 relative top-[-2px]'}>{user_email}</small>
+                    {!!actionItems.length &&
+                      (<Dropdown
+                        items={actionItems}
+                        subItemClassName={'!top-1'}
+                        className={'card-actions'}
+                        triggerType={'click'}
+                      >
+                        <button className={'as-button'}>
+                          {proState.actionPendingSubscriptions.value?.[it.id] ?
+                            <LSSpinner size={8} color={'#ffffff'}/> : <DotsThreeOutline/>
+                          }
+                        </button>
+                      </Dropdown>)}
                   </div>
-                  <div className="r">
-                    <small className={'pb-1.5'}>Start date</small>
-                    <strong>{new Date(created_at).toLocaleDateString()}</strong>
-                  </div>
-                </div>
-              )}
 
-              <div className="info-desc">
-                <strong className={'text-gray-200'}>
-                  <b className={'text-2xl pr-1'}>Logseq</b>
-                  <span className="pro-flag relative top-[-2px]">PRO</span>
-                </strong>
+                  {isCurrent && (
+                    <div className={'active-desc'}>
+                      <div className="l">
+                        <small className={'pb-1.5'}>Subscriber</small>
+                        <strong>{user_name}</strong>
+                        <small className={'opacity-50 relative top-[-2px]'}>{user_email}</small>
+                      </div>
+                      <div className="r">
+                        <small className={'pb-1.5'}>Start date</small>
+                        <strong>{new Date(created_at).toLocaleDateString()}</strong>
+                      </div>
+                    </div>
+                  )}
 
-                <div className={'flex justify-between pt-1 items-center text-[15px] tracking-wide'}>
-                  <b className={'flex items-center space-x-2'}>
-                    <Repeat weight={'bold'} size={18}/>
-                    <span>{variant_name}</span>
-                  </b>
-                  <b>
+                  <div className="info-desc">
+                    <strong className={'text-gray-200'}>
+                      <b className={'text-2xl pr-1'}>Logseq</b>
+                      <span className="pro-flag relative top-[-2px]">PRO</span>
+                    </strong>
+
+                    <div className={'flex justify-between pt-1 items-center text-[15px] tracking-wide'}>
+                      <b className={'flex items-center space-x-2'}>
+                        <Repeat weight={'bold'} size={18}/>
+                        <span>{variant_name}</span>
+                      </b>
+                      <b>
                     <span className={'opacity-70 pr-1'}>
                       {(isActive || isTrial) ? `Next renewal: ${new Date(renews_at).toDateString()}` :
                         ((isPaused && pause?.resumes_at) ? `Resumes at: ${(new Date(pause?.resumes_at).toDateString())}` :
                           `Updated at: ${(new Date(updated_at)).toDateString()}`)}
                     </span>
-                  </b>
+                      </b>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </li>)
-      })}
-    </ul>)
+              </li>)
+          })}
+        </ul>
+        {previous && len > DEFAULT_LEN && !previousMore && (
+          <span className={'flex items-center justify-center py-2'}>
+            <a className={'cursor-pointer flex items-center text-sm opacity-80 hover:opacity-100 hover:underline'}
+               onClick={() => setPreviousMore(true)}
+            >get more items</a>
+          </span>
+        )}
+      </div>)
   }
 
   const activeSubs = []
@@ -386,7 +403,7 @@ export function LemoSubscriptions () {
   })
 
   activePane = renderList(activeSubs)
-  inactivePane = renderList(inactiveSubs)
+  inactivePane = renderList(inactiveSubs, true)
 
   return (
     <div className={'relative'}>
@@ -779,8 +796,9 @@ export function AccountDeleteUserPane ({ close, userInfo }: { close: () => void,
           </label>
           <input id={'delete-user-input-username'}
                  autoFocus={true}
+                 autoComplete={'off'}
                  ref={inputRef}
-                 className={'p-2 bg-transparent border border-logseq-50 rounded outline-0'}/>
+                 className={'p-2 bg-transparent border border-gray-400 rounded outline-0'}/>
         </p>
         {pending ?
           <p className={'flex justify-center'}><LSSpinner size={8}/></p> :
@@ -882,7 +900,7 @@ export function AccountContent ({ userInfo }: {
         <Button
           className={'!text-[20px] bg-logseq-600 scale-75 !px-6 !rounded-xl !py-4'}
           disabled={userInfo.pending}
-          rightIcon={userInfo.pending ? <LSSpinner/> : <SignOut/>}
+          rightIcon={userInfo.pending ? <LSSpinner size={8}/> : <SignOut/>}
           onClick={() => {
             userInfo.signOut()
           }}
