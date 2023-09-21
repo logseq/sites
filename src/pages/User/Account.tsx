@@ -183,9 +183,9 @@ export function LemoSubscriptions () {
         lemon.loadSubscriptions().catch(null)
         setPreviousMore(false)
       }} className={
-        cx('!bg-transparent',
+        cx('!bg-transparent mr-1',
           (lemon.subscriptionsFetching && 'animate-spin'))}>
-        <ArrowsClockwise weight={'duotone'} size={24}
+        <ArrowsClockwise weight={'bold'} size={22}
                          className={'opacity-70'}/>
       </Button>
     </div>)
@@ -409,12 +409,10 @@ export function LemoSubscriptions () {
                                 return open(invoiceUrl, '_blank')
                               }
 
-                              lemon.getSubscriptionRelatedInfo(it.id).
-                                then(info => {
-                                  const url = pickInvoiceUrl(info)
-                                  url && open(url, '_blank')
-                                }).
-                                catch(null)
+                              lemon.getSubscriptionRelatedInfo(it.id).then(info => {
+                                const url = pickInvoiceUrl(info)
+                                url && open(url, '_blank')
+                              }).catch(null)
                             }}
                           >
                             <ArrowSquareOut weight={'bold'}/>
@@ -448,12 +446,14 @@ export function LemoSubscriptions () {
               </li>)
           })}
         </ul>
-        {previous && len > DEFAULT_LEN && !previousMore && (
+        {previous && len > DEFAULT_LEN && (
           <span className={'flex items-center justify-center py-2'}>
             <a
               className={'cursor-pointer flex items-center text-sm opacity-80 hover:opacity-100 hover:underline'}
-              onClick={() => setPreviousMore(true)}
-            >get more items</a>
+              onClick={() => setPreviousMore(!previousMore)}
+            >
+              {previousMore ? 'less items' : 'more items'}
+            </a>
           </span>
         )}
       </div>)
@@ -594,7 +594,9 @@ function AccountFreePlanCard (
 
           <span
             className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300 px-1 py-1'}>
-          <a className={'flex items-center space-x-2 cursor-pointer'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}
+             href={'mailto://support@logseq.com'}
+          >
             <ChatsCircle size={16} weight={'duotone'}
                          className={'text-pro-400'}/>
             <span>Get support</span>
@@ -701,7 +703,9 @@ function AccountProPlanCard (
 
           <span
             className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
-          <a className={'flex items-center space-x-2 cursor-pointer'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}
+             href={'mailto://support@logseq.com'}
+          >
             <ChatsCircle size={16} weight={'duotone'}
                          className={'text-pro-400'}/>
             <span>Get support</span>
