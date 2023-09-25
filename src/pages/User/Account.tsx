@@ -18,7 +18,7 @@ import {
   MicrophoneStage, NoteBlank,
   Notebook,
   Queue, Receipt, ReceiptX, Repeat,
-  SignOut, Stack, StackSimple, WarningCircle,
+  SignOut, Stack, StackSimple, UserCircle, WarningCircle,
 } from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import toast from 'react-hot-toast'
@@ -993,9 +993,10 @@ export function AccountContent ({ userInfo }: {
           </div>
         </div>
         <Button
-          className={'!text-[20px] bg-logseq-600 scale-75 !px-6 !rounded-xl !py-4'}
+          className={'!text-[16px] bg-logseq-600/70 !px-5 !rounded-xl !py-3'}
           disabled={userInfo.pending}
-          rightIcon={userInfo.pending ? <LSSpinner size={8}/> : <SignOut/>}
+          leftIcon={<UserCircle size={20} weight={'duotone'} />}
+          rightIcon={userInfo.pending ? <LSSpinner size={8}/> : <SignOut size={18} className={'opacity-50'}/>}
           onClick={() => {
             userInfo.signOut()
           }}
