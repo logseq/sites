@@ -1,5 +1,5 @@
 import {
-  IAppUserInfo,
+  IAppUserInfo, isDev,
   modalFacade, useAppState, useAuthUserInfoState,
   useLemonState,
   useProState,
@@ -548,7 +548,9 @@ function AccountFreePlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer'}>
+          <a className={'flex items-center space-x-2 cursor-pointer'}
+             href={'logseq://handbook'}
+          >
             <Queue size={16} weight={'duotone'}/>
             <span>In-app handbook</span>
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
@@ -612,7 +614,19 @@ function AccountFreePlanCard (
           {/*start pro trial*/}
           {(!proStateInfoValue?.ProUser &&
             proStateInfoValue?.FreeTrialEndsAt?.LogseqPro == null) ?
-            <StartTrialButton/> :
+            (<>
+              <StartTrialButton/>
+              {isDev &&
+                <div className="relative">
+                  <strong className={'absolute top-6 right-12 text-orange-300'}>(Only visible for tests)</strong>
+                  <LemonPaymentButton
+                    email={userInfo.attributes?.email}
+                    userId={userInfo.attributes?.sub}
+                    username={userInfo.username}
+                  />
+                </div>
+              }
+            </>) :
             <LemonPaymentButton
               email={userInfo.attributes?.email}
               userId={userInfo.attributes?.sub}
@@ -997,7 +1011,7 @@ export function AccountContent ({ userInfo }: {
         <Button
           className={'!text-[16px] bg-logseq-600/70 !px-5 !rounded-xl !py-3'}
           disabled={userInfo.pending}
-          leftIcon={<UserCircle size={20} weight={'duotone'} />}
+          leftIcon={<UserCircle size={20} weight={'duotone'}/>}
           rightIcon={userInfo.pending ? <LSSpinner size={8}/> : <SignOut size={18} className={'opacity-50'}/>}
           onClick={() => {
             userInfo.signOut()
