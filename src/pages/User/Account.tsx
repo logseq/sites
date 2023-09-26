@@ -633,7 +633,7 @@ function AccountProPlanCard (
       <div className="inner">
         <div className="hd">
           <strong>
-            Pro {inTrial ? ' / On trial' : ''}
+            Pro {inTrial ? <sup className={'opacity-60'}>On trial</sup> : ''}
           </strong>
 
           <span className={'flex items-center space-x-5'}>
@@ -695,7 +695,9 @@ function AccountProPlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}>
+          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
+             href={'logseq://handbook'}
+          >
             <Queue size={16} weight={'duotone'}/>
             <span>In-app handbook</span>
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
