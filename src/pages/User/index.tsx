@@ -25,7 +25,7 @@ function UserEntryPage () {
 
   return (
     <div className={'app-page user-entry'}>
-      <div className={'page-inner px-20 min-h-[90vh]'}>
+      <div className={'page-inner px-2 sm:px-20 min-h-[90vh]'}>
         {content}
       </div>
 

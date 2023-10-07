@@ -166,6 +166,7 @@ export function RowOfPaneContent (
 
 export function LemoSubscriptions () {
   const lemon = useLemonState()
+  const appState = useAppState()
   const { proState, loadProInfo } = useProState()
   const lemonSubscriptions = lemon.getSubscriptions() as any
   const [previousMore, setPreviousMore] = useState(false)
@@ -177,7 +178,7 @@ export function LemoSubscriptions () {
     }
   }, [])
 
-  const loadButton = (
+  const loadButton = appState.sm.value !== true && (
     <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
       <Button onClick={() => {
         lemon.loadSubscriptions().catch(null)
@@ -981,13 +982,14 @@ export function AccountContent ({ userInfo }: {
   const { proState } = useProState()
   const navigate = useNavigate()
   const location = useLocation()
+  const appState= useAppState()
 
   return (
-    <div className={'app-account pt-10 text-[#a4b5b6]'}>
+    <div className={'app-account sm:pt-10 text-[#a4b5b6]'}>
       {/* head */}
       <div
-        className={'hd flex justify-between items-center px-2'}>
-        <div className={'flex items-center'}>
+        className={'hd sm:flex sm:justify-between sm:items-center px-2'}>
+        <div className={'mb-3 sm:mb-0 flex items-center'}>
           <h1>
             <Avatar
               size={'50px'}
@@ -1008,8 +1010,9 @@ export function AccountContent ({ userInfo }: {
             </h3>
           </div>
         </div>
+
         <Button
-          className={'!text-[16px] bg-logseq-600/70 !px-5 !rounded-xl !py-3'}
+          className={'w-full sm:w-auto !text-[16px] bg-logseq-600/70 !px-5 !rounded-xl !py-3'}
           disabled={userInfo.pending}
           leftIcon={<UserCircle size={20} weight={'duotone'}/>}
           rightIcon={userInfo.pending ? <LSSpinner size={8}/> : <SignOut size={18} className={'opacity-50'}/>}
@@ -1022,33 +1025,32 @@ export function AccountContent ({ userInfo }: {
       </div>
 
       {/* tabs */}
-      <ul className={'pt-10 text-md flex items-center ' +
-        'border-b border-b-logseq-500 space-x-4'}>
-        <li onClick={() => navigate('/account')}>
+      <ul className={'pt-8 text-md flex items-center border-b border-b-logseq-500 space-x-4'}>
+        <li onClick={() => navigate('/account')} className={'whitespace-nowrap flex-1 sm:flex-grow-0'}>
           <a
             className={cx('block cursor-pointer select-none pb-2.5 px-4 \
-              border-b tracking-wide border-b-transparent hover:text-gray-400',
+              border-b-[3px] tracking-wide border-b-transparent hover:text-gray-400',
               (location.pathname === '/account') &&
               'active font-bold !text-gray-200 !border-b-logseq-300')}>
             <span
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <IdentificationCard size={17} weight={'bold'}/>
             </span>
-            Account information
+            {appState.sm.value ? "Account" : "Account information"}
           </a>
         </li>
 
-        <li onClick={() => navigate('/account/subscriptions')}>
+        <li onClick={() => navigate('/account/subscriptions')} className={'whitespace-nowrap flex-1 sm:flex-grow-0'}>
           <a
             className={cx('block cursor-pointer select-none pb-2.5 px-2 ' +
-              'border-b tracking-wide border-b-transparent hover:text-gray-400',
+              'border-b-[3px] tracking-wide border-b-transparent hover:text-gray-400',
               (location.pathname === '/account/subscriptions') &&
               'active font-bold !text-gray-200 !border-b-logseq-300')}>
             <span
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <Cardholder size={17} weight={'bold'}/>
             </span>
-            Payments & Subscriptions
+            {appState.sm.value ? "Subscriptions": "Payments & Subscriptions"}
           </a>
         </li>
       </ul>
