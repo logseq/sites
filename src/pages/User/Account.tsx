@@ -153,8 +153,8 @@ export function RowOfPaneContent (
   },
 ) {
   return (
-    <div className={'row flex'}>
-      <div className="l w-[260px] px-2 opacity-80 text-sm">
+    <div className={'row sm:flex'}>
+      <div className="l w-[260px] px-2 opacity-80 text-sm pb-2">
         {props.label}
       </div>
       <div className="r w-full">
@@ -914,13 +914,14 @@ export function AccountDeleteUserPane ({ close, userInfo }: {
 }
 
 export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
+  const appState = useAppState()
   const { proState } = useProState()
   const proStateValue = proState.value
 
   return (
     <>
       <RowOfPaneContent label={'Current plan'}>
-        <div className={'px-6'}>
+        <div className={'px-2 sm:px-6'}>
           {proStateValue.e &&
             (<pre className={'bg-red-600/50 p-4 block rounded-lg'}>
               {proStateValue.e?.message}
@@ -935,18 +936,19 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
       </RowOfPaneContent>
 
       <RowOfPaneContent label={'Authentication'}>
-        <div className="px-6 flex items-center space-x-5">
-          <Button
-            className={'!py-2 !bg-logseq-600 !px-6'}
-            leftIcon={<ArrowSquareOut/>}
-            href={`logseq://x-callback-url/auth?t=${encodeURIComponent(
-              JSON.stringify(userInfo.signInUserSession))}`}
-          >
-            Open in Desktop
-          </Button>
+        <div className="flex items-start space-y-3 sm:space-y-0 sm:space-x-5 px-2 sm:px-6 flex-col sm:flex-row sm:items-center">
+          {!appState.isMobile.value &&
+            <Button
+              className={'!py-2 !bg-logseq-600 !px-6 !w-full sm:!w-auto'}
+              leftIcon={<ArrowSquareOut/>}
+              href={`logseq://x-callback-url/auth?t=${encodeURIComponent(
+                JSON.stringify(userInfo.signInUserSession))}`}
+            >
+              Open in Desktop
+            </Button>}
 
           <Button
-            className={'!py-2 !bg-logseq-700 !px-6'} leftIcon={<LockOpen/>}
+            className={'!py-2 !bg-logseq-700 !px-6 !w-full sm:!w-auto'} leftIcon={<LockOpen/>}
             onClick={() => {
               const m = modalFacade.create(
                 (x) => <AccountChangePasswordPane close={x}/>,
@@ -958,7 +960,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
           </Button>
 
           <Button
-            className={'!py-2 !bg-red-900 !px-6'}
+            className={'!py-2 !bg-red-900 !px-6 !w-full sm:!w-auto'}
             onClick={() => {
               const m = modalFacade.create((c) => {
                 return (<AccountDeleteUserPane close={c} userInfo={userInfo}/>)
@@ -1056,7 +1058,7 @@ export function AccountContent ({ userInfo }: {
       </ul>
 
       {/* main */}
-      <div className={'bd relative pt-8'}>
+      <div className={'bd relative pt-6 sm:pt-8'}>
         <div className="flex flex-col space-y-6 w-full">
           <Outlet/>
         </div>

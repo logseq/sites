@@ -53,7 +53,8 @@ export const checkSmBreakPoint = () => {
 }
 
 const defaultAppState = {
-  isDev, os, sm: checkSmBreakPoint(),
+  isDev, os, isMobile: os.android || os.ios,
+  sm: checkSmBreakPoint(),
   userInfo: {
     pending: false,
     username: null,

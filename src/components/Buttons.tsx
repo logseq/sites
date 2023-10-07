@@ -15,7 +15,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ILSButtonProps>((
   const rootProps: any = {
     ref: ref,
     className: cx(
-      'flex items-center justify-between text-base space-x-1 bg-logseq-400 rounded-lg py-3 px-4',
+      'flex items-center justify-between text-base space-x-1 bg-logseq-400 rounded-lg py-3 px-4 whitespace-nowrap',
       'transition-opacity hover:opacity-80 active:opacity-100 disabled:hover:opacity-100',
       className),
   }
