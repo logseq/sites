@@ -498,6 +498,7 @@ export function LemoSubscriptions () {
 function AccountFreePlanCard (
   { userInfo }: { userInfo: IAppUserInfo },
 ) {
+  const appState = useAppState()
   const { proState, loadProInfo } = useProState()
   const proStateInfoValue = proState.value.info
 
@@ -509,7 +510,7 @@ function AccountFreePlanCard (
             Free
           </strong>
 
-          <a className={cx('relative top-[-10px]',
+          <a className={cx('relative top-[-4px] sm:top-[-10px]',
             proState.value.infoFetching && 'animate-spin')}
              onClick={() => {
                if (proState.value.infoFetching) return
@@ -518,25 +519,25 @@ function AccountFreePlanCard (
             <ArrowsClockwise size={18} weight={'bold'}/>
           </a>
         </div>
-        <div className="desc free">
-          <div className={'flex items-center pt-3'}>
-          <span className={'flex items-center'}>
-            <StackSimple size={26} weight={'duotone'} color={'#608E91'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>1</strong>
-            <small className={'text-base px-2'}>synced graphs</small>
-          </span>
-            <span className={'line'}>-------</span>
+        <div className="desc free ml-[-6px] sm:ml-0">
+          <div className={'sm:flex sm:items-center pt-3'}>
             <span className={'flex items-center'}>
-            <Notebook size={26} weight={'duotone'} color={'#608E91'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>
-              50MB
-            </strong>
-            <small className={'text-base px-2'}>
-              storage per graph
-            </small>
-          </span>
+              <StackSimple size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>1</strong>
+              <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
+            </span>
+            <span className={'hidden sm:block line'}>-------</span>
+            <span className={'flex items-center'}>
+              <Notebook size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                50MB
+              </strong>
+              <small className={'text-sm sm:text-base px-2'}>
+                storage per graph
+              </small>
+            </span>
           </div>
         </div>
         <div className="sub-desc">
@@ -549,13 +550,16 @@ function AccountFreePlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer'}
-             href={'logseq://handbook'}
-          >
-            <Queue size={16} weight={'duotone'}/>
-            <span>In-app handbook</span>
-            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
-          </a>
+          {!appState.sm.value && (
+            <a className={'flex items-center space-x-2 cursor-pointer'}
+               href={'logseq://handbook'}
+            >
+              <Queue size={16} weight={'duotone'}/>
+              <span>In-app handbook</span>
+              <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+            </a>
+          )}
+
         </div>
         {/*  pro */}
         <div className="desc pro">

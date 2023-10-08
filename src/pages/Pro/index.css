@@ -175,7 +175,7 @@
             @apply text-4xl font-medium pb-2;
           }
 
-          li {
+          & li {
             @apply text-lg sm:text-xl flex items-center space-x-2 py-1 opacity-80
             font-normal sm:tracking-wide;
           }
@@ -592,7 +592,7 @@
     @apply bg-logseq-500 p-0;
 
     > .inner {
-      @apply px-6 py-7 from-pro-800/70 to-transparent bg-gradient-to-t overflow-hidden rounded-xl;
+      @apply px-6 py-6 from-pro-800/70 to-transparent bg-gradient-to-t overflow-hidden rounded-xl;
 
       .sub-desc {
         @apply border-b border-logseq-200/60 pb-4 mb-4 mx-[-24px] px-6;
