@@ -519,6 +519,7 @@ function AccountFreePlanCard (
             <ArrowsClockwise size={18} weight={'bold'}/>
           </a>
         </div>
+
         <div className="desc free ml-[-6px] sm:ml-0">
           <div className={'sm:flex sm:items-center pt-3'}>
             <span className={'flex items-center'}>
@@ -540,6 +541,7 @@ function AccountFreePlanCard (
             </span>
           </div>
         </div>
+
         <div className="sub-desc">
           <a className={'flex items-center space-x-2 cursor-pointer'}
              href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
@@ -648,8 +650,10 @@ function AccountFreePlanCard (
 function AccountProPlanCard (
   { userInfo }: { userInfo: IAppUserInfo },
 ) {
+  const appState = useAppState()
   const { proStateValue, loadProInfo, inTrial } = useProState()
   const fileSyncExpiredAt = proStateValue.info?.FileSyncExpireAt
+
   return (
     <div className={'account-plan-card pro'}>
       <div className="inner">
@@ -673,42 +677,44 @@ function AccountProPlanCard (
             </a>
           </span>
         </div>
-        <div className="desc pro">
-          <div className={'flex items-center pt-3'}>
-          <span className={'flex items-center'}>
-            <Stack size={26} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
-            <small className={'text-base px-2'}>synced graphs</small>
-          </span>
-            <span className={'line'}>-------</span>
+
+        <div className="desc pro ml-[-6px] sm:ml-0">
+          <div className={'sm:flex items-center pt-3'}>
             <span className={'flex items-center'}>
-            <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>
-              10GB
-            </strong>
-            <small className={'text-base px-2'}>
-              storage per graph
-            </small>
-          </span>
+              <Stack size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+              <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
+            </span>
+            <span className={'hidden sm:block line'}>-------</span>
+
+            <span className={'flex items-center pt-2'}>
+              <Notebook size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
+              <strong className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                10GB
+              </strong>
+              <small className={'text-sm sm:text-base px-2'}>
+                storage per graph
+              </small>
+            </span>
           </div>
 
-          <div className={'flex items-center pt-2'}>
-          <span className={'flex items-center'}>
-            <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>
-              Early access
-            </strong>
-            <small className={'text-base px-2 relative top-[2px]'}>
-              to upcoming features
-            </small>
-          </span>
+          <div className={'sm:flex items-center pt-2'}>
+            <span className={'flex items-center'}>
+              <LockKeyOpen size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                Early access
+              </strong>
+              <small className={'text-sm sm:text-base px-2 relative top-[2px]'}>
+                to upcoming features
+              </small>
+            </span>
           </div>
         </div>
-        <div className="sub-desc">
-          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
+
+        <div className="sub-desc ml-[-6px] sm:ml-0">
+          <a className={'flex items-center space-x-2 cursor-pointer sm:w-1/2'}
              href={'https://discord.com/channels/725182569297215569/918889676071374889/1050520429258887320'}
              target={'_blank'}
           >
@@ -717,30 +723,32 @@ function AccountProPlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
-             href={'logseq://handbook'}
-          >
-            <Queue size={16} weight={'duotone'}/>
-            <span>In-app handbook</span>
-            <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
-          </a>
-
+          {!appState.sm.value && (
+            <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
+               href={'logseq://handbook'}
+            >
+              <Queue size={16} weight={'duotone'}/>
+              <span>In-app handbook</span>
+              <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
+            </a>
+          )}
+          
           <span
             className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
-          <a className={'flex items-center space-x-2 cursor-pointer'}
-             href={'mailto://support@logseq.com'}
-          >
-            <ChatsCircle size={16} weight={'duotone'}
-                         className={'text-pro-400'}/>
-            <span>Get support</span>
-          </a>
+            <a className={'flex items-center space-x-2 cursor-pointer'}
+               href={'mailto://support@logseq.com'}
+            >
+              <ChatsCircle size={16} weight={'duotone'}
+                           className={'text-pro-400'}/>
+              <span>Get support</span>
+            </a>
 
-          <a className={'flex items-center space-x-2 cursor-pointer'}>
-            <MicrophoneStage size={16} weight={'duotone'}
-                             className={'text-pro-400'}/>
-            <span>Exclusive townhalls with team members</span>
-          </a>
-        </span>
+            <a className={'flex items-center space-x-2 cursor-pointer'}>
+              <MicrophoneStage size={16} weight={'duotone'}
+                               className={'text-pro-400'}/>
+              <span>Exclusive townhalls with team members</span>
+            </a>
+          </span>
         </div>
 
         {/* Debug */}
