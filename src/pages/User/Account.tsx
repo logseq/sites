@@ -559,41 +559,44 @@ function AccountFreePlanCard (
               <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
             </a>
           )}
-
         </div>
+
         {/*  pro */}
-        <div className="desc pro">
+        <div className="desc pro ml-[-6px] sm:ml-0">
           <h2 className={'text-gray-50 py-2 px-1'}>
             Upgrading to <strong className={'pro-flag'}>PRO</strong> unlocks:
           </h2>
-          <div className={'flex items-center pt-3'}>
-          <span className={'flex items-center'}>
-            <Stack size={26} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>10</strong>
-            <small className={'text-base px-2'}>synced graphs</small>
-          </span>
-            <span className={'line'}>-------</span>
+
+          <div className={'pt-1 sm:flex sm:items-center sm:pt-3'}>
             <span className={'flex items-center'}>
-            <Notebook size={26} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>
-              10GB
-            </strong>
-            <small className={'text-base px-2'}>
-              storage per graph
-            </small>
-          </span>
+              <Stack size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+              <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
+            </span>
+
+            <span className={'hidden sm:block line'}>-------</span>
+
+            <span className={'flex items-center pt-1.5'}>
+              <Notebook size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
+              <strong
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                10GB
+              </strong>
+              <small className={'text-base px-2'}>
+                storage per graph
+              </small>
+            </span>
           </div>
 
-          <div className={'flex items-center pt-2'}>
+          <div className={'flex items-center pt-1 sm:pt-2'}>
           <span className={'flex items-center'}>
-            <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'}/>
+            <LockKeyOpen size={27} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
             <strong
-              className={'text-2xl text-gray-200 font-medium pl-2'}>
+              className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
               Early access
             </strong>
-            <small className={'text-base px-2 relative top-[2px]'}>
+            <small className={'text-sm sm:text-base px-2 relative top-[2px]'}>
               to upcoming features
             </small>
           </span>
@@ -1063,7 +1066,7 @@ export function AccountContent ({ userInfo }: {
 
       {/* main */}
       <div className={'bd relative pt-6 sm:pt-8'}>
-        <div className="flex flex-col space-y-6 w-full">
+        <div className="flex flex-col space-y-2 sm:space-y-6 w-full">
           <Outlet/>
         </div>
       </div>
