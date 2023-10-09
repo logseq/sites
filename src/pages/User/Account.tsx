@@ -133,14 +133,18 @@ function StartTrialButton () {
     </button>)
 }
 
-export function NothingContent ({ text }: { text: string }) {
+export function NothingContent ({ text }: { text: string | ReactElement }) {
   return (
     <div className="nothing-content py-20">
       <h1 className={'flex flex-col justify-center items-center'}>
-        <NoteBlank weight={'duotone'} size={70} className={'opacity-20'}/>
-        <span className={'text-gray-600'}>
+        {typeof text === 'string' ?
+          <>
+            <NoteBlank weight={'duotone'} size={70} className={'opacity-20'}/>
+            <span className={'text-gray-600'}>
           {text}
         </span>
+          </> : text
+        }
       </h1>
     </div>
   )
@@ -178,26 +182,28 @@ export function LemoSubscriptions () {
     }
   }, [])
 
-  const loadButton = appState.sm.value !== true && (
-    <div className={'flex justify-between absolute top-[-80px] right-2 z-10'}>
-      <Button onClick={() => {
-        lemon.loadSubscriptions().catch(null)
-        setPreviousMore(false)
-      }} className={
-        cx('!bg-transparent mr-1',
-          (lemon.subscriptionsFetching && 'animate-spin'))}>
-        <ArrowsClockwise weight={'bold'} size={22}
-                         className={'opacity-70'}/>
-      </Button>
+  const createLoadButton = (isTop = true) => (
+    <div className={cx(isTop ? 'absolute top-[-80px] right-2 z-10' : '', 'flex justify-between')}>
+      {isTop ?
+        <Button onClick={() => {
+          lemon.loadSubscriptions().catch(null)
+          setPreviousMore(false)
+        }} className={
+          cx('!bg-transparent mr-1',
+            (lemon.subscriptionsFetching && 'animate-spin'))}>
+          <ArrowsClockwise weight={'bold'} size={22}
+                           className={'opacity-70'}/>
+        </Button> : <LSSpinner/>}
     </div>)
+
+  const topLoadButton = appState.sm.value !== true && createLoadButton()
 
   if (!lemonSubscriptions || !lemonSubscriptions.length) {
     return (
       <div className={'relative'}>
-        {loadButton}
+        {topLoadButton}
 
-        {!lemon.subscriptionsFetching &&
-          <NothingContent text={'Empty list'}/>}
+        <NothingContent text={appState.sm.value === true ? createLoadButton(false) : 'Empty list'}/>
       </div>)
   }
 
@@ -261,7 +267,7 @@ export function LemoSubscriptions () {
                             <div
                               className={'text-xl pt-4 text-gray-300 flex items-center space-x-2'}>
                               <WarningCircle size={20} weight={'duotone'}/>
-                              <span>Are you sure you want to cancel the subscription?</span>
+                              <span className={'flex-1'}>Are you sure you want to cancel the subscription?</span>
                             </div>
 
                             <p className="flex justify-end pt-6 space-x-6">
@@ -476,18 +482,18 @@ export function LemoSubscriptions () {
 
   return (
     <div className={'relative'}>
-      {loadButton}
+      {topLoadButton}
 
       {activeSubs?.length != 0 && (
         <RowOfPaneContent label={'Current subscription'}>
-          <div className={'px-6 relative'}>
+          <div className={'px-2 sm:px-6 relative'}>
             {activePane}
           </div>
         </RowOfPaneContent>)}
 
       {inactiveSubs?.length != 0 &&
         (<RowOfPaneContent label={'Previous subscriptions'}>
-          <div className={'px-6 relative'}>
+          <div className={'px-2 sm:px-6 relative'}>
             {inactivePane}
           </div>
         </RowOfPaneContent>)}
@@ -732,7 +738,7 @@ function AccountProPlanCard (
               <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
             </a>
           )}
-          
+
           <span
             className={'flex flex-col pt-2 text-sm space-y-2 text-gray-300'}>
             <a className={'flex items-center space-x-2 cursor-pointer'}
@@ -951,7 +957,8 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
       </RowOfPaneContent>
 
       <RowOfPaneContent label={'Authentication'}>
-        <div className="flex items-start space-y-3 sm:space-y-0 sm:space-x-5 px-2 sm:px-6 flex-col sm:flex-row sm:items-center">
+        <div
+          className="flex items-start space-y-3 sm:space-y-0 sm:space-x-5 px-2 sm:px-6 flex-col sm:flex-row sm:items-center">
           {!appState.isMobile.value &&
             <Button
               className={'!py-2 !bg-logseq-600 !px-6 !w-full sm:!w-auto'}
@@ -999,7 +1006,7 @@ export function AccountContent ({ userInfo }: {
   const { proState } = useProState()
   const navigate = useNavigate()
   const location = useLocation()
-  const appState= useAppState()
+  const appState = useAppState()
 
   return (
     <div className={'app-account sm:pt-10 text-[#a4b5b6]'}>
@@ -1053,7 +1060,7 @@ export function AccountContent ({ userInfo }: {
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <IdentificationCard size={17} weight={'bold'}/>
             </span>
-            {appState.sm.value ? "Account" : "Account information"}
+            {appState.sm.value ? 'Account' : 'Account information'}
           </a>
         </li>
 
@@ -1067,7 +1074,7 @@ export function AccountContent ({ userInfo }: {
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <Cardholder size={17} weight={'bold'}/>
             </span>
-            {appState.sm.value ? "Subscriptions": "Payments & Subscriptions"}
+            {appState.sm.value ? 'Subscriptions' : 'Payments & Subscriptions'}
           </a>
         </li>
       </ul>
