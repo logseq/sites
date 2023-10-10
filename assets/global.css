@@ -218,6 +218,10 @@ body {
       @apply top-[-50px] animate-in zoom-in duration-300;
     }
   }
+
+  &-container-locked {
+    overflow-y: hidden;
+  }
 }
 
 .ui-dropdown {

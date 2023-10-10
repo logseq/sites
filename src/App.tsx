@@ -16,12 +16,14 @@ import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
 import { scrollToTop } from './components/utils'
 import { AccountContent, AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
+import cx from 'classnames'
 
 export function App () {
   const appState = useAppState()
   const modalsState = useModalsState()
   const userInfoState = appState.userInfo
   const { pathname } = useLocation()
+  const hasActiveModals = modalsState.modals?.some(m => m.value.visible)
 
   useEffect(() => {
     scrollToTop()
@@ -58,8 +60,13 @@ export function App () {
     }
   }, [])
 
+  useEffect(() => {
+    const container = document.documentElement
+      container.classList[hasActiveModals ? 'add' : 'remove']('ui-modal-container-locked')
+  }, [hasActiveModals])
+
   return (
-    <div id="app" className={'flex justify-center'}>
+    <div id="app" className={cx('flex justify-center')}>
       <Toaster
         position={'top-right'}
         toastOptions={{
