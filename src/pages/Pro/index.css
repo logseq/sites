@@ -546,6 +546,7 @@
   @apply bg-logseq-600 rounded-xl px-6 py-6 relative mb-6;
 
   > .inner {
+    @apply sm:min-w-[400px];
 
     > .hd {
       @apply flex justify-between items-center;
@@ -611,7 +612,7 @@
 
   > .inner {
     @apply p-6 w-full bg-gradient-to-t from-green-900/80 to-transparent rounded-xl
-    overflow-hidden to-30%;
+    overflow-hidden to-30% sm:min-w-[400px];
 
     > .hd {
       @apply flex justify-between items-center;
