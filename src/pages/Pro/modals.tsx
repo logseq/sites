@@ -70,8 +70,8 @@ export function UnlockStudentDiscount (props: any) {
 
             <blockquote
               className={'flex items-center space-x-2 text-sm bg-logseq-900/70 px-2 py-2 mt-2 mb-3 tracking-wide'}>
-              <Info/>
-              <span>Using a university email during this step speeds up your student discount approval.</span>
+              <Info size={16}/>
+              <span className={'flex-1'}>Using a university email during this step speeds up your student discount approval.</span>
             </blockquote>
 
             <button className={'as-button'}
@@ -83,7 +83,7 @@ export function UnlockStudentDiscount (props: any) {
               {isLogged ?
                 (<>
                   <CheckSquareOffset size={17} weight={'bold'}/>
-                  <span className={'mx-2'}>Logged as <code>{appState.value.userInfo.attributes?.email}</code></span>
+                  <span className={'mx-2 flex-1'}>Logged as <code>{appState.value.userInfo.attributes?.email}</code></span>
                 </>) :
                 (
                   <>
@@ -98,11 +98,12 @@ export function UnlockStudentDiscount (props: any) {
             </button>
           </section>
         </li>
+
         <li>
           <strong>2</strong>
           <section>
             <h3>Request your discount</h3>
-            <div className={'flex space-x-6 pt-2'}>
+            <div className={'sm:flex sm:space-x-6 pt-2'}>
               <div className="as-card flex-1">
                 <h3>Already used a school email address for sign-up?</h3>
                 <h4>Simply email us directly from that school/university email address to request your discount. Make

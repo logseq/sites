@@ -192,16 +192,20 @@ body {
 }
 
 .ui-modal {
-  @apply fixed w-screen h-screen flex items-center justify-center
-  top-0 left-0 z-50 bg-black/50 overflow-auto;
+  @apply fixed w-screen h-screen flex justify-center
+  top-0 left-0 z-50 bg-black/50 overflow-auto py-10;
+
+  &.hidden {
+    @apply !hidden;
+  }
 
   &-inner {
-    @apply relative;
+    @apply relative m-auto;
   }
 
   &-content {
     @apply relative bg-logseq-700 border border-logseq-600 rounded-xl
-    w-[80vw] max-w-[840px] min-h-[600px] p-6;
+    w-[90vw] max-w-[840px] min-h-[600px] p-6;
   }
 
   &-close {

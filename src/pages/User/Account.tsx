@@ -1,6 +1,6 @@
 import {
   IAppUserInfo, isDev,
-  modalFacade, useAppState, useAuthUserInfoState,
+  modalFacade, useAppState,
   useLemonState,
   useProState,
 } from '../../state'
@@ -196,14 +196,14 @@ export function LemoSubscriptions () {
         </Button> : <LSSpinner/>}
     </div>)
 
-  const topLoadButton = appState.sm.value !== true && createLoadButton()
+  const topLoadButton = appState.value.sm !== true && createLoadButton()
 
   if (!lemonSubscriptions || !lemonSubscriptions.length) {
     return (
       <div className={'relative'}>
         {topLoadButton}
 
-        <NothingContent text={appState.sm.value === true ? createLoadButton(false) : 'Empty list'}/>
+        <NothingContent text={appState.value.sm === true ? createLoadButton(false) : 'Empty list'}/>
       </div>)
   }
 
@@ -558,7 +558,7 @@ function AccountFreePlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          {!appState.sm.value && (
+          {!appState.value.sm && (
             <a className={'flex items-center space-x-2 cursor-pointer'}
                href={'logseq://handbook'}
             >
@@ -729,7 +729,7 @@ function AccountProPlanCard (
             <ArrowRight className={'relative top-[2px] opacity-70'} size={16}/>
           </a>
 
-          {!appState.sm.value && (
+          {!appState.value.sm && (
             <a className={'flex items-center space-x-2 cursor-pointer w-1/2'}
                href={'logseq://handbook'}
             >
@@ -959,7 +959,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
       <RowOfPaneContent label={'Authentication'}>
         <div
           className="flex items-start space-y-3 sm:space-y-0 sm:space-x-5 px-2 sm:px-6 flex-col sm:flex-row sm:items-center">
-          {!appState.isMobile.value &&
+          {!appState.value.isMobile &&
             <Button
               className={'!py-2 !bg-logseq-600 !px-6 !w-full sm:!w-auto'}
               leftIcon={<ArrowSquareOut/>}
@@ -1060,7 +1060,7 @@ export function AccountContent ({ userInfo }: {
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <IdentificationCard size={17} weight={'bold'}/>
             </span>
-            {appState.sm.value ? 'Account' : 'Account information'}
+            {appState.value.sm ? 'Account' : 'Account information'}
           </a>
         </li>
 
@@ -1074,7 +1074,7 @@ export function AccountContent ({ userInfo }: {
               className={'inline-flex items-center pr-2 relative top-[3px]'}>
               <Cardholder size={17} weight={'bold'}/>
             </span>
-            {appState.sm.value ? 'Subscriptions' : 'Payments & Subscriptions'}
+            {appState.value.sm ? 'Subscriptions' : 'Payments & Subscriptions'}
           </a>
         </li>
       </ul>

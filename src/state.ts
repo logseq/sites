@@ -266,7 +266,7 @@ export function useAppState () {
 
 export function useProState () {
   const appState = useAppState()
-  const userInfo = appState.userInfo.get()
+  const userInfo = appState.value.userInfo
   const hookProState = useHookstate(proState)
   const proStateValue = hookProState.get({ noproxy: true })
   const proFreeTrialEndsAt = proStateValue?.info?.FreeTrialEndsAt?.LogseqPro
@@ -447,6 +447,7 @@ export const createModalFacade = (ms: typeof modalsState) => {
       })
 
       return {
+        id,
         show: () => ms.modals[idx].visible.set(true),
         hide: () => ms.modals[idx].visible.set(false),
         destroy: () => m.remove(id),
@@ -467,3 +468,5 @@ export function useModalsState () {
 window.__appState = appState
 // @ts-ignore
 window.__proState = proState
+// @ts-ignore
+window.__modalFacade = modalFacade
