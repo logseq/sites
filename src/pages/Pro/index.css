@@ -534,7 +534,7 @@
   }
 
   .ui-modal-content {
-    @apply max-w-[510px] min-h-[200px] pt-5 pb-10 px-8 text-gray-100;
+    @apply max-w-[510px] min-h-[200px] pt-5 pb-6 px-8 text-gray-100;
   }
 
   .ui-modal-inner {

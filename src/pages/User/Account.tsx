@@ -1,6 +1,6 @@
 import {
   IAppUserInfo, isDev,
-  modalFacade, useAppState,
+  modalFacade, useAppState, useFetchAPI,
   useLemonState,
   useProState,
 } from '../../state'
@@ -30,9 +30,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown } from '../../components/Dropdown'
 import { AccountSettings } from '@aws-amplify/ui-react'
 import { ValidationMode } from '@aws-amplify/ui'
-import { Auth } from 'aws-amplify'
 
-function LemonPaymentButton ({ userId, email, opts }: Partial<{
+function LemonPaymentButton({ userId, email, opts }: Partial<{
   userId: string,
   username: string,
   email: string,
@@ -96,7 +95,7 @@ function LemonPaymentButton ({ userId, email, opts }: Partial<{
     </a>)
 }
 
-function StartTrialButton () {
+function StartTrialButton() {
   const [pending, setPending] = useState(false)
   const lemonState = useLemonState()
   const { loadProInfo } = useProState()
@@ -133,7 +132,7 @@ function StartTrialButton () {
     </button>)
 }
 
-export function NothingContent ({ text }: { text: string | ReactElement }) {
+export function NothingContent({ text }: { text: string | ReactElement }) {
   return (
     <div className="nothing-content py-20">
       <h1 className={'flex flex-col justify-center items-center'}>
@@ -150,7 +149,7 @@ export function NothingContent ({ text }: { text: string | ReactElement }) {
   )
 }
 
-export function RowOfPaneContent (
+export function RowOfPaneContent(
   props: {
     label: string | ReactElement
     children: ReactElement
@@ -168,7 +167,7 @@ export function RowOfPaneContent (
   )
 }
 
-export function LemoSubscriptions () {
+export function LemoSubscriptions() {
   const lemon = useLemonState()
   const appState = useAppState()
   const { proState, loadProInfo } = useProState()
@@ -288,7 +287,7 @@ export function LemoSubscriptions () {
 
                         m.show()
 
-                        async function doCancel () {
+                        async function doCancel() {
                           try {
                             proState.actionPendingSubscriptions.merge(
                               { [it.id]: true })
@@ -318,7 +317,7 @@ export function LemoSubscriptions () {
                   text: (
                     <Button className={'!bg-transparent !px-2 !py-2 !w-full'}
                             onClick={() => {
-                              async function doPause () {
+                              async function doPause() {
                                 try {
                                   proState.actionPendingSubscriptions.merge(
                                     { [it.id]: true })
@@ -501,7 +500,7 @@ export function LemoSubscriptions () {
   )
 }
 
-function AccountFreePlanCard (
+function AccountFreePlanCard(
   { userInfo }: { userInfo: IAppUserInfo },
 ) {
   const appState = useAppState()
@@ -653,7 +652,7 @@ function AccountFreePlanCard (
     </div>)
 }
 
-function AccountProPlanCard (
+function AccountProPlanCard(
   { userInfo }: { userInfo: IAppUserInfo },
 ) {
   const appState = useAppState()
@@ -777,7 +776,7 @@ function AccountProPlanCard (
   )
 }
 
-export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
+export function UserInfoContent(props: { userInfo: IAppUserInfo }) {
   const { proStateValue } = useProState()
 
   if (!proStateValue.info && proStateValue.infoFetching) {
@@ -809,7 +808,7 @@ export function UserInfoContent (props: { userInfo: IAppUserInfo }) {
  * @param close
  * @constructor
  */
-export function AccountChangePasswordPane ({ close }: { close: () => void }) {
+export function AccountChangePasswordPane({ close }: { close: () => void }) {
   const [pending, setPending] = useState(false)
   const minLength = {
     validationMode: 'onChange' as ValidationMode,
@@ -876,15 +875,17 @@ export function AccountChangePasswordPane ({ close }: { close: () => void }) {
   )
 }
 
-export function AccountDeleteUserPane ({ close, userInfo }: {
+export function AccountDeleteUserPane({ close, userInfo }: {
   close: () => void,
   userInfo: IAppUserInfo
 }) {
   const [pending, setPending] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const { loadAPI } = useFetchAPI()
 
   const handleSuccess = async () => {
     await userInfo.signOut()
+    setPending(false)
     close()
   }
 
@@ -897,14 +898,24 @@ export function AccountDeleteUserPane ({ close, userInfo }: {
 
   const handleDelete = async () => {
     if (pending) return
-    setPending(true)
 
     if (inputRef.current?.value?.trim() !== userInfo.username) {
       inputRef.current.select()
-      throw new Error('Incorrect username!')
+      toast.error('Incorrect username!', {
+        position: 'top-center'
+      })
+      return setPending(false)
     }
 
-    await Auth.deleteUser()
+    setPending(true)
+    const ret = await loadAPI('delete_user', false, { notShowErrMsg: true })
+
+    if (ret instanceof Error) {
+      return handleError(ret)
+    }
+
+    // success
+    handleSuccess().catch(null)
   }
 
   return (
@@ -922,19 +933,37 @@ export function AccountDeleteUserPane ({ close, userInfo }: {
                  ref={inputRef}
                  className={'p-2 bg-transparent border border-gray-400 rounded outline-0'}/>
         </p>
-        {pending ?
-          <p className={'flex justify-center'}><LSSpinner size={8}/></p> :
-          <AccountSettings.DeleteUser
-            onSuccess={handleSuccess}
-            handleDelete={handleDelete}
-            onError={handleError}
-          />}
+
+        <blockquote className={'bg-red-600/50 p-2 flex rounded'}>
+          <span className={'pl-1 pr-2 pt-1 flex items-start'}>
+            <WarningCircle size={24}/>
+          </span>
+          <strong className={'fex-1'}>
+            Deleting your account is not reversable.
+            You will lose access to your account and all data associated with it.
+          </strong>
+        </blockquote>
+
+        <p className={'flex justify-end pt-4'}>
+          <Button className={'bg-transparent opacity-50'}
+                  onClick={close}
+                  disabled={pending}
+          >
+            Cancel
+          </Button>
+          <Button className={'!py-2 !bg-red-500/10 text-red-500'}
+                  onClick={handleDelete}
+                  disabled={pending}
+          >
+            {pending ? <span className={'inline-block px-2'}><LSSpinner size={7}/></span> : <>Delete</>}
+          </Button>
+        </p>
       </div>
     </div>
   )
 }
 
-export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
+export function AccountUserInfoPane({ userInfo }: { userInfo: IAppUserInfo }) {
   const appState = useAppState()
   const { proState } = useProState()
   const proStateValue = proState.value
@@ -1000,7 +1029,7 @@ export function AccountUserInfoPane ({ userInfo }: { userInfo: IAppUserInfo }) {
     </>)
 }
 
-export function AccountContent ({ userInfo }: {
+export function AccountContent({ userInfo }: {
   userInfo: IAppUserInfo
 }) {
   const { proState } = useProState()

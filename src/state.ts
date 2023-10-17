@@ -1,4 +1,4 @@
-import { hookstate, none, useHookstate } from '@hookstate/core'
+import { hookstate, none, StateMethods, useHookstate } from '@hookstate/core'
 import { IProInfo } from './types'
 
 // @ts-ignore
@@ -35,7 +35,7 @@ export const authConfig = isDev ?
     oauthProviders: [],
   }
 
-function getAuthValueFromStorage (key: string) {
+function getAuthValueFromStorage(key: string) {
   const prefix = `CognitoIdentityServiceProvider.${authConfig.userPoolWebClientId}`
   const authUser = localStorage.getItem(
     `${prefix}.${authConfig.userPoolWebClientId}.LastAuthUser`)
@@ -114,7 +114,7 @@ const logseqEndpoint = isDev
 
 let appliedLogin = false
 
-export function applyLoginUser (
+export function applyLoginUser(
   user: any, t: {
     navigate: NavigateFunction,
     routeLocation: Location,
@@ -160,7 +160,48 @@ export function applyLoginUser (
   appliedLogin = true
 }
 
-export function useAuthUserInfoState () {
+export function useFetchAPI<T = StateMethods<any, any>>(attachedState?: T) {
+  const userInfo = useAppState().userInfo.get()
+
+  async function loadAPI(
+    type: string,
+    setState: StateMethods<any, any> | boolean = false,
+    opts: Partial<{ init: RequestInit, notShowErrMsg: boolean }> = {}
+  ) {
+    try {
+      // @ts-ignore
+      const idToken = userInfo.signInUserSession?.idToken?.jwtToken
+      const res = await fetch(`${logseqEndpoint}/${type}`,
+        Object.assign(opts.init || {}, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${idToken}`, ...(opts.init?.headers || {}),
+          },
+        }))
+
+      const json = await res.json()
+
+      if (setState) {
+        if (setState === true) {
+          attachedState?.[camelcase(type)].set(json)
+        } else {
+          setState?.[camelcase(type)].set(json)
+        }
+      }
+
+      return json
+    } catch (e: any) {
+      !opts.notShowErrMsg && toast.error(e.message)
+      return e
+    }
+  }
+
+  return {
+    loadAPI
+  }
+}
+
+export function useAuthUserInfoState() {
   const { user }: any = useAuthenticator(({ user }) => [user])
   const routeLocation = useLocation()
   const navigate = useNavigate()
@@ -183,7 +224,7 @@ export function useAuthUserInfoState () {
   }, [user?.username])
 }
 
-export function useReleasesState () {
+export function useReleasesState() {
   const state = useAppState()
 
   useEffect(() => {
@@ -242,7 +283,7 @@ export function useReleasesState () {
   return state.releases
 }
 
-export function useDiscordState () {
+export function useDiscordState() {
   const state = useAppState()
 
   useEffect(() => {
@@ -260,11 +301,11 @@ export function useDiscordState () {
   return state.discord
 }
 
-export function useAppState () {
+export function useAppState() {
   return useHookstate(appState)
 }
 
-export function useProState () {
+export function useProState() {
   const appState = useAppState()
   const userInfo = appState.value.userInfo
   const hookProState = useHookstate(proState)
@@ -277,7 +318,7 @@ export function useProState () {
   // @ts-ignore
   const idToken = userInfo.signInUserSession?.idToken?.jwtToken
 
-  async function loadProInfo () {
+  async function loadProInfo() {
     try {
       hookProState.infoFetching?.set(true)
 
@@ -305,36 +346,9 @@ export function useProState () {
   }
 }
 
-export function useLemonState () {
-  const userInfo = useAppState().userInfo.get()
+export function useLemonState() {
   const { proState } = useProState()
-
-  async function loadAPI (
-    type: string,
-    setState: boolean = false,
-    init?: RequestInit) {
-    try {
-      // @ts-ignore
-      const idToken = userInfo.signInUserSession?.idToken?.jwtToken
-      const res = await fetch(`${logseqEndpoint}/${type}`,
-        Object.assign(init || {}, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${idToken}`, ...(init?.headers || {}),
-          },
-        }))
-
-      const json = await res.json()
-
-      if (setState) {
-        proState[camelcase(type)].set(json)
-      }
-
-      return json
-    } catch (e: any) {
-      toast.error(e.message)
-    }
-  }
+  const { loadAPI } = useFetchAPI(proState)
 
   return {
     getSubscriptions: () => proState.lemonListSubscriptions.get(
@@ -348,7 +362,7 @@ export function useLemonState () {
     cancelSubscription: async (subId: string) => {
       await loadAPI(
         'lemon_cancel_subscription', false,
-        { body: JSON.stringify({ 'subscription-id': subId }) })
+        { init: { body: JSON.stringify({ 'subscription-id': subId }) } })
     },
     pauseSubscription: async (subId: string, resumesAt?: string) => {
       const body = { 'subscription-id': parseInt(subId), 'mode': 'free' }
@@ -360,14 +374,14 @@ export function useLemonState () {
       }
       await loadAPI(
         'lemon_pause_subscription', false,
-        { body: JSON.stringify(body) },
+        { init: { body: JSON.stringify(body) } },
       )
     },
     unpauseSubscription: async (subId: string) => {
       const body = { 'subscription-id': parseInt(subId) }
       await loadAPI(
         'lemon_unpause_subscription', false,
-        { body: JSON.stringify(body) },
+        { init: { body: JSON.stringify(body) } },
       )
     },
     startFreeTrial: async () => {
@@ -377,7 +391,7 @@ export function useLemonState () {
 
       await loadAPI(
         'start_free_trial', false,
-        { body: JSON.stringify({ project: 'LogseqPro' }) },
+        { init: { body: JSON.stringify({ project: 'LogseqPro' }) } },
       )
     },
     getSubscriptionRelatedInfo: async (
@@ -396,7 +410,7 @@ export function useLemonState () {
 
         const ret = await loadAPI(
           'lemon_get_subscription_related_resources', false,
-          { body: JSON.stringify(body) },
+          { init: { body: JSON.stringify(body) } },
         )
 
         for (let k in ret) {
@@ -459,7 +473,7 @@ export const createModalFacade = (ms: typeof modalsState) => {
 
 export const modalFacade = createModalFacade(modalsState)
 
-export function useModalsState () {
+export function useModalsState() {
   const hookModalsState = useHookstate(modalsState)
   return createModalFacade(hookModalsState)
 }
