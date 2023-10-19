@@ -172,6 +172,10 @@ body {
 
 }
 
+.app-terms {
+  padding-top: 80px;
+}
+
 .dockify-app-logo:hover .app-logo-embossed {
   cursor: pointer;
   filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3)) drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));

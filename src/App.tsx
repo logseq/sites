@@ -15,10 +15,11 @@ import { UserEntryPage } from './pages/User'
 import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
 import { scrollToTop } from './components/utils'
-import { AccountContent, AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
+import { AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
 import cx from 'classnames'
+import { TermsPage } from './pages/User/Terms'
 
-export function App () {
+export function App() {
   const appState = useAppState()
   const modalsState = useModalsState()
   const userInfoState = appState.userInfo
@@ -62,7 +63,7 @@ export function App () {
 
   useEffect(() => {
     const container = document.documentElement
-      container.classList[hasActiveModals ? 'add' : 'remove']('ui-modal-container-locked')
+    container.classList[hasActiveModals ? 'add' : 'remove']('ui-modal-container-locked')
   }, [hasActiveModals])
 
   return (
@@ -81,6 +82,7 @@ export function App () {
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/pro'} element={<ProPage/>}></Route>
+          <Route path={'/terms'} element={<TermsPage/>}></Route>
           <Route path={'/login'} element={<UserEntryPage/>}></Route>
           <Route path={'/account'} element={<UserEntryPage/>}>
             <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>

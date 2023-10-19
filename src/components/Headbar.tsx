@@ -1,13 +1,12 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useSearchParams } from 'react-router-dom'
 import { ArrowSquareOut, List, X } from '@phosphor-icons/react'
 import { ReactElement, useEffect, useState } from 'react'
 import { WrapGlobalDownloadButton } from '../pages/Downloads'
 import cx from 'classnames'
-import { scrollToTop } from './utils'
 
 const logo: any = new URL('/assets/logo-with-border.png', import.meta.url)
 
-export function LinksGroup (
+export function LinksGroup(
   props: {
     items: Array<{ link: string, label: string | ReactElement, icon?: ReactElement }>,
 
@@ -55,8 +54,12 @@ export function LinksGroup (
   )
 }
 
-export function Headbar () {
+export function Headbar() {
   const [rightActive, setRightActive] = useState(false)
+  const [urlParams] = useSearchParams()
+
+  // without header
+  if (urlParams.has('x')) return
 
   useEffect(() => {
     const outsideHandler = (e: MouseEvent) => {

@@ -330,7 +330,7 @@ export function LandingFooterNav () {
         <Button
           leftIcon={<img className="w-10" src={imageProductHuntLogo} alt="image"/>}
           rightIcon={<ArrowSquareOut className="opacity-50"/>}
-          className="w-full py-1 px-2 bg-transparent border-2 border-logseq-400"
+          className="w-full !py-1 !px-3 bg-transparent border-2 border-logseq-400"
           href="https://www.producthunt.com/products/logseq"
         >
           <span className="opacity-90">

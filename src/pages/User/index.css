@@ -96,3 +96,21 @@ form[data-amplify-authenticator-confirmsignup] {
     tracking-widest bg-pro-600/40 text-[12px] leading-none font-bold mx-1;
   }
 }
+
+.logseq-terms-content {
+  @apply px-8 py-10 max-w-[960px];
+
+  font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+
+  > h1 {
+    @apply text-3xl font-bold mb-8 text-center;
+  }
+
+  > p {
+    @apply mb-2;
+  }
+
+  > h4 {
+    @apply text-lg font-bold mt-6 mb-2;
+  }
+}
