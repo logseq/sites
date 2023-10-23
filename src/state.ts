@@ -16,7 +16,8 @@ import {
 import camelcase from 'camelcase'
 import { isDateValid } from './components/utils'
 
-export const isDev = process.env.NODE_ENV !== 'production'
+// export const isDev = process.env.NODE_ENV !== 'production'
+export const isDev = false // TODO: DEBUG
 export const authConfig = isDev ?
   {
     region: 'us-east-2',
@@ -24,15 +25,10 @@ export const authConfig = isDev ?
     userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
     oauthProviders: [],
   } : {
-    // TODO: production
-    // region: 'us-east-1',
-    // userPoolId: 'us-east-1_dtagLnju8',
-    // userPoolWebClientId: '69cs1lgme7p8kbgld8n5kseii6',
-    // oauthProviders: []
-    region: 'us-east-2',
-    userPoolId: 'us-east-2_kAqZcxIeM',
-    userPoolWebClientId: '1qi1uijg8b6ra70nejvbptis0q',
-    oauthProviders: [],
+    region: 'us-east-1',
+    userPoolId: 'us-east-1_dtagLnju8',
+    userPoolWebClientId: '69cs1lgme7p8kbgld8n5kseii6',
+    oauthProviders: []
   }
 
 function getAuthValueFromStorage(key: string) {
@@ -110,7 +106,11 @@ const discordEndpoint = 'https://discord.com/api/v9/invites/VNfUaTtdFb?with_coun
 const fileSyncEndpoint = 'https://api-dev.logseq.com/file-sync'
 const logseqEndpoint = isDev
   ? 'https://api-dev.logseq.com/logseq'
-  : 'https://api-dev.logseq.com/logseq'
+  : 'https://api.logseq.com/logseq'
+
+export const lemonProductEndpoint = isDev
+  ? 'https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09'
+  : 'https://logseq.lemonsqueezy.com/checkout/buy/4828e0c2-e189-4102-9a90-c7101e53d525'
 
 let appliedLogin = false
 

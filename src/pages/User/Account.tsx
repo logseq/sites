@@ -1,5 +1,5 @@
 import {
-  IAppUserInfo, isDev,
+  IAppUserInfo, isDev, lemonProductEndpoint,
   modalFacade, useAppState, useFetchAPI,
   useLemonState,
   useProState,
@@ -69,10 +69,8 @@ function LemonPaymentButton({ userId, email, opts }: Partial<{
   }, [])
 
   // if (proState.value.info?.ProUser === true) return
-
   return (
-    <a href={`https://logseq.lemonsqueezy.com/checkout/buy/f9a3c7cb-b8eb-42b5-b22a-7dfafad8dc09
-      ?embed=1&media=0&checkout[email]=${encodeURIComponent(
+    <a href={`${lemonProductEndpoint}?embed=1&media=0&checkout[email]=${encodeURIComponent(
       email)}&checkout[custom][user_uuid]=${userId}`}
        className={'lemonsqueezy-button flex justify-between mt-4 bg-pro-700 py-3 px-6 rounded-lg items-center hover:opacity-80 active:opacity-100'}>
       <strong className={'flex items-center font-normal'}>
