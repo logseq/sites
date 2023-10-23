@@ -2,6 +2,7 @@ export type IProInfo = {
   FileSyncExpireAt: number
   FileSyncGraphCountLimit: number
   FileSyncStorageLimit: number
+  FileSyncStorageLimitFormat: string
   ProUser: boolean
   UserGroups: 'alpha-tester' | string
 

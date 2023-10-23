@@ -348,7 +348,7 @@ function ChoosePlanSection () {
               <ul>
                 <li>
                   <HandPointing weight={'duotone'}/>
-                  <span>1 synced graph (up to 50MB)</span>
+                  <span>{proStateValue.info.FileSyncGraphCountLimit || 0} synced graph (up to 50MB)</span>
                 </li>
                 <li>
                   <HandPointing weight={'duotone'}/>
@@ -395,7 +395,7 @@ function ChoosePlanSection () {
               <ul className={'text-pro-200'}>
                 <li>
                   <CheckSquare weight={'duotone'}/>
-                  <span>10 synced graphs (up to 10GB each)</span>
+                  <span>{proStateValue.info.FileSyncGraphCountLimit} synced graphs (up to 10GB each)</span>
                 </li>
                 <li>
                   <CheckSquare weight={'duotone'}/>

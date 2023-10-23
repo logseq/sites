@@ -330,6 +330,12 @@ export function useProState() {
       }
 
       const info = await resp.json()
+      // normalize info
+      if (typeof info.FileSyncStorageLimit === 'number') {
+        const giga = info.FileSyncStorageLimit / 1024 / 1024 / 1024
+        info.FileSyncStorageLimitFormat = giga >= 0.5 ? `${giga}GB` : `${giga * 1024}MB`
+      }
+
       hookProState.info.set(info)
     } catch (e: any) {
       console.error('[Request ProState] ', e)

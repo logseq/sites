@@ -528,7 +528,7 @@ function AccountFreePlanCard(
             <span className={'flex items-center'}>
               <StackSimple size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
               <strong
-                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>1</strong>
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>{proStateInfoValue.FileSyncGraphCountLimit}</strong>
               <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
             </span>
             <span className={'hidden sm:block line'}>-------</span>
@@ -536,7 +536,7 @@ function AccountFreePlanCard(
               <Notebook size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
               <strong
                 className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
-                50MB
+                {proStateInfoValue.FileSyncStorageLimitFormat}
               </strong>
               <small className={'text-sm sm:text-base px-2'}>
                 storage per graph
@@ -629,16 +629,16 @@ function AccountFreePlanCard(
             proStateInfoValue?.FreeTrialEndsAt?.LogseqPro == null) ?
             (<>
               <StartTrialButton/>
-              {isDev &&
-                <div className="relative">
-                  <strong className={'absolute top-6 right-12 text-orange-300'}>(Only visible for tests)</strong>
+              {
+                // TODO: debug
+                (<div className="relative">
+                  <strong className={'absolute  top-6 right-12 text-orange-300'}>(Only visible for tests)</strong>
                   <LemonPaymentButton
                     email={userInfo.attributes?.email}
                     userId={userInfo.attributes?.sub}
                     username={userInfo.username}
                   />
-                </div>
-              }
+                </div>)}
             </>) :
             <LemonPaymentButton
               email={userInfo.attributes?.email}
@@ -686,7 +686,7 @@ function AccountProPlanCard(
             <span className={'flex items-center'}>
               <Stack size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong
-                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>{proStateValue.info.FileSyncGraphCountLimit}</strong>
               <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
             </span>
             <span className={'hidden sm:block line'}>-------</span>
@@ -694,7 +694,7 @@ function AccountProPlanCard(
             <span className={'flex items-center pt-2'}>
               <Notebook size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
-                10GB
+                {proStateValue.info.FileSyncStorageLimitFormat}
               </strong>
               <small className={'text-sm sm:text-base px-2'}>
                 storage per graph
