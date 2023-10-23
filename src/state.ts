@@ -14,7 +14,7 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import camelcase from 'camelcase'
-import { isDateValid } from './components/utils'
+import { bytesFormat, isDateValid } from './components/utils'
 
 // export const isDev = process.env.NODE_ENV !== 'production'
 export const isDev = false // TODO: DEBUG
@@ -329,12 +329,12 @@ export function useProState() {
         throw new Error(resp.statusText)
       }
 
-      const info = await resp.json()
+      const info: IProInfo = await resp.json()
+
       // normalize info
-      if (typeof info.FileSyncStorageLimit === 'number') {
-        const giga = info.FileSyncStorageLimit / 1024 / 1024 / 1024
-        info.FileSyncStorageLimitFormat = giga >= 0.5 ? `${giga}GB` : `${giga * 1024}MB`
-      }
+      info.FileSyncStorageLimit.currentFormatted = bytesFormat(info.FileSyncStorageLimit?.current)
+      info.FileSyncStorageLimit.proFormatted = bytesFormat(info.FileSyncStorageLimit?.pro)
+      info.FileSyncStorageLimit.freeFormatted = bytesFormat(info.FileSyncStorageLimit?.free)
 
       hookProState.info.set(info)
     } catch (e: any) {

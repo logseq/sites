@@ -103,3 +103,9 @@ export function navigateTabs (event: React.KeyboardEvent) {
 export function scrollToTop () {
   document.documentElement.scrollTop = 0
 }
+
+export function bytesFormat (bytes: number) {
+  if (!isNumber(bytes)) return '0 B'
+  const giga = bytes / 1024 / 1024 / 1024
+  return giga >= 0.5 ? `${giga}GB` : `${giga * 1024}MB`
+}

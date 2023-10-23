@@ -528,7 +528,7 @@ function AccountFreePlanCard(
             <span className={'flex items-center'}>
               <StackSimple size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
               <strong
-                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>{proStateInfoValue.FileSyncGraphCountLimit}</strong>
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>{proStateInfoValue.FileSyncGraphCountLimit.current}</strong>
               <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
             </span>
             <span className={'hidden sm:block line'}>-------</span>
@@ -536,7 +536,7 @@ function AccountFreePlanCard(
               <Notebook size={26} weight={'duotone'} color={'#608E91'} className={'scale-75 sm:scale-100'}/>
               <strong
                 className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
-                {proStateInfoValue.FileSyncStorageLimitFormat}
+                {proStateInfoValue.FileSyncStorageLimit.currentFormatted}
               </strong>
               <small className={'text-sm sm:text-base px-2'}>
                 storage per graph
@@ -576,7 +576,9 @@ function AccountFreePlanCard(
             <span className={'flex items-center'}>
               <Stack size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong
-                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>10</strong>
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                {proStateInfoValue.FileSyncGraphCountLimit.pro}
+              </strong>
               <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
             </span>
 
@@ -586,7 +588,7 @@ function AccountFreePlanCard(
               <Notebook size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong
                 className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
-                10GB
+                {proStateInfoValue.FileSyncStorageLimit.proFormatted}
               </strong>
               <small className={'text-base px-2'}>
                 storage per graph
@@ -686,7 +688,9 @@ function AccountProPlanCard(
             <span className={'flex items-center'}>
               <Stack size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong
-                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>{proStateValue.info.FileSyncGraphCountLimit}</strong>
+                className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
+                {proStateValue.info.FileSyncGraphCountLimit.current}
+              </strong>
               <small className={'text-sm sm:text-base px-2'}>synced graphs</small>
             </span>
             <span className={'hidden sm:block line'}>-------</span>
@@ -694,7 +698,7 @@ function AccountProPlanCard(
             <span className={'flex items-center pt-2'}>
               <Notebook size={26} weight={'duotone'} color={'#3cbaf3'} className={'scale-75 sm:scale-100'}/>
               <strong className={'text-lg sm:text-2xl text-gray-200 font-medium pl-2'}>
-                {proStateValue.info.FileSyncStorageLimitFormat}
+                {proStateValue.info.FileSyncStorageLimit.currentFormatted}
               </strong>
               <small className={'text-sm sm:text-base px-2'}>
                 storage per graph

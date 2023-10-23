@@ -1,8 +1,18 @@
 export type IProInfo = {
   FileSyncExpireAt: number
-  FileSyncGraphCountLimit: number
-  FileSyncStorageLimit: number
-  FileSyncStorageLimitFormat: string
+  FileSyncGraphCountLimit: {
+    'current': number,
+    'free': number,
+    'pro': number,
+  },
+  FileSyncStorageLimit: {
+    'current': number,
+    'currentFormatted': string,
+    'free': number,
+    'freeFormatted': string,
+    'pro': number,
+    'proFormatted': string
+  },
   ProUser: boolean
   UserGroups: 'alpha-tester' | string
 
