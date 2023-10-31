@@ -105,12 +105,12 @@ function ProInfoSection () {
         <ProCard className={'plans-card c'}>
           <span>
             <Stack size={36} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong>100GB</strong>
+            <strong>200GB</strong>
             <small>total storage</small>
           </span>
           <span>
             <Notebook size={36} weight={'duotone'} color={'#3cbaf3'}/>
-            <strong>10GB</strong>
+            <strong>20GB</strong>
             <small>per graph</small>
           </span>
           <span>
@@ -331,9 +331,9 @@ function ChoosePlanSection () {
 
         <div className="tabs">
           <ul>
-            <li className={'active'}>Monthly</li>
             <li><Tag className={'mr-1.5'} weight={'duotone'} color={'#195D6C'}/>
               Yearly<sup className={'text-xs text-pro-400'}>-20%</sup></li>
+            <li className={'active'}>Monthly</li>
           </ul>
         </div>
 
@@ -390,12 +390,12 @@ function ChoosePlanSection () {
             </div>
             <div className="bd">
               <h2 className={'flex items-baseline'}>
-                $10 <small className={'pl-1 font-normal text-2xl text-pro-200'}>/ month</small>
+                $8 <small className={'pl-1 font-normal text-2xl text-pro-200'}>/ month</small>
               </h2>
               <ul className={'text-pro-200'}>
                 <li>
                   <CheckSquare weight={'duotone'}/>
-                  <span>10 synced graphs (up to 10GB each)</span>
+                  <span>10 synced graphs (up to 20GB each)</span>
                 </li>
                 <li>
                   <CheckSquare weight={'duotone'}/>
