@@ -1,14 +1,13 @@
 import { LandingFooterNav } from '../Landing'
 
-export function TermsPage() {
-  const termsUrl = '/public/terms.html'
+export function PrivacyPolicyPage() {
+  const privacyPolicyUrl = '/public/privacy_policy.html'
 
   return (
     <div className="app-page app-terms">
       <div className="logseq-iframe-content page-inner">
-        <iframe src={termsUrl}/>
+        <iframe src={privacyPolicyUrl}/>
       </div>
-
       {/* global footer */}
       <div className="page-inner-full-wrap b relative">
         <div className="page-inner footer-nav">

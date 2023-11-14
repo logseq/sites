@@ -100,8 +100,6 @@ form[data-amplify-authenticator-confirmsignup] {
 .logseq-terms-content {
   @apply px-8 py-10 max-w-[960px];
 
-  font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
-
   > h1 {
     @apply text-3xl font-bold mb-8 text-center;
   }
@@ -112,5 +110,11 @@ form[data-amplify-authenticator-confirmsignup] {
 
   > h4 {
     @apply text-lg font-bold mt-6 mb-2;
+  }
+}
+
+.logseq-iframe-content {
+  > iframe {
+    @apply mx-auto my-10 md:w-[760px] min-h-[72vh] bg-transparent;
   }
 }
