@@ -84,7 +84,7 @@ export function App() {
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/pro'} element={<ProPage/>}></Route>
           <Route path={'/terms'} element={<TermsPage/>}></Route>
-          <Route path={'/privacy'} element={<PrivacyPolicyPage/>}></Route>
+          <Route path={'/privacy-policy'} element={<PrivacyPolicyPage/>}></Route>
           <Route path={'/login'} element={<UserEntryPage/>}></Route>
           <Route path={'/account'} element={<UserEntryPage/>}>
             <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>
