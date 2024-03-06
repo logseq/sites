@@ -90,12 +90,12 @@ export function Headbar() {
 
   const leftLinks = [
     { label: 'Home', link: '/' },
-    {
-      label: (<>
-        <span>Pro</span>
-        <sup className={'pl-1 opacity-90 group-hover:opacity-100 text-xs font-medium text-pro-500'}>New</sup>
-      </>), link: '/pro'
-    },
+    // {
+    //   label: (<>
+    //     <span>Pro</span>
+    //     <sup className={'pl-1 opacity-90 group-hover:opacity-100 text-xs font-medium text-pro-500'}>New</sup>
+    //   </>), link: '/pro'
+    // },
     { label: 'Downloads', link: '/downloads' },
   ]
 
