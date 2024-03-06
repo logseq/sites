@@ -8,6 +8,7 @@ import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './commo
 import { WrapGlobalDownloadButton } from '../Downloads'
 import { useAppState, useModalsState } from '../../state'
 import { openLiveDemo } from '../../components/utils'
+import { Link } from 'react-router-dom'
 
 export function FooterDescCard (props: any) {
   const { icon, title, desc } = props
@@ -286,8 +287,8 @@ export function LandingFooterNav () {
   const links = (
     <div className="links flex flex-col justify-center">
       <p className="flex space-x-4 text-xs text-gray-300/90 pb-1">
-        <a href="https://blog.logseq.com/privacy-policy/" target="_blank">Privacy</a>
-        <a href="https://blog.logseq.com/terms/" target="_blank">Terms</a>
+        <Link to={"/privacy-policy"}>Privacy</Link>
+        <Link to={"/terms"}>Terms</Link>
         <a href="mailto:hi@logseq.com">Contact Us</a>
       </p>
       <p className="text-xs opacity-40 py-1">
