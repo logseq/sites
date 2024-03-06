@@ -1,13 +1,19 @@
+// @ts-ignore
+import html from './privacy_policy.md'
 import { LandingFooterNav } from '../Landing'
 
-export function PrivacyPolicyPage() {
-  const privacyPolicyUrl = '/public/privacy_policy.html'
+export function PrivacyPolicyContent() {
+  return (
+    <div className="logseq-terms-content page-inner"
+         dangerouslySetInnerHTML={{ __html: html }}
+    ></div>)
+}
 
+export function PrivacyPolicyPage() {
   return (
     <div className="app-page app-terms">
-      <div className="logseq-iframe-content page-inner">
-        <iframe src={privacyPolicyUrl}/>
-      </div>
+      {PrivacyPolicyContent()}
+
       {/* global footer */}
       <div className="page-inner-full-wrap b relative">
         <div className="page-inner footer-nav">

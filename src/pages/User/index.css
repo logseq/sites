@@ -98,7 +98,7 @@ form[data-amplify-authenticator-confirmsignup] {
 }
 
 .logseq-terms-content {
-  @apply px-8 py-10 max-w-[960px];
+  @apply px-8 py-10 max-w-[1140px] text-logseq-50;
 
   > h1 {
     @apply text-3xl font-bold mb-8 text-center;
@@ -110,6 +110,22 @@ form[data-amplify-authenticator-confirmsignup] {
 
   > h4 {
     @apply text-lg font-bold mt-6 mb-2;
+  }
+
+  pre {
+    @apply whitespace-pre-wrap mb-3 py-4 px-4 bg-logseq-700 rounded-md;
+  }
+
+  table {
+    @apply w-full border-collapse my-3;
+
+    td, th {
+      @apply border border-logseq-600 p-4;
+    }
+  }
+
+  > p {
+    @apply my-3;
   }
 }
 
