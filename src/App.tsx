@@ -1,3 +1,4 @@
+import "./pages/User/index.css"
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/Home'
 import { DownloadsPage } from './pages/Downloads'
@@ -10,12 +11,9 @@ import {
 } from './state'
 import React, { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { ProPage } from './pages/Pro'
-import { UserEntryPage } from './pages/User'
 import { Modal } from './components/Modal'
 import { createPortal } from 'react-dom'
 import { scrollToTop } from './components/utils'
-import { AccountUserInfoPane, LemoSubscriptions } from './pages/User/Account'
 import cx from 'classnames'
 import { TermsPage } from './pages/User/Terms'
 import { PrivacyPolicyPage } from './pages/User/PrivacyPolicy'
@@ -82,14 +80,8 @@ export function App() {
         <Routes>
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
-          {/*<Route path={'/pro'} element={<ProPage/>}></Route>*/}
           <Route path={'/terms'} element={<TermsPage/>}></Route>
           <Route path={'/privacy-policy'} element={<PrivacyPolicyPage/>}></Route>
-          {/*<Route path={'/login'} element={<UserEntryPage/>}></Route>*/}
-          {/*<Route path={'/account'} element={<UserEntryPage/>}>*/}
-          {/*  <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>*/}
-          {/*  <Route path={'subscriptions'} element={<LemoSubscriptions/>}/>*/}
-          {/*</Route>*/}
         </Routes>
 
         {/*  modals */}

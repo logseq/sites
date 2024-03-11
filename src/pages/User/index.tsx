@@ -7,7 +7,7 @@ import { AccountContent } from './Account'
 import { useLocation } from 'react-router-dom'
 
 // setup amplify configures
-setupAuthConfigure(authConfig)
+// setupAuthConfigure(authConfig)
 
 function UserEntryPage () {
   const appState = useAppState()
