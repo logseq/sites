@@ -2,12 +2,13 @@ import {
   ArrowSquareOut, CloudCheck, DeviceMobile, FileText,
   GithubLogo, Globe, HandWaving, Keyhole, Play,
   PuzzlePiece, ScribbleLoop, Swatches, TwitterLogo, UserCirclePlus
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './common'
 import { WrapGlobalDownloadButton } from '../Downloads'
-import { useAppState } from '../../state'
+import { useAppState, useModalsState } from '../../state'
 import { openLiveDemo } from '../../components/utils'
+import { Link } from 'react-router-dom'
 
 export function FooterDescCard (props: any) {
   const { icon, title, desc } = props
@@ -151,90 +152,95 @@ export function FeaturesBoardsDL () {
 }
 
 export function LandingFooterDesc (props: {
-  downloadsPage?: boolean
+  downloadsPage?: boolean,
+  hideFeaturesSection?: boolean
 }) {
   const appState = useAppState()
 
   return (
     <div className="app-landing-footer-desc">
+      {!props.hideFeaturesSection &&
+        (<div className="bg-radial from-logseq-800 via-logseq-800/50 to-logseq-800/0">
+          {props.downloadsPage ?
+            <>
+              <h1
+                className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
+                <span className="text-logseq-50/80">Get ready for</span><br/>
+                <strong className="font-semibold">knowledge work reimagined.</strong>
+              </h1>
 
-      <div className="bg-radial from-logseq-800 via-logseq-800/50 to-logseq-800/0">
-        {props.downloadsPage ?
-          <>
-            <h1
-              className="text-4xl -mt-[230px] leading-9 tracking-wide pb-2 sm:mt-0 sm:leading-[1em] sm:text-6xl sm:text-center sm:pt-20 sm:pb-15">
-              <span className="text-logseq-50/80">Get ready for</span><br/>
-              <strong className="font-semibold">knowledge work reimagined.</strong>
-            </h1>
-
-            <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
+              <h2 className="text-lg leading-9 tracking-wide sm:text-[32px] sm:px-60 sm:py-6 sm:text-center">
               <span className="text-logseq-50/80">
                 By downloading Logseq, you are embarking on a journey. We are
                 constantly trying to make it even more useful for all kinds of
                 workflows.
               </span>
-              {" "}
-              <strong className="font-normal">
-                These exciting features are coming soon:
-              </strong>
-            </h2>
+                {' '}
+                <strong className="font-normal">
+                  These exciting features are coming soon:
+                </strong>
+              </h2>
 
-          </> :
-          <>
-            <h1 className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10 bg-radial">
-              <strong className="font-semibold">A safe space for </strong>
-              <span className="text-logseq-50/80">your thoughts.</span>
-            </h1>
+            </> :
+            <>
+              <h1
+                className="text-4xl -mt-[230px] leading-9 pb-2 sm:mt-0 sm:text-6xl sm:text-center sm:py-10 bg-radial">
+                <strong className="font-semibold">A safe space for </strong>
+                <span className="text-logseq-50/80">your thoughts.</span>
+              </h1>
 
-            <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
-              <span className="text-logseq-50/80">Designed to store your </span>
-              <strong className="font-normal">interests, questions, ideas, favorite quotes,
-                reminders, reading and meeting
-                notes </strong>
-              <span className="text-logseq-50/80">easily and future-proof:</span>
-            </h2>
-          </>
-        }
-      </div>
+              <h2 className="text-lg sm:text-[24px] sm:px-60 sm:text-center">
+                <span className="text-logseq-50/80">Designed to store your </span>
+                <strong className="font-normal">interests, questions, ideas, favorite quotes,
+                  reminders, reading and meeting
+                  notes </strong>
+                <span className="text-logseq-50/80">easily and future-proof:</span>
+              </h2>
+            </>}
+        </div>)}
 
       {/*  descriptions */}
-      {props.downloadsPage ?
-        null :
-        <div className="cards">
-          {[
-            [<GithubLogo size={34} weight={'duotone'}/>, 'Open source', 'Free forever for personal use'],
-            [<Keyhole size={34} weight={'duotone'}/>, 'Privacy first', 'You own your data locally forever'],
-            [<DeviceMobile weight={'duotone'} size={34}/>, 'Mobile apps', 'Available for iOS & Android'],
-            [<FileText size={34} weight={'duotone'}/>, 'Markdown files', 'Open your notes in other tools'],
-            [<HandWaving size={34} weight={'duotone'}/>, 'Strong community', (
-              <span className="flex space-x-2 items-center">
+      {!props.hideFeaturesSection &&
+        (props.downloadsPage ?
+          null :
+          <div className="cards">
+            {[
+              [<GithubLogo size={34} weight={'duotone'}/>, 'Open source', 'Free forever for personal use'],
+              [<Keyhole size={34} weight={'duotone'}/>, 'Privacy first', 'You own your data locally forever'],
+              [<DeviceMobile weight={'duotone'} size={34}/>, 'Mobile apps', 'Available for iOS & Android'],
+              [<FileText size={34} weight={'duotone'}/>, 'Markdown files', 'Open your notes in other tools'],
+              [<HandWaving size={34} weight={'duotone'}/>, 'Strong community', (
+                <span className="flex space-x-2 items-center">
               <i className="w-[6px] h-[6px] bg-green-600 rounded-2xl"></i>
               <span className="opacity-50">{appState.discord?.approximate_presence_count.get() || '-'} users online currently</span>
             </span>)],
-            [<Globe size={34} weight={'duotone'}/>, 'Localization', 'Translated in many languages'],
-            [<PuzzlePiece size={34} weight={'duotone'}/>, '150+ Plugins', 'Extend functionality to your needs'],
-            [<Swatches size={34} weight={'duotone'}/>, '30+ Themes', 'Customize look and feel'],
-          ].map(([icon, title, desc]) => {
-            if (typeof desc === 'string') {
-              desc = (<span className="opacity-50">{desc}</span>)
-            }
-            return (
-              <FooterDescCard key={title} icon={icon} title={title} desc={desc}/>
-            )
-          })}
-        </div>}
+              [<Globe size={34} weight={'duotone'}/>, 'Localization', 'Translated in many languages'],
+              [<PuzzlePiece size={34} weight={'duotone'}/>, '150+ Plugins', 'Extend functionality to your needs'],
+              [<Swatches size={34} weight={'duotone'}/>, '30+ Themes', 'Customize look and feel'],
+            ].map(([icon, title, desc]) => {
+              if (typeof desc === 'string') {
+                desc = (<span className="opacity-50">{desc}</span>)
+              }
+              return (
+                <FooterDescCard key={title} icon={icon} title={title} desc={desc}/>
+              )
+            })}
+          </div>)}
 
       {/* features */}
-      {props.downloadsPage ? <FeaturesBoardsDL/> : <FeaturesBoards/>}
+      {
+        !props.hideFeaturesSection &&
+        (props.downloadsPage ? <FeaturesBoardsDL/> : <FeaturesBoards/>)
+      }
 
       {/* downloads */}
       <div className="actions">
-        <h1 className="text-4xl leading-9 sm:leading-normal sm:text-6xl tracking-wide">
+        <h1 className="text-4xl leading-10 sm:leading-normal sm:text-6xl tracking-wide">
           <span className="opacity-70">Think faster, </span>
           <strong className="font-semibold">think better!</strong>
         </h1>
 
-        <h2 className="text-lg mt-2 sm:mt-0 sm:text-3xl sm:text-center sm:tracking-wide">
+        <h2 className="text-lg mt-4 sm:mt-0 sm:text-3xl sm:text-center sm:tracking-wide">
           <strong className="opacity-70 font-normal">By thinking and writing with Logseq, you'll </strong><br/>
           <span className="">gain confidence in what you know and <br/>
             stop worrying about forgetting </span>
@@ -281,8 +287,8 @@ export function LandingFooterNav () {
   const links = (
     <div className="links flex flex-col justify-center">
       <p className="flex space-x-4 text-xs text-gray-300/90 pb-1">
-        <a href="https://blog.logseq.com/privacy-policy/" target="_blank">Privacy</a>
-        <a href="https://blog.logseq.com/terms/" target="_blank">Terms</a>
+        <Link to={"/privacy-policy"}>Privacy</Link>
+        <Link to={"/terms"}>Terms</Link>
         <a href="mailto:hi@logseq.com">Contact Us</a>
       </p>
       <p className="text-xs opacity-40 py-1">
@@ -325,7 +331,7 @@ export function LandingFooterNav () {
         <Button
           leftIcon={<img className="w-10" src={imageProductHuntLogo} alt="image"/>}
           rightIcon={<ArrowSquareOut className="opacity-50"/>}
-          className="w-full py-1 px-2 bg-transparent border-2 border-logseq-400"
+          className="w-full !py-1 !px-3 bg-transparent border-2 border-logseq-400"
           href="https://www.producthunt.com/products/logseq"
         >
           <span className="opacity-90">

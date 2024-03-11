@@ -94,13 +94,17 @@ body {
 
       &.app-link-active {
         @apply text-gray-300 font-semibold sm:opacity-100;
+
+        > * {
+          @apply opacity-100;
+        }
       }
     }
   }
 
   .right-group {
     &-inner {
-      @apply invisible absolute left-0 top-16 w-full
+      @apply invisible absolute left-0 top-[54px] w-full
       flex-col space-x-0 items-center px-2 pb-6 opacity-0 transition-opacity duration-300
       sm:flex sm:flex-row sm:top-0 sm:sticky sm:opacity-100 sm:visible
       sm:px-0 sm:space-x-6 sm:pb-0 sm:translate-y-0;
@@ -157,24 +161,25 @@ body {
 
 .app-logo-embossed {
   background: linear-gradient(to right, #0E2A35, #0E2A35) content-box content-box,
-              linear-gradient(to bottom, rgba(133,200,200,0.1), rgba(133,200,200,0), rgba(0,0,0,0.2)) border-box,
-              #0E2A35 border-box;
+  linear-gradient(to bottom, rgba(133, 200, 200, 0.1), rgba(133, 200, 200, 0), rgba(0, 0, 0, 0.2)) border-box,
+  #0E2A35 border-box;
   padding: 2px;
   display: grid;
   place-items: center;
   border-radius: 16px;
-  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2))
-          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.2)) drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.1));
   transition: filter 300ms ease-out;
 
 }
 
-.dockify-app-logo:hover .app-logo-embossed {
-  cursor: pointer;
-  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3))
-          drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));
+.app-terms {
+  padding-top: 80px;
 }
 
+.dockify-app-logo:hover .app-logo-embossed {
+  cursor: pointer;
+  filter: drop-shadow(0px 4px 16px rgba(133, 200, 200, 0.3)) drop-shadow(0px 8px 6px rgba(133, 200, 200, 0.2));
+}
 
 .app-privacy-banner {
   @apply fixed left-0 bottom-0 right-0 p-6 flex justify-center
@@ -186,6 +191,70 @@ body {
 
     > button {
       @apply justify-center;
+    }
+  }
+}
+
+.ui-modal {
+  @apply fixed w-screen h-screen flex justify-center
+  top-0 left-0 z-50 bg-black/50 overflow-auto py-10;
+
+  &.hidden {
+    @apply !hidden;
+  }
+
+  &-inner {
+    @apply relative m-auto;
+  }
+
+  &-content {
+    @apply relative bg-logseq-700 border border-logseq-600 rounded-xl
+    w-[90vw] max-w-[840px] min-h-[600px] p-6;
+  }
+
+  &-close {
+    @apply absolute top-6 right-6 opacity-60 hover:opacity-80
+    cursor-pointer active:opacity-50 select-none;
+  }
+
+  &.as-confirm {
+    .ui-modal-content {
+      @apply min-h-[180px] max-w-[700px];
+    }
+
+    .ui-modal-inner {
+      @apply top-[-50px] animate-in zoom-in duration-300;
+    }
+  }
+
+  &-container-locked {
+    overflow-y: hidden;
+  }
+}
+
+.ui-dropdown {
+  @apply relative;
+
+  .sub-items {
+    transform-origin: top;
+    transform: scaleY(0);
+    min-width: 270px;
+    display: flex;
+
+    &-inner {
+      @apply border bg-logseq-600 rounded-md overflow-hidden
+      border-logseq-400 p-1;
+
+      > a {
+        @apply select-none cursor-pointer rounded-md
+        pl-3 pr-2 py-1.5 hover:bg-logseq-400/80 transition-all;
+      }
+    }
+  }
+
+  &.is-active {
+    .sub-items {
+      transform: scaleY(1);
     }
   }
 }

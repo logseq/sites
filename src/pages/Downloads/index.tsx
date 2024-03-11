@@ -2,13 +2,14 @@ import './index.css'
 import {
   AppleLogo, AppStoreLogo, CaretDown, DownloadSimple, GooglePlayLogo,
   LinuxLogo, QrCode, WindowsLogo,
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
 import { Button } from '../../components/Buttons'
 import { LandingFooterDesc, LandingFooterNav } from '../Landing'
 import { useAppState } from '../../state'
 import { navigateTabs } from '../../components/utils'
+import { Dropdown } from '../../components/Dropdown'
 
 const iosImageQr: any = new URL('assets/ios_app_qr.png', import.meta.url)
 const intelImageIcon: any = new URL('assets/icon_intel.png', import.meta.url)
@@ -163,7 +164,6 @@ export function WrapGlobalDownloadButton (
   const subItems = isMacOS ? (
     <div className="sub-items flex flex-col absolute top-5 right-0 w-full pt-6">
       <div className="sub-items-inner">
-
         <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
           <div className="flex items-center">
             <div className="flex pr-2">
@@ -182,7 +182,6 @@ export function WrapGlobalDownloadButton (
             </div>
           </div>
         </a>
-
 
         <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-arm64')}>
           <div className="flex items-center">
@@ -215,8 +214,11 @@ export function WrapGlobalDownloadButton (
   const activePlatformIcon = active?.[1]
 
   return (
-    <div className={cx('global-downloads-wrap', className)}
-         ref={wrapElRef}
+    <Dropdown
+      className={cx('global-downloads-wrap', className)}
+      ref={wrapElRef}
+      items={subItems}
+      wrapItems={false}
     >
       <a className={'block'} target={'_blank'} href={resolveDownloadHref(appState, active, isIOS)}>
         {children({
@@ -227,9 +229,7 @@ export function WrapGlobalDownloadButton (
           rightIconFn,
         })}
       </a>
-
-      {subItems}
-    </div>
+    </Dropdown>
   )
 }
 

@@ -2,7 +2,7 @@ import {
   ArrowSquareOut,
   CircleWavyQuestion,
   Play,
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { GlassCard } from '../../components/Cards'
 import { WrapGlobalDownloadButton } from '../Downloads'

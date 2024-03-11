@@ -10,7 +10,7 @@ import {
   CheckCircle,
   Gauge,
   Browsers
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 import { AnimateInTurnStage } from '../../components/Animations'
 import cx from 'classnames'
 import { useState } from 'react'

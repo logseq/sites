@@ -1,12 +1,12 @@
-import { Link, NavLink } from 'react-router-dom'
-import { ArrowSquareOut, List, X } from 'phosphor-react'
+import { Link, NavLink, useSearchParams } from 'react-router-dom'
+import { ArrowSquareOut, List, X } from '@phosphor-icons/react'
 import { ReactElement, useEffect, useState } from 'react'
 import { WrapGlobalDownloadButton } from '../pages/Downloads'
 import cx from 'classnames'
 
 const logo: any = new URL('/assets/logo-with-border.png', import.meta.url)
 
-export function LinksGroup (
+export function LinksGroup(
   props: {
     items: Array<{ link: string, label: string | ReactElement, icon?: ReactElement }>,
 
@@ -32,6 +32,7 @@ export function LinksGroup (
         return (
           <li className={'flex items-center'}
               key={it.label.toString()}
+              data-link={it.link?.toString().toLowerCase()}
           >
             {it.link.startsWith('http')
               ?
@@ -53,8 +54,12 @@ export function LinksGroup (
   )
 }
 
-export function Headbar () {
+export function Headbar() {
   const [rightActive, setRightActive] = useState(false)
+  const [urlParams] = useSearchParams()
+
+  // without header
+  if (urlParams.has('x')) return
 
   useEffect(() => {
     const outsideHandler = (e: MouseEvent) => {
@@ -85,6 +90,12 @@ export function Headbar () {
 
   const leftLinks = [
     { label: 'Home', link: '/' },
+    // {
+    //   label: (<>
+    //     <span>Pro</span>
+    //     <sup className={'pl-1 opacity-90 group-hover:opacity-100 text-xs font-medium text-pro-500'}>New</sup>
+    //   </>), link: '/pro'
+    // },
     { label: 'Downloads', link: '/downloads' },
   ]
 
@@ -111,7 +122,7 @@ export function Headbar () {
       <div className={'flex items-center justify-between w-full'}>
         <div className={'flex items-center h-full flex-1'}>
           <Link to={'/'} className={'app-logo-link mr-2'} aria-label={`Home`}>
-            <img src={logo} alt={'Logseq'} />
+            <img src={logo} alt={'Logseq'}/>
           </Link>
 
           <LinksGroup
