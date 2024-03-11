@@ -82,14 +82,14 @@ export function App() {
         <Routes>
           <Route path={'/'} element={<HomePage/>}/>
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
-          <Route path={'/pro'} element={<ProPage/>}></Route>
+          {/*<Route path={'/pro'} element={<ProPage/>}></Route>*/}
           <Route path={'/terms'} element={<TermsPage/>}></Route>
           <Route path={'/privacy-policy'} element={<PrivacyPolicyPage/>}></Route>
-          <Route path={'/login'} element={<UserEntryPage/>}></Route>
-          <Route path={'/account'} element={<UserEntryPage/>}>
-            <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>
-            <Route path={'subscriptions'} element={<LemoSubscriptions/>}/>
-          </Route>
+          {/*<Route path={'/login'} element={<UserEntryPage/>}></Route>*/}
+          {/*<Route path={'/account'} element={<UserEntryPage/>}>*/}
+          {/*  <Route path={''} element={<AccountUserInfoPane userInfo={userInfoState.get({ noproxy: true })}/>}/>*/}
+          {/*  <Route path={'subscriptions'} element={<LemoSubscriptions/>}/>*/}
+          {/*</Route>*/}
         </Routes>
 
         {/*  modals */}

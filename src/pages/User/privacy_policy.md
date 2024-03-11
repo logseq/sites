@@ -19,7 +19,7 @@ This Privacy Policy sets forth the nature, purpose, use and sharing of any infor
 
 **B. What We Collect**
 
-    We act as a data “controller,” meaning that we collect certain Personal Information from you as you engage the website, our services, or contact us. Data privacy and protection laws across the United States and the European Union (“**_Privacy Laws_**”) apply to how we collect that information and what we use it for. To help us comply with Privacy Laws, and because we care about being transparent with you, below is a chart detailing what sort of personal information we collect about you, how we collect it, and why. In some cases, we may collect different information from you based on the type of relationship we have with you, and in such cases the differences are noted.
+We act as a data “controller,” meaning that we collect certain Personal Information from you as you engage the website, our services, or contact us. Data privacy and protection laws across the United States and the European Union (“**_Privacy Laws_**”) apply to how we collect that information and what we use it for. To help us comply with Privacy Laws, and because we care about being transparent with you, below is a chart detailing what sort of personal information we collect about you, how we collect it, and why. In some cases, we may collect different information from you based on the type of relationship we have with you, and in such cases the differences are noted.
 
 <table>
   <tr>

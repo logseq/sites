@@ -98,10 +98,10 @@ form[data-amplify-authenticator-confirmsignup] {
 }
 
 .logseq-terms-content {
-  @apply px-8 py-10 max-w-[1140px] text-logseq-50;
+  @apply px-8 py-10 max-w-[1040px] text-logseq-50;
 
   > h1 {
-    @apply text-3xl font-bold mb-8 text-center;
+    @apply text-3xl font-bold mb-8;
   }
 
   > p {
