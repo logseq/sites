@@ -60,7 +60,7 @@ export function HomePage () {
                         'sm:flex flex-col justify-center sm:text-center text-2xl tracking-wide invisible',
                         t[1] && 'ani-fade-in')}>
                     <span className="text-logseq-50/80">Everyday you’re bombarded with information.</span>
-                    <span className="text-logseq-50/80">Your non-connected notes lead to missing context when</span>
+                    <span className="text-logseq-50/80">Your non-connected notes lead to missing context when </span>
                     <strong className="font-normal">
                       <span className="text-logseq-50/80">you need it. </span>
                       That gets future-you into trouble.
