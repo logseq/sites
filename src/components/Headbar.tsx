@@ -101,13 +101,18 @@ export function Headbar() {
 
   const rightLinks = [
     {
-      label: 'Jobs',
-      link: 'https://blog.logseq.com/jobs',
+      label: 'Community Hub',
+      link: 'https://hub.logseq.com',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
-      label: 'Community Hub',
-      link: 'https://hub.logseq.com',
+      label: 'Docs',
+      link: 'https://docs.logseq.com/',
+      icon: <ArrowSquareOut size={15} weight={'bold'}/>,
+    },
+    {
+      label: 'Jobs',
+      link: 'https://blog.logseq.com/jobs',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
