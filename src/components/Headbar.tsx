@@ -101,8 +101,8 @@ export function Headbar() {
 
   const rightLinks = [
     {
-      label: 'Community Hub',
-      link: 'https://hub.logseq.com',
+      label: 'Forum',
+      link: 'https://discuss.logseq.com',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
@@ -111,8 +111,8 @@ export function Headbar() {
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
-      label: 'Jobs',
-      link: 'https://blog.logseq.com/jobs',
+      label: 'Github',
+      link: 'https://github.com/logseq',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
