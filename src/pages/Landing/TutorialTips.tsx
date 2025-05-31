@@ -355,39 +355,6 @@ export function TutorialTips () {
 
       {/*  more resources */}
       <div className="ft mt-14 sm:flex sm:h-28 sm:mt-28">
-        <div className="flex-1 sm:flex flex-col justify-center items-center">
-          <h2 className="text-xl sm:text-2xl">More Resources</h2>
-          <div className="sm:flex sm:space-x-6 py-5">
-            <div>
-              <Button
-                leftIcon={<MonitorPlay size={24} weight={'duotone'}/>}
-                href={`https://hub.logseq.com/`}
-                className={'w-full sm:w-auto'}
-              >
-                Knowledge Hub
-              </Button>
-              <span
-                className="hidden sm:inline-block text-[11px] pt-2 text-center w-full text-gray-400/80">
-                Accessible content for new users
-              </span>
-            </div>
-
-            <div className={'mt-3.5 border-b pb-8 border-b-logseq-300 sm:border-0 sm:mt-0'}>
-              <Button
-                className="bg-logseq-700 w-full sm:w-auto"
-                leftIcon={<Notebook size={24} weight={'duotone'}/>}
-                href={`https://docs.logseq.com/#/page/Contents`}
-              >
-                Documentation
-              </Button>
-              <span
-                className="hidden sm:inline-block text-[11px]  pt-2 text-center w-full text-gray-400/80">
-                Feature details
-              </span>
-            </div>
-          </div>
-        </div>
-
         <div
           className="flex-1 sm:flex flex-col justify-center items-center sm:border-l sm:border-l-logseq-500">
           <h2 className="text-xl sm:text-2xl mt-2 sm:-mt-8">A helpful community</h2>
