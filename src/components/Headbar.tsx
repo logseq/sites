@@ -111,7 +111,7 @@ export function Headbar() {
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
-      label: 'Github',
+      label: 'GitHub',
       link: 'https://github.com/logseq',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
