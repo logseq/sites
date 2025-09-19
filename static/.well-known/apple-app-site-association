@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "K378MFWK59.com.logseq.logseq",
+        "paths": [ "/mobile/go/*" ]
+      }
+    ]
+  }
+}
