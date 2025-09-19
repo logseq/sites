@@ -3,8 +3,13 @@
     "apps": [],
     "details": [
       {
-        "appIDs": ["K378MFWK59.com.logseq.logseq"],
-        "paths": [ "*" ]
+        "appIDs": [ "K378MFWK59.com.logseq.logseq" ],
+        "components": [
+          {
+            "/": "/mobile/go/*",
+            "comment": "All deep links under /mobile/go/ open in Logseq app"
+          }
+        ]
       }
     ]
   }
