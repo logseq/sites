@@ -164,25 +164,6 @@ export function WrapGlobalDownloadButton (
   const subItems = isMacOS ? (
     <div className="sub-items flex flex-col absolute top-5 right-0 w-full pt-6">
       <div className="sub-items-inner">
-        <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
-          <div className="flex items-center">
-            <div className="flex pr-2">
-              <IntelIcon className={'bg-black w-8 h-8'}/>
-            </div>
-
-            <div
-              className={'w-full flex flex-col opacity-80'}
-            >
-            <span className="text-sm">
-              Intel chip
-            </span>
-              <span className="text-[11px] opacity-60">
-              Most common in Macs
-            </span>
-            </div>
-          </div>
-        </a>
-
         <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-arm64')}>
           <div className="flex items-center">
             <div className="flex pr-2">
@@ -193,10 +174,29 @@ export function WrapGlobalDownloadButton (
               className={'w-full flex flex-col opacity-80'}
             >
             <span className="text-sm">
-              Apple silicon
+              Apple silicon (ARM)
             </span>
               <span className="text-[11px] opacity-60">
-              Macs from November 2020 and later
+              Most modern Macs from 2020 onward
+            </span>
+            </div>
+          </div>
+        </a>
+
+         <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
+          <div className="flex items-center">
+            <div className="flex pr-2">
+              <IntelIcon className={'bg-black w-8 h-8'}/>
+            </div>
+
+            <div
+              className={'w-full flex flex-col opacity-80'}
+            >
+            <span className="text-sm">
+              Intel chip (x64)
+            </span>
+              <span className="text-[11px] opacity-60">
+              Older macOS devices with Intel processors
             </span>
             </div>
           </div>
