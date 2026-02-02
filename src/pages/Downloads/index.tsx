@@ -183,7 +183,7 @@ export function WrapGlobalDownloadButton (
           </div>
         </a>
 
-         <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
+        <a className={'block'} href={resolveDownloadHref(appState, active, isIOS, 'macos-x64')}>
           <div className="flex items-center">
             <div className="flex pr-2">
               <IntelIcon className={'bg-black w-8 h-8'}/>
