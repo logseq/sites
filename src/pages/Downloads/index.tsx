@@ -177,7 +177,7 @@ export function WrapGlobalDownloadButton (
               Intel chip
             </span>
               <span className="text-[11px] opacity-60">
-              Most common in Macs
+              Macs from before November 2020
             </span>
             </div>
           </div>
