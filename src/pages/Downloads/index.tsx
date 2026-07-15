@@ -177,7 +177,7 @@ export function WrapGlobalDownloadButton (
               Apple silicon (ARM)
             </span>
               <span className="text-[11px] opacity-60">
-              Macs from before November 2020
+              Macs after 2020 with Apple M processors
             </span>
             </div>
           </div>
