@@ -1,7 +1,7 @@
 import {
   ArrowSquareOut, CloudCheck, DeviceMobile, FileText,
   GithubLogo, Globe, HandWaving, Keyhole, Play,
-  PuzzlePiece, ScribbleLoop, Swatches, TwitterLogo, UserCirclePlus
+  PuzzlePiece, Swatches, TwitterLogo, UserCirclePlus
 } from '@phosphor-icons/react'
 import { Button } from '../../components/Buttons'
 import { AppLogoEmbossed, FloatGlassButton, imageProductHuntLogo } from './common'
@@ -50,61 +50,11 @@ export function FeaturesBoards () {
           <div className="r img-wrap flex-1 hidden sm:block"></div>
         </div>
       </div>
-
-      <div className="board-item hidden sm:block">
-        <div className="inner whiteboard">
-          <div className="l img-wrap flex-1 hidden sm:flex"></div>
-
-          <div className="r info-wrap flex-1">
-            <strong><ScribbleLoop size={38} weight={'duotone'}/></strong>
-            <h1>Whiteboards <sup>BETA</sup></h1>
-
-            <h2>
-              <span>A new canvas</span> <br/>
-              <span className="text-logseq-50/80">for your thoughts.</span>
-            </h2>
-
-            <h3 className="hidden sm:block">
-              <span className="text-logseq-50/80">Place any of your thoughts from the knowledge base <br/>
-              or new ones next to each other on an infinite canvas</span> <br/>
-              <span>to connect, associate and understand in new ways.</span>
-            </h3>
-          </div>
-
-        </div>
-      </div>
     </div>
   )
 }
 
 export function FeaturesBoardsDL () {
-  const appState = useAppState()
-
-  const itemWhiteboard = (
-    <div className="board-item whiteboard flex-1">
-      <div className="inner">
-        <div className="r info-wrap flex-1">
-          <strong><ScribbleLoop size={38} weight={'duotone'}/></strong>
-          <h1>Whiteboards <sup>BETA</sup></h1>
-
-          {appState.sm.get() ?
-            (
-              <h2>
-                <span>A new canvas </span> <br/>
-                <span className="text-logseq-50/80">for your thoughts.</span>
-              </h2>
-            ) : (
-              <h2>
-                <span>A new canvas </span>
-                <span className="text-logseq-50/80">for your<br/>thoughts.</span>
-              </h2>
-            )}
-        </div>
-
-      </div>
-    </div>
-  )
-
   return (
     <div className={'app-features-boards dl-page hidden sm:block'}>
       <div className="board-item-wrap">
@@ -122,13 +72,11 @@ export function FeaturesBoardsDL () {
           </div>
         </div>
 
-        {appState.sm.get() && (itemWhiteboard)}
-
         <div className="board-item rtc-collaboration">
           <div className="inner">
             <div className="l info-wrap flex-1">
               <strong><UserCirclePlus size={38} weight={'duotone'}/></strong>
-              <h1>Real-time collaboration<sup> COMING SOON</sup></h1>
+              <h1>Real-time collaboration</h1>
               <h2>
                 <span className="text-logseq-50/80">
                   Great knowledge is
@@ -141,12 +89,6 @@ export function FeaturesBoardsDL () {
           </div>
         </div>
       </div>
-
-      {!appState.sm.get() && (
-        <div className="board-item-wrap flex w-full">
-          {itemWhiteboard}
-        </div>
-      )}
     </div>
   )
 }
@@ -271,9 +213,9 @@ export function LandingFooterDesc (props: {
             leftIcon={<Play size={18} weight={'duotone'}/>}
             rightIcon={<ArrowSquareOut size={18} className={'opacity-70'}/>}
             className={'w-full bg-logseq-600 mt-4 sm:w-auto sm:mt-0'}
-            href={'https://demo.logseq.com'}
+            href={'https://app.logseq.com'}
           >
-            Live Demo
+            Web app
           </Button>
         </div>
       </div>
@@ -287,6 +229,7 @@ export function LandingFooterNav () {
   const links = (
     <div className="links flex flex-col justify-center">
       <p className="flex space-x-4 text-xs text-gray-300/90 pb-1">
+        <a href="https://logseq.io/p/NX4mc_ggEV" target="_blank" rel="noreferrer">Roadmap</a>
         <Link to={"/privacy-policy"}>Privacy</Link>
         <Link to={"/terms"}>Terms</Link>
         <a href="mailto:hi@logseq.com">Contact Us</a>

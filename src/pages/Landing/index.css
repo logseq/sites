@@ -1055,23 +1055,6 @@ h1, h2, h3 {
         }
       }
 
-      &.whiteboard {
-        @apply pt-4 pb-5
-        sm:pt-10 sm:pb-12;
-
-        > .img-wrap {
-          @apply -mb-12 -ml-16;
-
-          background-image: url("./assets/whiteboard-demo.png");
-          background-position-x: left;
-          background-position-y: bottom;
-          border-radius: 22px;
-        }
-
-        > .r {
-          @apply sm:pl-16;
-        }
-      }
     }
   }
 
@@ -1120,31 +1103,6 @@ h1, h2, h3 {
             position: relative;
             left: -16px;
             background-size: contain;
-          }
-        }
-      }
-
-      &.whiteboard {
-        @apply flex;
-
-        > .inner {
-          @apply pt-4 flex flex-1 pb-20 -mx-4 -mt-4
-          sm:pt-10 sm:-mx-8 sm:-mb-2 sm:px-8;
-
-          border-radius: 1em;
-          overflow: hidden;
-          background-image: url("./assets/whiteboard-demo-small.png");
-          background-repeat: no-repeat;
-          background-size: 100%;
-          background-position: bottom;
-
-          @screen sm {
-            background-size: contain;
-            background-image: url("./assets/whiteboard_canvas_fadeout.png");
-          }
-
-          > .r {
-            @apply px-4 py-4 sm:px-0 sm:py-0;
           }
         }
       }

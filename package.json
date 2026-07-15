@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "rm -rf .parcel-cache && parcel ./index.html --public-url http://localhost:1234/",
     "build": "rm -rf ./dist && parcel build ./index.html --public-url $PUBLIC_URL && mkdir -p ./dist/public && cp -rf ./public/* ./dist/public",
+    "test:landing-web-app": "rm -rf .parcel-cache && PUBLIC_URL=/ npm run build && node --test test/landing-web-app.test.mjs",
     "dev:cloudflare": "wrangler2 dev"
   },
   "devDependencies": {
