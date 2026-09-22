@@ -107,7 +107,7 @@ export function Headbar() {
     },
     {
       label: 'Docs',
-      link: 'https://docs.logseq.com/',
+      link: 'https://github.com/logseq/docs/blob/master/db-version.md',
       icon: <ArrowSquareOut size={15} weight={'bold'}/>,
     },
     {
