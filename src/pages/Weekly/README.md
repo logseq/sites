@@ -1,18 +1,21 @@
 # Weekly highlights
 
-`weekly.json` is the only file to edit when refreshing [/weekly](https://logseq.com/weekly). The page reads that file. It does not need a UI change.
+`weekly.json` is the only file to edit when refreshing [/weekly](https://logseq.com/weekly).
 
-Replace the file each week. Keep the list short: about 5 to 10 items, most important first.
+Source is merged pull requests in [`logseq/logseq`](https://github.com/logseq/logseq) only. Do not include other Logseq repos, issues, or invented PR numbers.
 
-## Schema
+## Shape
+
+`weeks` is an array, newest first. Keep about three months at most. The page defaults to the latest week and shows at most 10 items, in the order written.
+
+Each week:
 
 | Field | Required | Notes |
 | --- | --- | --- |
-| `_note` | no | Marker for sample data. While it is present, the page shows a short placeholder hint. Remove it when the items are real. |
-| `weekStart` | yes | Inclusive start date, `YYYY-MM-DD`. |
-| `weekEnd` | yes | Inclusive end date, `YYYY-MM-DD`. |
+| `weekStart` | yes | Inclusive `YYYY-MM-DD`. Also the dropdown value. |
+| `weekEnd` | yes | Inclusive `YYYY-MM-DD`. |
 | `updatedAt` | yes | ISO-8601 datetime for the “Updated …” line. |
-| `items` | yes | Ordered array. The page shows the first 10 entries and does not reorder them. |
+| `items` | yes | Ordered array, max 10 shown. |
 
 Each item:
 
@@ -20,9 +23,9 @@ Each item:
 | --- | --- | --- |
 | `title` | yes | Short. |
 | `summary` | no | One sentence. |
-| `link` | no | A real PR, issue, or blog URL. Use `#` or omit the field for a placeholder. Do not invent GitHub numbers. |
-| `tags` | no | Short labels, for example `Sync` or `Mobile`. |
-| `category` | no | Optional single label. Shown with `tags`. |
-| `priority` | no | Optional number for whoever prepares the file. Display order is the array order, not this field. |
+| `link` | no | One real `logseq/logseq` pull request URL. |
+| `tags` | no | Optional. Not shown as badges. |
+| `category` | no | Optional. Not shown as badges. |
+| `priority` | no | Optional metadata. Display order is array order. |
 
-Fewer than 5 items is fine. The page renders whatever is there. An empty `items` array shows a quiet empty state.
+A week with fewer than 5 items still renders as-is.

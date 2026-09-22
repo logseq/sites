@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { LandingFooterNav } from '../Landing'
 import weeklyData from './weekly.json'
@@ -13,8 +14,15 @@ type WeeklyItem = {
   priority?: number
 }
 
+type WeeklyWeek = {
+  weekStart?: string
+  weekEnd?: string
+  updatedAt?: string
+  items?: WeeklyItem[]
+}
+
 type WeeklyFile = {
-  _note?: string
+  weeks?: WeeklyWeek[]
   weekStart?: string
   weekEnd?: string
   updatedAt?: string
@@ -61,7 +69,7 @@ function formatWeekRange (startIso?: string, endIso?: string): string {
 
   if (start) return monthDayYear.format(start)
   if (end) return monthDayYear.format(end)
-  return ''
+  return 'Unknown week'
 }
 
 function formatUpdated (iso?: string): string {
@@ -76,6 +84,23 @@ function formatUpdated (iso?: string): string {
   }).format(date)
 }
 
+function weekKey (week: WeeklyWeek): string {
+  return (week.weekStart || week.weekEnd || '').slice(0, 10)
+}
+
+function weeksFromFile (file: WeeklyFile): WeeklyWeek[] {
+  const source = Array.isArray(file.weeks)
+    ? file.weeks
+    : (file.weekStart || file.weekEnd || file.items)
+      ? [file]
+      : []
+
+  return source
+    .filter(week => week && (week.weekStart || week.weekEnd))
+    .slice()
+    .sort((a, b) => weekKey(b).localeCompare(weekKey(a)))
+}
+
 function visibleHref (link?: string): string | null {
   if (!link) return null
   const href = link.trim()
@@ -83,100 +108,120 @@ function visibleHref (link?: string): string | null {
   return href
 }
 
-function labelsFor (item: WeeklyItem): string[] {
-  const labels: string[] = []
-  if (item.category?.trim()) labels.push(item.category.trim())
-  for (const tag of item.tags || []) {
-    const text = tag?.trim()
-    if (text && !labels.includes(text)) labels.push(text)
-  }
-  return labels
+function itemsFor (week?: WeeklyWeek): WeeklyItem[] {
+  if (!week || !Array.isArray(week.items)) return []
+  return week.items
+    .filter(item => item && typeof item.title === 'string' && item.title.trim())
+    .slice(0, MAX_ITEMS)
 }
 
 function WeeklyItemRow (props: { item: WeeklyItem }) {
-  const { item } = props
-  const href = visibleHref(item.link)
+  const title = props.item.title?.trim() || ''
+  const summary = props.item.summary?.trim()
+  const href = visibleHref(props.item.link)
   const external = !!href && /^https?:\/\//i.test(href)
-  const labels = labelsFor(item)
-  const title = item.title?.trim() || ''
 
-  const titleNode = href ? (
-    <a
-      href={href}
-      className="inline-flex items-center gap-2 hover:text-white"
-      {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-    >
-      {title}
-      {external && (
-        <>
-          <ArrowSquareOut size={16} className="opacity-50" aria-hidden="true"/>
-          <span className="sr-only"> (opens a new window)</span>
-        </>
+  const body = (
+    <>
+      <span className="block text-lg font-medium leading-snug text-gray-100">
+        {title}
+        {external && (
+          <ArrowSquareOut
+            size={15}
+            weight="bold"
+            className="ml-1.5 inline-block translate-y-px opacity-40"
+            aria-hidden="true"
+          />
+        )}
+      </span>
+      {summary && (
+        <span className="mt-1.5 block text-base font-normal leading-relaxed text-logseq-50/80">
+          {summary}
+        </span>
       )}
-    </a>
-  ) : title
+    </>
+  )
+
+  if (!href) {
+    return <li className="border-t border-white/10 py-5">{body}</li>
+  }
 
   return (
-    <li className="py-8 first:pt-0">
-      {labels.length > 0 && (
-        <p className="text-xs tracking-wide text-logseq-100/80">
-          {labels.join(' · ')}
-        </p>
-      )}
-      <h2 className="mt-2 text-xl font-medium tracking-wide text-gray-100 sm:text-2xl">
-        {titleNode}
-      </h2>
-      {item.summary?.trim() && (
-        <p className="mt-2 max-w-xl text-base leading-relaxed text-logseq-50/80">
-          {item.summary.trim()}
-        </p>
-      )}
+    <li className="border-t border-white/10">
+      <a
+        href={href}
+        className="block py-5 hover:text-white"
+        {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+      >
+        {body}
+        {external && <span className="sr-only"> (opens a new window)</span>}
+      </a>
     </li>
   )
 }
 
 export function WeeklyPage () {
-  const items = (Array.isArray(data.items) ? data.items : [])
-    .filter(item => item && typeof item.title === 'string' && item.title.trim())
-    .slice(0, MAX_ITEMS)
-  const range = formatWeekRange(data.weekStart, data.weekEnd)
-  const updated = formatUpdated(data.updatedAt)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const weeks = weeksFromFile(data)
+  const requested = searchParams.get('week') || ''
+  const selected = weeks.find(week => weekKey(week) === requested) || weeks[0]
+  const items = itemsFor(selected)
+  const range = selected ? formatWeekRange(selected.weekStart, selected.weekEnd) : ''
+  const updated = formatUpdated(selected?.updatedAt)
+
+  const onWeekChange = (key: string) => {
+    const next = new URLSearchParams(searchParams)
+    if (!key || key === weekKey(weeks[0] || {})) next.delete('week')
+    else next.set('week', key)
+    setSearchParams(next, { replace: true })
+  }
 
   return (
     <div className="app-page pt-20">
-      <article className="page-inner w-full px-6 pb-4 sm:px-10">
-        <div className="mx-auto max-w-2xl pb-16 pt-10 sm:pb-24 sm:pt-20">
-          <p className="text-sm tracking-wide text-logseq-100/80">Weekly</p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-wide text-logseq-50 sm:text-5xl sm:leading-tight">
-            What we worked on
+      <article className="page-inner w-full px-5 pb-8 sm:px-10">
+        <div className="mx-auto max-w-2xl pb-12 pt-8 sm:pb-20 sm:pt-16">
+          <h1 className="text-3xl font-semibold tracking-wide text-logseq-50">
+            Weekly
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-logseq-50/80">
-            A short list from the Logseq team. Not everything — just the few things worth knowing.
-          </p>
 
-          {(range || updated) && (
-            <p className="mt-8 text-sm text-logseq-100/80">
-              {range && <span>{range}</span>}
-              {range && updated && <span className="px-2 opacity-50">·</span>}
-              {updated && <span>Updated {updated}</span>}
-            </p>
+          {weeks.length > 0 && (
+            <div className="mt-8">
+              <label className="block text-sm text-logseq-100/80" htmlFor="weekly-week">
+                Week
+              </label>
+              <select
+                id="weekly-week"
+                className="mt-2 w-full max-w-full rounded-md border border-logseq-500/70 bg-logseq-800 px-3 py-3 text-base text-gray-100 sm:max-w-sm [color-scheme:dark]"
+                value={selected ? weekKey(selected) : ''}
+                onChange={(event) => onWeekChange(event.target.value)}
+              >
+                {weeks.map(week => {
+                  const key = weekKey(week)
+                  return (
+                    <option key={key} value={key}>
+                      {formatWeekRange(week.weekStart, week.weekEnd)}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
           )}
 
-          {data._note && (
-            <p className="mt-6 max-w-xl text-sm leading-relaxed text-logseq-100/70">
-              Sample page. These notes are placeholders, not a real week of work.
+          {updated && (
+            <p className="mt-4 text-sm text-logseq-100/70">
+              Updated {updated}
             </p>
           )}
 
           {items.length > 0 ? (
-            <ul className="mt-12 divide-y divide-logseq-600/60">
+            <ul className="mt-8 border-b border-white/10">
               {items.map((item, index) => (
                 <WeeklyItemRow item={item} key={`${item.title}-${index}`}/>
               ))}
             </ul>
           ) : (
-            <p className="mt-14 text-base text-logseq-50/70">
-              Nothing highlighted this week. Check back after the next update.
+            <p className="mt-10 text-base text-logseq-50/75">
+              {range ? `Nothing from ${range}.` : 'Nothing here yet.'}
             </p>
           )}
         </div>
