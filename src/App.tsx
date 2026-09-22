@@ -17,6 +17,7 @@ import { scrollToTop } from './components/utils'
 import cx from 'classnames'
 import { TermsPage } from './pages/User/Terms'
 import { PrivacyPolicyPage } from './pages/User/PrivacyPolicy'
+import { WeeklyPage } from './pages/Weekly'
 
 export function App() {
   const appState = useAppState()
@@ -82,6 +83,7 @@ export function App() {
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/terms'} element={<TermsPage/>}></Route>
           <Route path={'/privacy-policy'} element={<PrivacyPolicyPage/>}></Route>
+          <Route path={'/weekly'} element={<WeeklyPage/>}/>
         </Routes>
 
         {/*  modals */}

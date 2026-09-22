@@ -1,0 +1,51 @@
+{
+  "_note": "SAMPLE PLACEHOLDER. Not a real weekly update. Replace this entire file to publish real highlights. Omit link, or use \"#\", until you have a real URL. Do not invent GitHub issue or PR numbers. Remove _note once the content is real.",
+  "weekStart": "2026-09-15",
+  "weekEnd": "2026-09-21",
+  "updatedAt": "2026-09-22T09:00:00Z",
+  "items": [
+    {
+      "title": "Quicker property filters",
+      "summary": "Property filters on the database graph feel a bit snappier on larger graphs.",
+      "tags": ["DB graph"],
+      "priority": 1
+    },
+    {
+      "title": "Two devices, one page",
+      "summary": "We looked at what sync should do when two devices edit the same page offline.",
+      "tags": ["Sync"],
+      "priority": 2
+    },
+    {
+      "title": "Calmer iOS editing",
+      "summary": "The iOS editor is a little steadier with the keyboard up and text selected.",
+      "tags": ["Mobile"],
+      "priority": 3
+    },
+    {
+      "title": "Clearer sync status on Android",
+      "summary": "Android now says more plainly when a graph is still catching up.",
+      "category": "Mobile",
+      "priority": 4
+    },
+    {
+      "title": "A shorter first-graph intro",
+      "summary": "Drafted a smaller getting-started for opening a database graph the first time.",
+      "link": "#",
+      "tags": ["Docs"],
+      "priority": 5
+    },
+    {
+      "title": "Notes for plugin authors",
+      "summary": "Wrote down how a plugin can read the new graph model without guessing.",
+      "tags": ["Plugins"],
+      "priority": 6
+    },
+    {
+      "title": "Search that skipped fresh edits",
+      "summary": "Chased a few desktop searches that missed blocks edited earlier the same day.",
+      "tags": ["Desktop"],
+      "priority": 7
+    }
+  ]
+}
