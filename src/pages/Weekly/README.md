@@ -6,7 +6,9 @@ Source is merged pull requests in [`logseq/logseq`](https://github.com/logseq/lo
 
 ## Shape
 
-`weeks` is an array, newest first. Keep about three months at most. The page defaults to the latest week and shows at most 10 items, in the order written.
+`weeks` is an array, newest first. Keep at most about three months (14 weeks). The page drops anything older than that, defaults to the first week, and shows at most 10 items in the order written.
+
+The file currently has two real weeks from merged `logseq/logseq` pull requests. Add a week at the top when refreshing. Do not pad the file with placeholder weeks.
 
 Each week:
 

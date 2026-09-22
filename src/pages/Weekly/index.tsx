@@ -4,6 +4,7 @@ import { LandingFooterNav } from '../Landing'
 import weeklyData from './weekly.json'
 
 const MAX_ITEMS = 10
+const MAX_WEEKS = 14
 
 type WeeklyItem = {
   title?: string
@@ -99,6 +100,7 @@ function weeksFromFile (file: WeeklyFile): WeeklyWeek[] {
     .filter(week => week && (week.weekStart || week.weekEnd))
     .slice()
     .sort((a, b) => weekKey(b).localeCompare(weekKey(a)))
+    .slice(0, MAX_WEEKS)
 }
 
 function visibleHref (link?: string): string | null {
