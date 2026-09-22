@@ -1,0 +1,84 @@
+{
+  "weeks": [
+    {
+      "weekStart": "2026-09-15",
+      "weekEnd": "2026-09-21",
+      "updatedAt": "2026-09-22T15:30:00Z",
+      "items": [
+        {
+          "title": "Faster DB graph scans",
+          "summary": "Cut several O(graph) paths in views, journals, refs, and startup revision checks so larger graphs stay responsive.",
+          "link": "https://github.com/logseq/logseq/pull/13347",
+          "priority": 1
+        },
+        {
+          "title": "Snappier block editing",
+          "summary": "Stopped re-rendering the editor box on every keystroke and sized the textarea with CSS field-sizing where supported.",
+          "link": "https://github.com/logseq/logseq/pull/13211",
+          "priority": 2
+        },
+        {
+          "title": "More reliable DB worker",
+          "summary": "Moved lock ownership to SQLite and keep the worker healthy across system sleep so graphs do not get stuck after idle.",
+          "link": "https://github.com/logseq/logseq/pull/13302",
+          "priority": 3
+        },
+        {
+          "title": "Library and sidebar polish",
+          "summary": "Hide library blocks, collapse nested pages more cleanly, and refresh favorites after drag-and-drop reorder.",
+          "link": "https://github.com/logseq/logseq/pull/13349",
+          "priority": 4
+        },
+        {
+          "title": "Property paste and undo fixes",
+          "summary": "Copy and paste text property values as blocks, restore property values after undo, and keep child page content on selection delete.",
+          "link": "https://github.com/logseq/logseq/pull/13324",
+          "priority": 5
+        },
+        {
+          "title": "Query and table view fixes",
+          "summary": "Fixed query result views and set-literal editing, restored property columns, and sped up DB table scrolling.",
+          "link": "https://github.com/logseq/logseq/pull/13318",
+          "priority": 6
+        },
+        {
+          "title": "CLI and Windows build fixes",
+          "summary": "Added force-remove page, username/password login, and fixed Windows vite/bundle and state-phase build issues.",
+          "link": "https://github.com/logseq/logseq/pull/13331",
+          "priority": 7
+        },
+        {
+          "title": "Import and publishing fixes",
+          "summary": "Convert markdown headings into DB heading metadata on import, and honor default home in HTML export.",
+          "link": "https://github.com/logseq/logseq/pull/13275",
+          "priority": 8
+        }
+      ]
+    },
+    {
+      "weekStart": "2026-09-08",
+      "weekEnd": "2026-09-14",
+      "updatedAt": "2026-09-22T15:30:00Z",
+      "items": [
+        {
+          "title": "Faster file-graph import",
+          "summary": "Optimized the file graph import path and preserved mention timestamps, icons, and PDF annotations more reliably.",
+          "link": "https://github.com/logseq/logseq/pull/13130",
+          "priority": 1
+        },
+        {
+          "title": "Page rename and delete edge cases",
+          "summary": "Update linking page mirrors on rename, tag Recycle as Page so File→DB deletes work, and load breadcrumbs on demand.",
+          "link": "https://github.com/logseq/logseq/pull/13147",
+          "priority": 2
+        },
+        {
+          "title": "Property and shortcut polish",
+          "summary": "URL property editor UX, default Task status icons, shared default shortcuts when resetting, and Contents from the right-sidebar menu.",
+          "link": "https://github.com/logseq/logseq/pull/13186",
+          "priority": 3
+        }
+      ]
+    }
+  ]
+}

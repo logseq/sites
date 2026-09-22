@@ -228,8 +228,9 @@ export function LandingFooterNav () {
 
   const links = (
     <div className="links flex flex-col justify-center">
-      <p className="flex space-x-4 text-xs text-gray-300/90 pb-1">
+      <p className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-300/90 pb-1">
         <a href="https://logseq.io/p/NX4mc_ggEV" target="_blank" rel="noreferrer">Roadmap</a>
+        <Link to={"/weekly"}>Weekly</Link>
         <Link to={"/privacy-policy"}>Privacy</Link>
         <Link to={"/terms"}>Terms</Link>
         <a href="mailto:hi@logseq.com">Contact Us</a>
