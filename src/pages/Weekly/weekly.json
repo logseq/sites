@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-09-22",
+      "weekEnd": "2026-09-28",
+      "updatedAt": "2026-09-26T17:19:16Z",
+      "items": [
+        {
+          "title": "Undo restores moves, deletes, tags, and properties",
+          "summary": "Five undo bugs found by property-based testing now round-trip correctly, with regression coverage in the worker suite.",
+          "link": "https://github.com/logseq/logseq/pull/13444",
+          "priority": 1
+        },
+        {
+          "title": "Safer paste of page refs and embeds",
+          "summary": "Deduped pasted page refs that exploded into thousands of pages, bounded the batch-delete dialog, and fixed drag/paste of page embeds.",
+          "link": "https://github.com/logseq/logseq/pull/13436",
+          "priority": 2
+        },
+        {
+          "title": "Editor composition and focus fixes",
+          "summary": "Dead-key layouts no longer double characters, escape-editing clears only its own block, and the editor flushes before ref navigation.",
+          "link": "https://github.com/logseq/logseq/pull/13443",
+          "priority": 3
+        },
+        {
+          "title": "Query builder and /query hardening",
+          "summary": "Incomplete /query syntax no longer crashes the app; property chips show titles, custom status/priority appear in filters, and class defaults stay scoped.",
+          "link": "https://github.com/logseq/logseq/pull/13419",
+          "priority": 4
+        },
+        {
+          "title": "Sync and checksum reliability",
+          "summary": "Value replacements stay in one request, stale local checksums heal on graph open, and outliner insert identities survive sync replay.",
+          "link": "https://github.com/logseq/logseq/pull/13432",
+          "priority": 5
+        },
+        {
+          "title": "Tag pages and views feel snappier",
+          "summary": "Tag page bodies mount after the objects table paints, small class tables sort without a row-limit walk, and block render watches are indexed.",
+          "link": "https://github.com/logseq/logseq/pull/13435",
+          "priority": 6
+        },
+        {
+          "title": "CLI markdown block upsert",
+          "summary": "Upsert blocks accept Markdown via --blocks/--blocks-file, with clearer skill docs and healthier worker retirement during CLI runs.",
+          "link": "https://github.com/logseq/logseq/pull/13377",
+          "priority": 7
+        },
+        {
+          "title": "Flashcards empty state and due count",
+          "summary": "When no cards are due, practice-again is offered instead of the create-card empty state, and the due counter refreshes after rating.",
+          "link": "https://github.com/logseq/logseq/pull/13410",
+          "priority": 8
+        },
+        {
+          "title": "Repeating dates and page updated-at",
+          "summary": "Date repeats stay on the correct calendar day west of UTC, clearing datetimes drops stale journal refs, and page updated-at bumps on insert/move/delete.",
+          "link": "https://github.com/logseq/logseq/pull/13433",
+          "priority": 9
+        },
+        {
+          "title": "Library moves and browser MCP",
+          "summary": "Only normal pages move into Library with correct namespace roots, and Electron /mcp works from browser-based MCP clients.",
+          "link": "https://github.com/logseq/logseq/pull/13397",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-09-15",
       "weekEnd": "2026-09-21",
       "updatedAt": "2026-09-22T15:30:00Z",
