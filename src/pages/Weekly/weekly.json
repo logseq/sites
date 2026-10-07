@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-09-29",
+      "weekEnd": "2026-10-05",
+      "updatedAt": "2026-10-03T17:10:00Z",
+      "items": [
+        {
+          "title": "Undo restores deleted pages, blocks, and schemas",
+          "summary": "Deleted pages and blocks with inner refs come back intact, many-to-one undos no longer collapse, property schemas restore, and tag templates skip re-insert on redo.",
+          "link": "https://github.com/logseq/logseq/pull/13528",
+          "priority": 1
+        },
+        {
+          "title": "UUID refs resolve in search and breadcrumbs",
+          "summary": "Nested [[uuid]] titles render as page names in search, breadcrumbs, and page refs; missing entities stay broken links instead of failing the save.",
+          "link": "https://github.com/logseq/logseq/pull/13580",
+          "priority": 2
+        },
+        {
+          "title": "Property pickers and config toggles stick",
+          "summary": "Node property pickers show current selections, Hide-by-default and similar toggles persist, choice identities stay stable, and empty multi-value slots clear without throwing.",
+          "link": "https://github.com/logseq/logseq/pull/13521",
+          "priority": 3
+        },
+        {
+          "title": "SPA HTML publishing no longer blanks",
+          "summary": "Export public pages boots with content again after fixing worker startup and asset wiring in the published shell.",
+          "link": "https://github.com/logseq/logseq/pull/13579",
+          "priority": 4
+        },
+        {
+          "title": "Desktop packaging and Windows installer",
+          "summary": "Nightly desktop bundles include the embedding sidecar again, and electron-builder 26.17.0 stops the NSIS crash on Windows 11 24H2+.",
+          "link": "https://github.com/logseq/logseq/pull/13584",
+          "priority": 5
+        },
+        {
+          "title": "Graph download survives bad assets",
+          "summary": "A single failed asset download no longer aborts the whole graph download once the snapshot is already imported.",
+          "link": "https://github.com/logseq/logseq/pull/13572",
+          "priority": 6
+        },
+        {
+          "title": "Settings recover from broken config.edn",
+          "summary": "Missing or unparsable logseq/config.edn is recreated so settings toggles unlock again instead of staying stuck.",
+          "link": "https://github.com/logseq/logseq/pull/13566",
+          "priority": 7
+        },
+        {
+          "title": "Flashcards, assets, and image actions",
+          "summary": "Tags that extend Card count as flashcards, new assets land on #assets, and Electron Copy Image / Show in folder work again.",
+          "link": "https://github.com/logseq/logseq/pull/13540",
+          "priority": 8
+        },
+        {
+          "title": "Moves keep descendants under ancestors",
+          "summary": "Selecting an ancestor with descendants and dragging or Alt+Shift+Up no longer pulls grandchildren out of their parent.",
+          "link": "https://github.com/logseq/logseq/pull/13482",
+          "priority": 9
+        },
+        {
+          "title": "Search, cmdk, and DB performance",
+          "summary": "FTS lookups use rowid, cancelled search migrations stop early, Themes cmdk results stay populated, and WAL sync plus tree flush cut idle work.",
+          "link": "https://github.com/logseq/logseq/pull/13475",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-09-22",
       "weekEnd": "2026-09-28",
       "updatedAt": "2026-09-26T17:12:00Z",
@@ -135,7 +202,7 @@
         },
         {
           "title": "Page rename and delete edge cases",
-          "summary": "Update linking page mirrors on rename, tag Recycle as Page so File\u2192DB deletes work, and load breadcrumbs on demand.",
+          "summary": "Update linking page mirrors on rename, tag Recycle as Page so File→DB deletes work, and load breadcrumbs on demand.",
           "link": "https://github.com/logseq/logseq/pull/13147",
           "priority": 2
         },
