@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-10-06",
+      "weekEnd": "2026-10-12",
+      "updatedAt": "2026-10-10T17:10:00Z",
+      "items": [
+        {
+          "title": "Sync recovers stalled uploads",
+          "summary": "Stalled uploads now recover without dropping local edits, pulls follow the server journal with a pending-ops overlay, and timestamp-only touches skip revalidation.",
+          "link": "https://github.com/logseq/logseq/pull/13647",
+          "priority": 1
+        },
+        {
+          "title": "db-sync pending ops on a display connection",
+          "summary": "Pending operations are projected onto a separate display conn instead of reverse/rebase, simplifying how unsynced edits are shown.",
+          "link": "https://github.com/logseq/logseq/pull/13585",
+          "priority": 2
+        },
+        {
+          "title": "Graph-scoped personal access tokens for RTC",
+          "summary": "RTC gains personal access tokens scoped to a single graph, and clj-e2e RTC tests now run against a local db-sync server.",
+          "link": "https://github.com/logseq/logseq/pull/13019",
+          "priority": 3
+        },
+        {
+          "title": "Editor clicks and keys behave during saves and scrolls",
+          "summary": "A click while the page scrolls edits the right block, Escape or Shift+Up/Down keeps the editor a click opened, and move up/down follows page order.",
+          "link": "https://github.com/logseq/logseq/pull/13635",
+          "priority": 4
+        },
+        {
+          "title": "Virtual list and journals scrolling fixed",
+          "summary": "Blank virt-list bodies, scroll gaps, and journals pagination are fixed; block selection also clears on route changes.",
+          "link": "https://github.com/logseq/logseq/pull/13648",
+          "priority": 5
+        },
+        {
+          "title": "Faster startup and page loads",
+          "summary": "Electron keeps compiled page scripts across app opens, and LRU caches start empty to speed up startup.",
+          "link": "https://github.com/logseq/logseq/pull/13634",
+          "priority": 6
+        },
+        {
+          "title": "File-graph import keeps data intact",
+          "summary": "Imported class and property entities stay distinct, asset links in property values convert, and class/property roots are skipped when moving pages to Library.",
+          "link": "https://github.com/logseq/logseq/pull/13629",
+          "priority": 7
+        },
+        {
+          "title": "Dates and repeats respect local time",
+          "summary": "Deadline and Scheduled repeats step in the local calendar, and createJournalPage date-only strings stay on the right day.",
+          "link": "https://github.com/logseq/logseq/pull/13615",
+          "priority": 8
+        },
+        {
+          "title": "Native GPUI and macOS app experiments",
+          "summary": "Work continues on the GPUI client (theme, typed-prop page layout, responsive caret) and a native SwiftUI macOS app on the OCaml/LUI stack.",
+          "link": "https://github.com/logseq/logseq/pull/13593",
+          "priority": 9
+        },
+        {
+          "title": "Desktop packaging and new-graph fixes",
+          "summary": "The embedding sidecar ships in desktop builds, a reload after creating a graph opens it, and a missing export.css is created on first edit.",
+          "link": "https://github.com/logseq/logseq/pull/13584",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-09-29",
       "weekEnd": "2026-10-05",
       "updatedAt": "2026-10-03T17:10:00Z",
