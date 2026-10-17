@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-10-13",
+      "weekEnd": "2026-10-19",
+      "updatedAt": "2026-10-17T17:10:00Z",
+      "items": [
+        {
+          "title": "Sync confirms uploads with canonical acks",
+          "summary": "Uploads are now confirmed from the server's canonical acknowledgement and applied locally instead of pulling back the echo; own echoes skip overlay replay and integers survive undo replay.",
+          "link": "https://github.com/logseq/logseq/pull/13698",
+          "priority": 1
+        },
+        {
+          "title": "db-sync server hardening",
+          "summary": "The node server honors DB_SYNC_ADMIN_TOKEN, port and log-level settings, failed async routes return 500, non-UUID graph ids are rejected, and UUIDs and Unicode graph names serialize correctly.",
+          "link": "https://github.com/logseq/logseq/pull/13790",
+          "priority": 2
+        },
+        {
+          "title": "File-graph import keeps more content",
+          "summary": "Namespaced tags no longer drop other or ancestor tags, text around embeds and multi-line math import, code-block properties are kept, and values stay text when a number would change them.",
+          "link": "https://github.com/logseq/logseq/pull/13745",
+          "priority": 3
+        },
+        {
+          "title": "Export and block attribute fixes",
+          "summary": "Tags before macros no longer break export, open-blocks only applies inside embeds, refs to missing blocks are kept, and DB graphs stop storing file-graph attributes like SCHEDULED or Org drawers.",
+          "link": "https://github.com/logseq/logseq/pull/13737",
+          "priority": 4
+        },
+        {
+          "title": "Native OCaml UI host keeps maturing",
+          "summary": "Typed prop binds and callbacks, scope-bound timers, component-owned layout and host capabilities replace older patterns; the host now runs on macOS and Linux with closer web styling.",
+          "link": "https://github.com/logseq/logseq/pull/13704",
+          "priority": 5
+        },
+        {
+          "title": "API, MCP and PATs cover more cases",
+          "summary": "The semantic API and personal access tokens support E2EE graphs, the API accepts URL values and stable block identities, and MCP rejects unsupported streams and closes request resources.",
+          "link": "https://github.com/logseq/logseq/pull/13671",
+          "priority": 6
+        },
+        {
+          "title": "Lower worker memory and safer snapshots",
+          "summary": "The DB worker retains less memory, query failures are isolated from page snapshots, property integers parse as int64, graph assets stay in the encoded directory, and encrypted journal replay keeps titles.",
+          "link": "https://github.com/logseq/logseq/pull/13775",
+          "priority": 7
+        },
+        {
+          "title": "Table sorting and filters behave",
+          "summary": "Missing sort values go last in query and grouped views, unchecked checkboxes sort correctly, and the does-not-contain filter is case-insensitive.",
+          "link": "https://github.com/logseq/logseq/pull/13485",
+          "priority": 8
+        },
+        {
+          "title": "Search, editor and property polish",
+          "summary": "Cmd+K prefers existing matches over page creation, Unicode previews render, Alt+Shift+Up/Down keeps the selection, clipboard works in Safari and Firefox, and number defaults and closed values set correctly.",
+          "link": "https://github.com/logseq/logseq/pull/13701",
+          "priority": 9
+        },
+        {
+          "title": "Nightly web app and test site banner",
+          "summary": "The nightly web app now deploys daily, and test.logseq.com shows a banner pointing real work to app.logseq.com.",
+          "link": "https://github.com/logseq/logseq/pull/13749",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-10-06",
       "weekEnd": "2026-10-12",
       "updatedAt": "2026-10-10T17:10:00Z",
