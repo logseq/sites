@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-10-20",
+      "weekEnd": "2026-10-26",
+      "updatedAt": "2026-10-24T17:06:28Z",
+      "items": [
+        {
+          "title": "db-sync hardens uploads and downloads",
+          "summary": "Uploads persist transaction identities and return canonical journal acks, graph writes and journal metadata commit atomically, and first downloads start from the snapshot without an extra pull.",
+          "link": "https://github.com/logseq/logseq/pull/13814",
+          "priority": 1
+        },
+        {
+          "title": "Native views and queries match master",
+          "summary": "Native view filtering and sorting now behave like master, reference-backed filter values and saved view settings survive, and worker queries handle nested tags and #uuid/#inst constants.",
+          "link": "https://github.com/logseq/logseq/pull/13823",
+          "priority": 2
+        },
+        {
+          "title": "File-graph import keeps non-outline content",
+          "summary": "Markdown and Org files without bullets, or with text before the first block, no longer import as empty pages; a property and tag sharing a name on one page also import correctly.",
+          "link": "https://github.com/logseq/logseq/pull/13831",
+          "priority": 3
+        },
+        {
+          "title": "Copy and export keep image assets",
+          "summary": "Image blocks now export with their asset reference in Markdown, HTML and OPML instead of just the caption.",
+          "link": "https://github.com/logseq/logseq/pull/13829",
+          "priority": 4
+        },
+        {
+          "title": "Publishing keeps private pages private",
+          "summary": "Blocks of a page marked private stay out of an all-pages-public export, and static export files copy without copyFile.",
+          "link": "https://github.com/logseq/logseq/pull/13691",
+          "priority": 5
+        },
+        {
+          "title": "Unlinked references get more accurate",
+          "summary": "Unlinked references ignore ref ids left by edited links and now match plain-text mentions of a page's aliases.",
+          "link": "https://github.com/logseq/logseq/pull/13706",
+          "priority": 6
+        },
+        {
+          "title": "API and MCP return nested blocks",
+          "summary": "get-page-data keeps nested children, so MCP getPage and the HTTP/JS APIs return the full block tree on DB graphs.",
+          "link": "https://github.com/logseq/logseq/pull/13811",
+          "priority": 7
+        },
+        {
+          "title": "Editor and slash command polish",
+          "summary": "Math blocks keep the formula alone when saved again, /code, /calc and /quote insert a new block on blocks with text, and the duplicate heading command is gone.",
+          "link": "https://github.com/logseq/logseq/pull/13736",
+          "priority": 8
+        },
+        {
+          "title": "Views and properties stop crashing",
+          "summary": "Cleared date placeholders sort safely, table cell popups no longer focus unmounted cells, untyped single-value properties show the select, and deleted reaction targets render.",
+          "link": "https://github.com/logseq/logseq/pull/13800",
+          "priority": 9
+        },
+        {
+          "title": "CI and test reliability",
+          "summary": "The native host and RTC adapter build in CI, zvec dylib copying is limited to macOS arm64, and tests clean up their redefinitions before the next one runs.",
+          "link": "https://github.com/logseq/logseq/pull/13828",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-10-13",
       "weekEnd": "2026-10-19",
       "updatedAt": "2026-10-17T17:10:00Z",
