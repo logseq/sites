@@ -1,6 +1,49 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-10-27",
+      "weekEnd": "2026-11-02",
+      "updatedAt": "2026-10-31T17:06:00Z",
+      "items": [
+        {
+          "title": "Import shows a per-item report",
+          "summary": "File-graph import now dry-runs first and shows which pages, assets and properties will be created or skipped, reports each item afterward, and also accepts plain Markdown folders.",
+          "link": "https://github.com/logseq/logseq/pull/13450",
+          "priority": 1
+        },
+        {
+          "title": "E2EE sync keeps Chinese titles intact",
+          "summary": "Encrypted sync now UTF-8 encodes text before encryption, so editing CJK titles no longer corrupts blocks into raw Transit data.",
+          "link": "https://github.com/logseq/logseq/pull/13839",
+          "priority": 2
+        },
+        {
+          "title": "DB migrations keep existing properties",
+          "summary": "Upgrades skip properties that already exist instead of rebuilding them, so their titles, creation times and order are no longer reset.",
+          "link": "https://github.com/logseq/logseq/pull/13750",
+          "priority": 3
+        },
+        {
+          "title": "CLI stress tests cover real writes again",
+          "summary": "The concurrent stress run creates real trees again and verifies them, which surfaced and fixed lifecycle timeouts and SQLite lock errors.",
+          "link": "https://github.com/logseq/logseq/pull/13905",
+          "priority": 4
+        },
+        {
+          "title": "Desktop build back on track",
+          "summary": "Electron moves to 42.11.16 and the desktop lockfile is synced, fixing nightly packaging on all platforms.",
+          "link": "https://github.com/logseq/logseq/pull/13838",
+          "priority": 5
+        },
+        {
+          "title": "Traditional Chinese and fork PR labels",
+          "summary": "zh-Hant gains 127 missing translations, and pull requests from forks are now labeled without the labeler failing.",
+          "link": "https://github.com/logseq/logseq/pull/12962",
+          "priority": 6
+        }
+      ]
+    },
+    {
       "weekStart": "2026-10-20",
       "weekEnd": "2026-10-26",
       "updatedAt": "2026-10-24T17:06:28Z",
