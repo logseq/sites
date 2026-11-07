@@ -1,6 +1,61 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-11-03",
+      "weekEnd": "2026-11-09",
+      "updatedAt": "2026-11-07T17:10:00Z",
+      "items": [
+        {
+          "title": "Native desktop moves to MyGo",
+          "summary": "The desktop host switches from SDL to MyGo for windows, menus, clipboard and rendering, restores drag/drop, paste and sidebar interactions, and drops the unused mobile packages.",
+          "link": "https://github.com/logseq/logseq/pull/13942",
+          "priority": 1
+        },
+        {
+          "title": "Native UI catches up with master",
+          "summary": "Selections, table bulk actions and property dialogs now ignore stale replies, and Settings, shortcuts, Recent pages, table sorting and hashtags behave like the current app again.",
+          "link": "https://github.com/logseq/logseq/pull/13900",
+          "priority": 2
+        },
+        {
+          "title": "Native chrome and popup polish",
+          "summary": "Header buttons stay clear of the macOS traffic lights and stop sliding with the sidebar, while text input, popups and sidebar gestures route correctly.",
+          "link": "https://github.com/logseq/logseq/pull/13941",
+          "priority": 3
+        },
+        {
+          "title": "Add an existing local DB graph",
+          "summary": "Desktop DB builds can open a graph folder, db.sqlite or backup ZIP from All graphs and the graph switcher, which helps after reinstalling the OS.",
+          "link": "https://github.com/logseq/logseq/pull/13875",
+          "priority": 4
+        },
+        {
+          "title": "Undo and redo keep page identity",
+          "summary": "Undoing creates and renames of pages, namespaced pages, tags and properties no longer loses the page or leaves it marked deleted.",
+          "link": "https://github.com/logseq/logseq/pull/13449",
+          "priority": 5
+        },
+        {
+          "title": "CLI renames pages and survives AppImage",
+          "summary": "logseq upsert page gains --rename that keeps references intact, and the installed CLI no longer breaks after an AppImage mount goes away.",
+          "link": "https://github.com/logseq/logseq/pull/13931",
+          "priority": 6
+        },
+        {
+          "title": "Steadier queries",
+          "summary": "Deleting a block shown in a query table just drops that row instead of a Query error, and (task ...) only matches real Task blocks.",
+          "link": "https://github.com/logseq/logseq/pull/13538",
+          "priority": 7
+        },
+        {
+          "title": "Tag and property fixes",
+          "summary": "Hidden tag properties can be revealed again on tagged pages, and Root Tag is no longer offered as an Extends choice.",
+          "link": "https://github.com/logseq/logseq/pull/13425",
+          "priority": 8
+        }
+      ]
+    },
+    {
       "weekStart": "2026-10-27",
       "weekEnd": "2026-11-02",
       "updatedAt": "2026-10-31T17:06:00Z",
