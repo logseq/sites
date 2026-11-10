@@ -17,6 +17,7 @@ import { scrollToTop } from './components/utils'
 import cx from 'classnames'
 import { TermsPage } from './pages/User/Terms'
 import { PrivacyPolicyPage } from './pages/User/PrivacyPolicy'
+import { AccountDeletionPage } from './pages/User/AccountDeletion'
 import { WeeklyPage } from './pages/Weekly'
 
 export function App() {
@@ -83,6 +84,7 @@ export function App() {
           <Route path={'/downloads'} element={<DownloadsPage/>}/>
           <Route path={'/terms'} element={<TermsPage/>}></Route>
           <Route path={'/privacy-policy'} element={<PrivacyPolicyPage/>}></Route>
+          <Route path={'/account-deletion'} element={<AccountDeletionPage/>}/>
           <Route path={'/weekly'} element={<WeeklyPage/>}/>
         </Routes>
 

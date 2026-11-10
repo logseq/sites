@@ -232,6 +232,7 @@ export function LandingFooterNav () {
         <a href="https://logseq.io/p/NX4mc_ggEV" target="_blank" rel="noreferrer">Roadmap</a>
         <Link to={"/weekly"}>Weekly</Link>
         <Link to={"/privacy-policy"}>Privacy</Link>
+        <Link to={"/account-deletion"}>Account deletion</Link>
         <Link to={"/terms"}>Terms</Link>
         <a href="mailto:hi@logseq.com">Contact Us</a>
       </p>
