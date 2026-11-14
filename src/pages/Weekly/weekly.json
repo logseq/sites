@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "weekStart": "2026-11-10",
+      "weekEnd": "2026-11-16",
+      "updatedAt": "2026-11-14T16:53:39Z",
+      "items": [
+        {
+          "title": "QuickJS plugin runtime lands",
+          "summary": "A DOM-free QuickJS runtime with a typed OCaml broker is designed and merged as a native-only first slice, with SDK reads backed by real app services.",
+          "link": "https://github.com/logseq/logseq/pull/14011",
+          "priority": 1
+        },
+        {
+          "title": "QuickJS SDK grows commands and reads",
+          "summary": "Plugins can register slash editor commands, see their granted capabilities, read siblings, and run bound Datalog queries and tree reads.",
+          "link": "https://github.com/logseq/logseq/pull/14019",
+          "priority": 2
+        },
+        {
+          "title": "Local API and plugins get stricter security",
+          "summary": "The local HTTP API, including /mcp, now requires a configured matching bearer token instead of skipping auth when none is set.",
+          "link": "https://github.com/logseq/logseq/pull/13987",
+          "priority": 3
+        },
+        {
+          "title": "CLI behaves like Desktop",
+          "summary": "CLI queries reuse Desktop's advanced-query executor, block input uses the Desktop parser, and repeated graph flags or failed imports now error out.",
+          "link": "https://github.com/logseq/logseq/pull/13996",
+          "priority": 4
+        },
+        {
+          "title": "File-to-DB import fixes",
+          "summary": "Imports resolve refs to entities created later, show the failing file and reason, and no longer duplicate favorites.",
+          "link": "https://github.com/logseq/logseq/pull/13979",
+          "priority": 5
+        },
+        {
+          "title": "DB graph editing fixes",
+          "summary": "Pasting asset blocks works, repeated Mod+A expands to the parent, hide-by-default properties stay hidden, and PDF annotation refs open the PDF.",
+          "link": "https://github.com/logseq/logseq/pull/13177",
+          "priority": 6
+        },
+        {
+          "title": "Search, sync and deep links",
+          "summary": "Current-page search stays on the page, All graphs shows remote graphs without a saved Sync URL, and logseq://graph links work on cold start.",
+          "link": "https://github.com/logseq/logseq/pull/13923",
+          "priority": 7
+        },
+        {
+          "title": "Faster Markdown Mirror",
+          "summary": "Markdown Mirror reuses cached per-block output instead of re-rendering the whole page on every edit.",
+          "link": "https://github.com/logseq/logseq/pull/13943",
+          "priority": 8
+        },
+        {
+          "title": "Native editor reliability",
+          "summary": "Input survives clicks, resyncs, navigation and graph switches, shortcuts follow user bindings, and Ctrl word navigation works on Linux and Windows.",
+          "link": "https://github.com/logseq/logseq/pull/13965",
+          "priority": 9
+        },
+        {
+          "title": "Native UI parity with master",
+          "summary": "Comments and reactions, auth forms, sidebar headers, Settings, Query controls and multi-block drag now match the current app.",
+          "link": "https://github.com/logseq/logseq/pull/13962",
+          "priority": 10
+        }
+      ]
+    },
+    {
       "weekStart": "2026-11-03",
       "weekEnd": "2026-11-09",
       "updatedAt": "2026-11-07T17:10:00Z",
